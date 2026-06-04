@@ -67,7 +67,7 @@ export default function Navbar() {
           {/* Logo */}
           <Link href="/">
             <Image
-              src="/logo-v2.png"
+              src="/brandingo-logo.png"
               alt="Brandingo India"
               width={180}
               height={40}
