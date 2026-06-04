@@ -16,10 +16,10 @@ const SocialYoutube = () => (
 );
 
 const quickLinks = [
-  { label: "Home", href: "#home" }, { label: "About Us", href: "#about" },
-  { label: "Services", href: "#services" }, { label: "Projects", href: "#projects" },
-  { label: "Blog", href: "#blog" }, { label: "Career", href: "#career" },
-  { label: "Contact", href: "#contact" }, { label: "Privacy Policy", href: "#privacy" },
+  { label: "Home", href: "/" }, { label: "About Us", href: "/about" },
+  { label: "Services", href: "/services" }, { label: "Projects", href: "/projects" },
+  { label: "Blog", href: "/blog" }, { label: "Career", href: "/career" },
+  { label: "Contact", href: "/contact" }, { label: "Privacy Policy", href: "#privacy" },
 ];
 
 const serviceLinks = [
@@ -46,7 +46,7 @@ export default function Footer() {
             </p>
           </div>
           <Link
-            href="#contact"
+            href="/contact"
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -108,7 +108,7 @@ export default function Footer() {
               <ul style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
                 {serviceLinks.map((s) => (
                   <li key={s}>
-                    <Link href="#services" style={{ color: "rgba(255,255,255,0.4)", fontSize: "13px", display: "flex", alignItems: "center", gap: "6px", transition: "color 0.2s" }} className="hover:text-[#f58220] group">
+                    <Link href="/services" style={{ color: "rgba(255,255,255,0.4)", fontSize: "13px", display: "flex", alignItems: "center", gap: "6px", transition: "color 0.2s" }} className="hover:text-[#f58220] group">
                       <ArrowRight size={11} style={{ opacity: 0, transition: "opacity 0.2s" }} className="group-hover:opacity-100" />
                       {s}
                     </Link>

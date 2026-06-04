@@ -59,9 +59,14 @@ export default function About() {
                 </li>
               ))}
             </ul>
-            <Link href="#services" style={{ display:"inline-flex", alignItems:"center", gap:"8px", padding:"14px 30px", background:"#f58220", color:"#fff", fontWeight:700, borderRadius:"999px", fontSize:"14px", transition:"background 0.2s" }} className="hover:bg-[#ff933c]">
-              Explore Our Services <ArrowRight size={16} />
-            </Link>
+            <div style={{ display:"flex", gap:"16px", flexWrap:"wrap" }}>
+              <Link href="/about" style={{ display:"inline-flex", alignItems:"center", gap:"8px", padding:"14px 30px", background:"#f58220", color:"#fff", fontWeight:700, borderRadius:"999px", fontSize:"14px", transition:"background 0.2s" }} className="hover:bg-[#ff933c]">
+                View More <ArrowRight size={16} />
+              </Link>
+              <Link href="/services" style={{ display:"inline-flex", alignItems:"center", gap:"8px", padding:"14px 30px", background:"transparent", color:"#1a1a1a", border:"1px solid #ddd", fontWeight:700, borderRadius:"999px", fontSize:"14px", transition:"background 0.2s, border-color 0.2s" }} className="hover:border-[#f58220] hover:text-[#f58220]">
+                Explore Our Services
+              </Link>
+            </div>
           </div>
         </div>
 

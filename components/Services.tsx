@@ -106,9 +106,27 @@ export default function Services() {
         </div>
 
         {/* CTA */}
-        <div style={{ textAlign: "center", marginTop: "52px" }}>
+        <div style={{ textAlign: "center", marginTop: "52px", display: "flex", justifyContent: "center", gap: "16px", flexWrap: "wrap" }}>
           <Link
-            href="#contact"
+            href="/services"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "8px",
+              padding: "14px 32px",
+              background: "#f58220",
+              color: "#fff",
+              fontWeight: 700,
+              borderRadius: "999px",
+              fontSize: "14px",
+              transition: "background 0.2s",
+            }}
+            className="hover:bg-[#ff933c]"
+          >
+            View All Services <ArrowRight size={16} />
+          </Link>
+          <Link
+            href="/contact"
             style={{
               display: "inline-flex",
               alignItems: "center",

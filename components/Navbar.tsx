@@ -8,10 +8,10 @@ import { Menu, X } from "lucide-react";
 
 const navLinks = [
   { label: "Home",     href: "/"         },
-  { label: "About",    href: "/#about"   },
-  { label: "Services", href: "/#services"},
-  { label: "Projects", href: "/#projects"},
-  { label: "Career",   href: "/#career"  },
+  { label: "About",    href: "/about"    },
+  { label: "Services", href: "/services" },
+  { label: "Projects", href: "/projects" },
+  { label: "Career",   href: "/career"   },
   { label: "Blog",     href: "/blog"     },
   { label: "Contact",  href: "/contact"  },
 ];
@@ -74,14 +74,16 @@ export default function Navbar() {
 
           {/* Desktop Nav */}
           <nav className="hidden lg:flex items-center gap-8">
-            {navLinks.map((link) => (
+            {navLinks.map((link) => {
+              const isActive = link.href === "/" ? pathname === "/" : pathname.startsWith(link.href);
+              return (
               <Link
                 key={link.label}
                 href={link.href}
                 style={{
                   fontSize: "14px",
                   fontWeight: 500,
-                  color: textColor,
+                  color: isActive ? "#f58220" : textColor,
                   position: "relative",
                   paddingBottom: "4px",
                   transition: "color 0.3s",
@@ -93,7 +95,7 @@ export default function Navbar() {
                   style={{
                     position: "absolute",
                     bottom: 0, left: 0,
-                    height: "2px", width: 0,
+                    height: "2px", width: isActive ? "100%" : 0,
                     background: "#f58220",
                     borderRadius: "2px",
                     transition: "width 0.25s ease",
@@ -101,7 +103,7 @@ export default function Navbar() {
                   className="group-hover:w-full"
                 />
               </Link>
-            ))}
+            )})}
           </nav>
 
           {/* CTA row */}
@@ -155,17 +157,19 @@ export default function Navbar() {
         className="lg:hidden"
       >
         <div style={{ padding: "12px 16px 20px" }}>
-          {navLinks.map((link) => (
+          {navLinks.map((link) => {
+            const isActive = link.href === "/" ? pathname === "/" : pathname.startsWith(link.href);
+            return (
             <Link
               key={link.label}
               href={link.href}
               onClick={() => setMobileOpen(false)}
-              style={{ display: "block", padding: "12px 16px", fontSize: "14px", fontWeight: 500, color: "#444", borderRadius: "8px", transition: "background 0.15s" }}
+              style={{ display: "block", padding: "12px 16px", fontSize: "14px", fontWeight: 500, color: isActive ? "#f58220" : "#444", backgroundColor: isActive ? "#fff5eb" : "transparent", borderRadius: "8px", transition: "background 0.15s, color 0.15s" }}
               className="hover:bg-[#fff5eb] hover:text-[#f58220]"
             >
               {link.label}
             </Link>
-          ))}
+          )})}
           <Link
             href="/contact"
             onClick={() => setMobileOpen(false)}
