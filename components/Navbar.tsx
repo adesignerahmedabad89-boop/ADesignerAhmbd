@@ -68,7 +68,7 @@ export default function Navbar() {
           <Link href="/">
             <Image
               src="/logo-v2.png"
-              alt="JK Branding India"
+              alt="Brandingo India"
               width={180}
               height={40}
               style={{ height: "40px", width: "auto", objectFit: "contain", filter: logoFilter, transition: "filter 0.3s ease" }}
