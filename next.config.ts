@@ -8,6 +8,11 @@ const nextConfig: NextConfig = {
         hostname: "jkbrandingindia.com",
         pathname: "/wp-content/uploads/**",
       },
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+        pathname: "/photo-**",
+      },
     ],
   },
 };

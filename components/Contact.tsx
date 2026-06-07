@@ -10,9 +10,8 @@ const SocialInstagram = () => <svg viewBox="0 0 24 24" fill="none" stroke="curre
 const SocialYoutube = () => <svg viewBox="0 0 24 24" fill="currentColor" width="17" height="17"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.54C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z" /><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="white" /></svg>;
 
 const offices = [
-  { city: "Rajkot", label: "Head Office", address: "Office No. 1104, Wings Business Bay, Nr ITC Fortune Hotel, 150 ft. Ring Road, Rajkot, Gujarat" },
-  { city: "Jamnagar", label: "Branch Office", address: "Royal Empire, F.F,-2, Nr Avadh Honda Showroom, Ranjit Sagar Road, Jamnagar" },
-  { city: "Ahmedabad", label: "Branch Office", address: "Office 1102, Shivam Trade Center (STC), Beside One World West, Bopal Approach, Ahmedabad" },
+  { city: "Ahmedabad", label: "Head Office", address: "607, Iconic Shyamal, Shyamal Cross Roads, 132 Feet Ring Rd, Shyamal, Ahmedabad, Gujarat 380015" },
+  { city: "Bangalore", label: "Branch Office", address: "Shanti Apartments, Behind Indian Bike Showroom, Bhaskaran Rd, Bengaluru, Karnataka 560042" }
 ];
 
 const iBase: React.CSSProperties = { width: "100%", padding: "12px 16px", background: "#f9fafb", border: "1.5px solid #e5e7eb", borderRadius: "0", color: "#1a1a1a", fontSize: "14px", outline: "none", transition: "border-color 0.2s" };

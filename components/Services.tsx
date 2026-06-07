@@ -10,11 +10,9 @@ const services = [
   { icon: "https://jkbrandingindia.com/wp-content/uploads/2024/10/social-media.png", title: "Digital Marketing", description: "Cost-effective brand awareness campaigns that connect you with your target audience across all digital platforms.", href: "/services/digital-marketing" },
   { icon: "https://jkbrandingindia.com/wp-content/uploads/2024/10/Service-3.png", title: "Website Development", description: "Responsive, user-centric websites that make lasting impressions and drive business growth.", href: "/services/website-development" },
   { icon: "https://jkbrandingindia.com/wp-content/uploads/2024/10/vector.png", title: "Search Engine Optimization", description: "Improve your website's visibility on Google, Bing and other search engines through proven SEO strategies.", href: "/services/search-engine-optimization" },
-  { icon: "https://jkbrandingindia.com/wp-content/uploads/2024/10/Service-5.png", title: "Hoarding & Kiosk", description: "Eye-catching physical display advertising solutions that amplify your brand presence in the real world.", href: "/services/hoarding-kiosk" },
-  { icon: "https://jkbrandingindia.com/wp-content/uploads/2024/10/Service-6.png", title: "Exhibition Stall", description: "Showcase platforms designed for direct client engagement — making your brand the star of every event.", href: "/services/exhibition-stall" },
   { icon: "https://jkbrandingindia.com/wp-content/uploads/2025/01/camera.png", title: "Photo & Videography", description: "Transforming moments into timeless memories through stunning photography and cinematic videography.", href: "/services/photo-videography" },
   { icon: "https://jkbrandingindia.com/wp-content/uploads/2024/10/adwords.png", title: "Google Ads", description: "Targeted online advertising to acquire new customers and maximize your return on investment.", href: "/services/google-ads" },
-  { icon: "https://jkbrandingindia.com/wp-content/uploads/2024/10/magazine.png", title: "Magazine, Radio & Cinema Ads", description: "Multi-channel advertising for maximum brand reach and recall across print, radio and cinema.", href: "/services/magazine-radio-cinema-ads" },
+  { icon: "https://jkbrandingindia.com/wp-content/uploads/2024/10/meta_ads.png", title: "META Ads", description: "Targeted social media advertising on Meta platforms to reach your audience.", href: "/services/meta-ads" }
 ];
 
 export default function Services() {

@@ -2,13 +2,13 @@
 
 import { useInView } from "react-intersection-observer";
 import CountUp from "react-countup";
-import { Award, Briefcase, Users, Clock } from "lucide-react";
+import { Briefcase, Users, Clock } from "lucide-react";
 
 const stats = [
-  { icon: Clock, value: 17, suffix: "+", label: "Years of Experience" },
-  { icon: Briefcase, value: 500, suffix: "+", label: "Projects Completed" },
-  { icon: Users, value: 200, suffix: "+", label: "Happy Clients" },
-  { icon: Award, value: 10, suffix: "+", label: "Awards Won" },
+  { icon: Clock, value: 10, suffix: "+", label: "Years of Experience" },
+  { icon: Briefcase, value: 40000, suffix: "+", label: "Projects Completed" },
+  { icon: Users, value: 35000, suffix: "+", label: "Happy Clients" },
+  
 ];
 
 export default function Stats() {

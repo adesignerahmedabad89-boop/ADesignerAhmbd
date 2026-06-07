@@ -191,7 +191,7 @@ export default function Hero() {
           className="animate-float"
         >
           <Image
-            src="/graphic_designer.png"
+            src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f"
             alt="Creative Designer"
             fill
             sizes="210px"
@@ -349,19 +349,14 @@ export default function Hero() {
             </div>
 
             {/* Stats row */}
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "40px" }}>
-              {[
-                { value: "17+", label: "Years Experience" },
-                { value: "500+", label: "Projects Done" },
-                { value: "200+", label: "Happy Clients" },
-                { value: "10+", label: "Awards Won" },
-              ].map((s) => (
-                <div key={s.label} style={{ borderLeft: "3px solid #f58220", paddingLeft: "14px" }}>
-                  <div style={{ fontSize: "2rem", fontWeight: 800, color: "#1a1a1a" }}>{s.value}</div>
-                  <div style={{ fontSize: "12px", color: "#888", marginTop: "2px", fontWeight: 500 }}>{s.label}</div>
-                </div>
-              ))}
-            </div>
+            <div style={{ display: "flex", flexWrap: "nowrap", justifyContent: "space-between", gap: "24px" }}>
+  {[{ value: "10+", label: "Years Experience" },{ value: "40,000+", label: "Projects Completed" },{ value: "35,000+", label: "Happy Clients" }].map((s) => (
+    <div key={s.label} style={{ borderLeft: "3px solid #f58220", paddingLeft: "14px" }}>
+      <div style={{ fontSize: "2rem", fontWeight: 800, color: "#1a1a1a" }}>{s.value}</div>
+      <div style={{ fontSize: "12px", color: "#888", marginTop: "2px", fontWeight: 500 }}>{s.label}</div>
+    </div>
+  ))}
+</div>
           </div>
         </div>
       </div>

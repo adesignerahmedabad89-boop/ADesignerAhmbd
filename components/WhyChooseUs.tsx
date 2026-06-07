@@ -1,7 +1,7 @@
 "use client";
 
 import { useInView } from "react-intersection-observer";
-import { Target, Lightbulb, Globe, Zap, Award } from "lucide-react";
+import { Target, Lightbulb, Globe, Zap } from "lucide-react";
 
 const reasons = [
   { icon: Lightbulb, title: "Seasoned Experts in Graphic Design", description: "Our team comprises highly experienced professionals who bring decades of collective expertise in visual communications." },
@@ -17,10 +17,7 @@ const skills = [
   { label: "Social Media Management", value: 90 },
 ];
 
-const awards = [
-  { year: "2023", title: "Digital Campaign of the Year Award" },
-  { year: "2022", title: "Social Media Innovation Award" },
-];
+
 
 export default function WhyChooseUs() {
   const { ref, inView } = useInView({ threshold: 0.08, triggerOnce: true });
@@ -106,21 +103,7 @@ export default function WhyChooseUs() {
               ))}
             </div>
 
-            {/* Awards */}
-            <div>
-              <h3 style={{ fontSize: "1.1rem", fontWeight: 700, color: "#1a1a1a", marginBottom: "16px", display: "flex", alignItems: "center", gap: "8px" }}>
-                <Award size={18} style={{ color: "#f58220" }} /> Awards &amp; Recognition
-              </h3>
-              <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-                {awards.map((award) => (
-                  <div key={award.title} style={{ display: "flex", alignItems: "center", gap: "16px", padding: "16px 20px", borderRadius: "0", border: "1px solid rgba(245,130,32,0.25)", background: "#fff5eb" }}>
-                    <span style={{ fontSize: "1.2rem", fontWeight: 900, color: "#f58220", minWidth: "fit-content" }}>{award.year}</span>
-                    <div style={{ width: "1px", height: "32px", background: "rgba(245,130,32,0.3)" }} />
-                    <p style={{ color: "#555", fontSize: "13.5px", fontWeight: 500 }}>{award.title}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
+
           </div>
         </div>
       </div>
