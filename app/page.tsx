@@ -6,8 +6,10 @@ import About from "@/components/About";
 import Services from "@/components/Services";
 import Portfolio from "@/components/Portfolio";
 import WhyChooseUs from "@/components/WhyChooseUs";
+import Pricing from "@/components/Pricing";
 import Vision from "@/components/Vision";
 import Testimonials from "@/components/Testimonials";
+import FAQ from "@/components/FAQ";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 
@@ -22,8 +24,10 @@ export default function Home() {
       <Services />
       <Portfolio />
       <WhyChooseUs />
+      <Pricing />
       <Vision />
       <Testimonials />
+      <FAQ />
       <Contact />
       <Footer />
     </main>
