@@ -23,13 +23,13 @@ export default function Stats() {
       <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: "linear-gradient(90deg, transparent, #f58220, transparent)" }} />
 
       <div className="site-wrap">
-        <div style={{ display: "grid", gap: "24px" }} className="grid-cols-1 sm:grid-cols-3">
+        <div style={{ display: "grid", gap: "16px" }} className="grid-cols-1 sm:grid-cols-3">
           {stats.map((stat, i) => (
             <div
               key={stat.label}
               style={{
                 textAlign: "center",
-                padding: "40px 24px",
+                padding: "24px 16px",
                 borderRadius: "0",
                 background: "#fff",
                 border: "1px solid rgba(0,0,0,0.07)", opacity: inView ? 1 : 0,
@@ -58,7 +58,7 @@ export default function Stats() {
                 <stat.icon size={24} style={{ color: "#f58220" }} />
               </div>
 
-              <div style={{ fontSize: "2.8rem", fontWeight: 800, color: "#1a1a1a", lineHeight: 1 }}>
+              <div style={{ fontSize: "clamp(1.8rem, 6vw, 2.8rem)", fontWeight: 800, color: "#1a1a1a", lineHeight: 1 }}>
                 {inView ? (
                   <CountUp end={stat.value} duration={2.5} delay={i * 0.2} suffix={stat.suffix} />
                 ) : (
