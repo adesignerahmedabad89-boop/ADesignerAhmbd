@@ -69,9 +69,9 @@ export default function Hero() {
   return (
     <section
       id="home"
+      className="bg-[linear-gradient(rgba(0,0,0,0.65),rgba(0,0,0,0.65)),url('/bannermobile.png')] md:bg-[linear-gradient(rgba(0,0,0,0.65),rgba(0,0,0,0.65)),url('/bannertablet.png')] lg:bg-[linear-gradient(rgba(0,0,0,0.65),rgba(0,0,0,0.65)),url('/banner.png')] bg-center bg-cover bg-no-repeat"
       style={{
         minHeight: "100vh",
-        background: "linear-gradient(135deg, #f0f6fa 0%, #ffffff 50%, #e8f1f7 100%)",
         position: "relative",
         overflow: "hidden",
         display: "flex",
@@ -119,152 +119,7 @@ export default function Hero() {
         }}
       />
 
-      {/* Premium circular vectors in background (like reference image) */}
-      <svg
-        style={{
-          position: "absolute",
-          inset: 0,
-          width: "100%",
-          height: "100%",
-          pointerEvents: "none",
-          opacity: 0.22,
-        }}
-        viewBox="0 0 1440 900"
-        preserveAspectRatio="xMidYMid slice"
-      >
-        <defs>
-          <linearGradient id="circleGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#0b3c5d" stopOpacity="0.02" />
-            <stop offset="100%" stopColor="#f58220" stopOpacity="0.002" />
-          </linearGradient>
-          <linearGradient id="circleGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#f58220" stopOpacity="0.02" />
-            <stop offset="100%" stopColor="#0b3c5d" stopOpacity="0.002" />
-          </linearGradient>
-          <linearGradient id="strokeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#0b3c5d" stopOpacity="0.1" />
-            <stop offset="50%" stopColor="#f58220" stopOpacity="0.05" />
-            <stop offset="100%" stopColor="transparent" stopOpacity="0" />
-          </linearGradient>
-        </defs>
-
-        {/* Concentric rings on bottom left */}
-        <circle cx="150" cy="750" r="500" fill="none" stroke="url(#strokeGrad)" strokeWidth="1.5" />
-        <circle cx="150" cy="750" r="350" fill="url(#circleGrad1)" stroke="url(#strokeGrad)" strokeWidth="1" />
-        <circle cx="150" cy="750" r="220" fill="none" stroke="url(#strokeGrad)" strokeWidth="0.75" />
-
-        {/* Large overlapping circle on right side background */}
-        <circle cx="1200" cy="380" r="600" fill="none" stroke="url(#strokeGrad)" strokeWidth="1.5" />
-        <circle cx="1200" cy="380" r="440" fill="url(#circleGrad2)" stroke="url(#strokeGrad)" strokeWidth="1" />
-        <circle cx="1200" cy="380" r="280" fill="none" stroke="url(#strokeGrad)" strokeWidth="0.75" />
-
-        {/* Floating background arcs */}
-        <path d="M-100,250 Q250,120 600,320" fill="none" stroke="url(#strokeGrad)" strokeWidth="1.2" strokeDasharray="8,8" />
-        <path d="M900,850 Q1150,650 1500,750" fill="none" stroke="url(#strokeGrad)" strokeWidth="1.2" />
-      </svg>
-
-      {/* Right-side decorative modern vector layout */}
-      <div
-        style={{
-          position: "absolute",
-          right: "3%",
-          top: "50%",
-          transform: "translateY(-50%)",
-          width: "560px",
-          height: "580px",
-          pointerEvents: "none",
-        }}
-        className="hidden lg:block"
-      >
-        {/* Yellow Star Top-Left */}
-        <DoodleStar size={44} color="#f5d020" style={{ position: "absolute", left: "60px", top: "70px", opacity: 0.9 }} />
-
-        {/* Orange Star Bottom-Left */}
-        <DoodleStar size={40} color="#f58220" style={{ position: "absolute", left: "110px", top: "430px", opacity: 0.9 }} />
-
-        {/* Blue Squiggle Left */}
-        <SquiggleLoop width={120} height={80} color="#4d62e0" style={{ position: "absolute", left: "0px", top: "220px", opacity: 0.8 }} />
-
-        {/* Sunburst Bottom-Right */}
-        <SunburstSpokes size={96} color="#0b3c5d" style={{ position: "absolute", left: "320px", top: "480px", opacity: 0.85 }} className="animate-spin-slow" />
-
-        {/* Capsule 1: Large Center-Left (Yellow) */}
-        <div
-          style={{
-            position: "absolute",
-            left: "130px",
-            top: "110px",
-            width: "210px",
-            height: "360px",
-            borderRadius: "110px",
-            overflow: "hidden",
-            border: "6px solid #ffffff",
-            boxShadow: "0 25px 50px -12px rgba(0,0,0,0.15)",
-            background: "#f5d020",
-          }}
-          className="animate-float"
-        >
-          <Image
-            src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f"
-            alt="Creative Designer"
-            fill
-            sizes="210px"
-            style={{ objectFit: "cover" }}
-          />
-        </div>
-
-        {/* Capsule 2: Top-Right (Purple) */}
-        <div
-          style={{
-            position: "absolute",
-            left: "360px",
-            top: "20px",
-            width: "160px",
-            height: "260px",
-            borderRadius: "80px",
-            overflow: "hidden",
-            border: "6px solid #ffffff",
-            boxShadow: "0 25px 50px -12px rgba(0,0,0,0.15)",
-            background: "#7c3aed",
-            animationDelay: "1.5s",
-          }}
-          className="animate-float"
-        >
-          <Image
-            src="/marketing_developer.png"
-            alt="Branding Expert"
-            fill
-            sizes="160px"
-            style={{ objectFit: "cover" }}
-          />
-        </div>
-
-        {/* Capsule 3: Bottom-Right (Sky-Blue) */}
-        <div
-          style={{
-            position: "absolute",
-            left: "340px",
-            top: "300px",
-            width: "160px",
-            height: "260px",
-            borderRadius: "80px",
-            overflow: "hidden",
-            border: "6px solid #ffffff",
-            boxShadow: "0 25px 50px -12px rgba(0,0,0,0.15)",
-            background: "#0ea5e9",
-            animationDelay: "3s",
-          }}
-          className="animate-float"
-        >
-          <Image
-            src="/videographer.png"
-            alt="Design Specialist"
-            fill
-            sizes="160px"
-            style={{ objectFit: "cover" }}
-          />
-        </div>
-      </div>
+      {/* Background is now banner.png */}
 
       {/* Content */}
       <div
@@ -299,7 +154,7 @@ export default function Hero() {
                 fontWeight: 800,
                 lineHeight: 1.1,
                 marginBottom: "24px",
-                color: "#1a1a1a",
+                color: "#ffffff",
               }}
             >
               {["We", "are", "Helping", "\n", "to", "Build"].map((w, i) =>
@@ -326,10 +181,12 @@ export default function Hero() {
               </span>
             </h1>
 
-            <p style={{ color: "#666", fontSize: "1.1rem", lineHeight: 1.75, marginBottom: "36px", maxWidth: "520px" }}>
+            <p style={{ color: "#e5e5e5", fontSize: "1.1rem", lineHeight: 1.75, marginBottom: "36px", maxWidth: "520px" }}>
               Build Your Brand&apos;s Journey with Barndingo — your partner in
               Logo, Packaging, Brochure &amp; all things graphic design.
             </p>
+
+            {/* Mobile-only hero visual removed */}
 
             {/* CTA buttons */}
             <div style={{ display: "flex", flexWrap: "wrap", gap: "14px", marginBottom: "56px" }}>
@@ -357,16 +214,16 @@ export default function Hero() {
                   alignItems: "center",
                   gap: "8px",
                   padding: "14px 32px",
-                  border: "1.5px solid #d1d5db",
-                  color: "#333",
+                  border: "1.5px solid #ffffff",
+                  color: "#ffffff",
                   fontWeight: 600,
                   borderRadius: "999px",
                   fontSize: "15px",
                   transition: "border-color 0.2s, background 0.2s",
                 }}
-                className="hover:border-[#f58220] hover:bg-[#fff5eb]"
+                className="hover:border-[#f58220] hover:bg-[#f58220] hover:text-[#ffffff]"
               >
-                <Play size={15} fill="#333" /> Read More
+                <Play size={15} fill="#ffffff" /> Read More
               </Link>
             </div>
 
@@ -377,8 +234,8 @@ export default function Hero() {
             >
               {[{ value: "40,000+", label: "Projects Completed" }, { value: "35,000+", label: "Happy Clients" }, { value: "10+", label: "Years Experience" }].map((s) => (
                 <div key={s.label} style={{ borderLeft: "2px solid #f58220", paddingLeft: "10px", minWidth: 0 }}>
-                  <div style={{ fontSize: "clamp(1rem, 3vw, 1.55rem)", fontWeight: 800, color: "#1a1a1a", lineHeight: 1.1, whiteSpace: "nowrap" }}>{s.value}</div>
-                  <div style={{ fontSize: "clamp(10px, 2vw, 11px)", color: "#888", marginTop: "3px", fontWeight: 500 }}>{s.label}</div>
+                  <div style={{ fontSize: "clamp(1rem, 3vw, 1.55rem)", fontWeight: 800, color: "#ffffff", lineHeight: 1.1, whiteSpace: "nowrap" }}>{s.value}</div>
+                  <div style={{ fontSize: "clamp(10px, 2vw, 11px)", color: "#cbd5e1", marginTop: "3px", fontWeight: 500 }}>{s.label}</div>
                 </div>
               ))}
             </div>

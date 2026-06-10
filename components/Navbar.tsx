@@ -13,11 +13,11 @@ const navLinks = [
   { label: "Portfolio", href: "/portfolio" },
   { label: "Career", href: "/career" },
   { label: "Pricing", href: "/pricing" },
-  { label: "FAQ", href: "/#faq" },
+  { label: "FAQ", href: "/faq" },
   { label: "Contact", href: "/contact" },
 ];
 
-const DARK_HERO_ROUTES = ["/contact", "/blog", "/portfolio"];
+const DARK_HERO_ROUTES = ["/contact", "/blog", "/portfolio", "/about", "/services", "/career", "/pricing", "/faq"];
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -36,12 +36,13 @@ export default function Navbar() {
     };
   }, []);
 
-  const transparentText = isDarkHero ? "#fff" : "#333";
-  const transparentPhone = isDarkHero ? "rgba(255,255,255,0.85)" : "#555";
+  const isHome = pathname === "/";
+  const transparentText = (isHome || isDarkHero) ? "#fff" : "#333";
+  const transparentPhone = (isHome || isDarkHero) ? "rgba(255,255,255,0.85)" : "#555";
 
   const textColor = scrolled ? "#333" : transparentText;
   const phoneColor = scrolled ? "#555" : transparentPhone;
-  const logoFilter = !scrolled && isDarkHero ? "brightness(0) invert(1)" : "none";
+  const logoFilter = "none";
 
   return (
     <header

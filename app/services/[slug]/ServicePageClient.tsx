@@ -6,6 +6,7 @@ import { ChevronRight } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import type { ServiceMeta } from "@/lib/services-data";
+import { workImages } from "@/lib/work-images";
 
 const A = "#f58220"; // accent orange
 
@@ -215,6 +216,7 @@ function StandardLayout({ eyebrow, heading, intro, tags, stats, offeringsTitle, 
       </section>
 
       {/* Process timeline */}
+      {steps.length > 0 && (
       <section style={{ padding: "80px 0", background: "#fff" }}>
         <div className="site-wrap">
           <h2 style={{ fontSize: "clamp(1.4rem,2.5vw,2rem)", fontWeight: 800, color: "#1a1a1a", textAlign: "center", marginBottom: "56px" }}>
@@ -231,6 +233,7 @@ function StandardLayout({ eyebrow, heading, intro, tags, stats, offeringsTitle, 
           </div>
         </div>
       </section>
+      )}
     </>
   );
 }
@@ -570,20 +573,64 @@ const LAYOUTS: Record<string, React.FC> = {
     Object.entries(DESIGN_CONTENT).map(([slug, content]) => [
       slug,
       function DesignServiceLayout() {
-        return <StandardLayout {...content} />;
+        // Design pages drop the process timeline — the full work gallery follows instead.
+        return <StandardLayout {...content} steps={[]} />;
       },
     ])
   ),
 };
 
+/* ── Service slug → work folder (in lib/work-images manifest) ──── */
+const SERVICE_FOLDER: Record<string, string> = {
+  "logo-design": "Logo",
+  "stationery-design": "Stationary Design",
+  "banner-standee-design": "banner design",
+  "packaging-label-design": "packaging",
+  "menu-design": "menu",
+  "invitation-card-design": "invtations",
+  "tag-design": "tag design",
+  "brochure-design": "Brouchers & File",
+  "bag-design": "Bag Design",
+};
+
+/* ── Full work gallery — every image for this service ───────────── */
+function WorkGallery({ title, images }: { title: string; images: string[] }) {
+  if (!images.length) return null;
+  return (
+    // Continues the offerings section above (same light background) so the work
+    // sits under a single "{offeringsTitle}" heading — no duplicate heading here.
+    <section style={{ padding: "0 0 80px", background: "#f8f9fb" }}>
+      <div className="site-wrap">
+        <div style={{ columnGap: "18px" }} className="columns-1 sm:columns-2 lg:columns-3">
+          {images.map((src, i) => (
+            <div key={src} style={{ marginBottom: "18px", overflow: "hidden", background: "#0b0b0b", breakInside: "avoid" }} className="group">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={src}
+                alt={`${title} design ${i + 1} by Brandingo`}
+                loading="lazy"
+                style={{ width: "100%", height: "auto", display: "block", transition: "transform 0.5s ease" }}
+                className="group-hover:scale-105"
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ── Page shell ───────────────────────────────────────────────── */
 export default function ServicePageClient({ service }: { service: ServiceMeta }) {
   const Layout = LAYOUTS[service.slug];
+  const galleryFolder = SERVICE_FOLDER[service.slug];
+  const galleryImages = galleryFolder ? workImages[galleryFolder] ?? [] : [];
   return (
     <>
       <Navbar />
       <ServiceHero service={service} />
       {Layout ? <Layout /> : null}
+      <WorkGallery title={service.title.replace(/ Design$/, "")} images={galleryImages} />
       <Footer />
     </>
   );

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PortfolioGallery from "@/components/PortfolioGallery";
+import PageHero from "@/components/PageHero";
 
 export const metadata: Metadata = {
   title: "Our Portfolio | Brandingo",
@@ -16,6 +17,7 @@ export default function PortfolioPage() {
   return (
     <main>
       <Navbar />
+      <PageHero />
       <PortfolioGallery />
       <Footer />
     </main>

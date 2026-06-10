@@ -1,24 +1,24 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import About from "@/components/About";
+import FAQ from "@/components/FAQ";
 import PageHero from "@/components/PageHero";
 
 export const metadata: Metadata = {
-  title: "About Us | Brandingo",
+  title: "FAQ | Brandingo",
   description:
-    "Learn more about Brandingo, a leading branding, printing, and digital marketing agency with over 10 years of experience.",
+    "Answers to the most common questions about Brandingo's logo design, branding, printing and design services.",
   alternates: {
-    canonical: "https://jkbrandingindia.com/about",
+    canonical: "https://jkbrandingindia.com/faq",
   },
 };
 
-export default function AboutPage() {
+export default function FAQPage() {
   return (
     <main>
       <Navbar />
       <PageHero />
-      <About />
+      <FAQ />
       <Footer />
     </main>
   );

@@ -93,6 +93,7 @@ export default function FAQ() {
                 }}
               >
                 <button
+                  suppressHydrationWarning
                   onClick={() => setOpen(isOpen ? null : i)}
                   style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "16px", padding: "20px 24px", background: "none", border: "none", cursor: "pointer", textAlign: "left" }}
                 >

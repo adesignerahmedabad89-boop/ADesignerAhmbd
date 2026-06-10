@@ -18,14 +18,31 @@ const iBase: React.CSSProperties = { width: "100%", padding: "12px 16px", backgr
 
 export default function Contact() {
   const { ref, inView } = useInView({ threshold: 0.08, triggerOnce: true });
-  const [form, setForm] = useState({ name: "", email: "", phone: "", service: "", message: "" });
+  const [form, setForm] = useState({ name: "", email: "", phone: "", service: "", message: "", company: "" });
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState("");
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSent(true);
-    setForm({ name: "", email: "", phone: "", service: "", message: "" });
-    setTimeout(() => setSent(false), 3000);
+    setError("");
+    setSending(true);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.ok) throw new Error(data.error || "Something went wrong.");
+      setSent(true);
+      setForm({ name: "", email: "", phone: "", service: "", message: "", company: "" });
+      setTimeout(() => setSent(false), 4000);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Could not send your message.");
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -54,21 +71,21 @@ export default function Contact() {
               <div style={{ display: "grid", gap: "16px" }} className="sm:grid-cols-2">
                 <div>
                   <label style={{ display: "block", color: "#555", fontSize: "11px", fontWeight: 700, letterSpacing: "1px", textTransform: "uppercase", marginBottom: "6px" }}>Full Name</label>
-                  <input type="text" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} required placeholder="Your name" style={iBase} onFocus={e => (e.target.style.borderColor = "#f58220")} onBlur={e => (e.target.style.borderColor = "#e5e7eb")} />
+                  <input suppressHydrationWarning type="text" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} required placeholder="Your name" style={iBase} onFocus={e => (e.target.style.borderColor = "#f58220")} onBlur={e => (e.target.style.borderColor = "#e5e7eb")} />
                 </div>
                 <div>
                   <label style={{ display: "block", color: "#555", fontSize: "11px", fontWeight: 700, letterSpacing: "1px", textTransform: "uppercase", marginBottom: "6px" }}>Email</label>
-                  <input type="email" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} required placeholder="your@email.com" style={iBase} onFocus={e => (e.target.style.borderColor = "#f58220")} onBlur={e => (e.target.style.borderColor = "#e5e7eb")} />
+                  <input suppressHydrationWarning type="email" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} required placeholder="your@email.com" style={iBase} onFocus={e => (e.target.style.borderColor = "#f58220")} onBlur={e => (e.target.style.borderColor = "#e5e7eb")} />
                 </div>
               </div>
               <div style={{ display: "grid", gap: "16px" }} className="sm:grid-cols-2">
                 <div>
                   <label style={{ display: "block", color: "#555", fontSize: "11px", fontWeight: 700, letterSpacing: "1px", textTransform: "uppercase", marginBottom: "6px" }}>Phone</label>
-                  <input type="tel" value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })} placeholder="+91 00000 00000" style={iBase} onFocus={e => (e.target.style.borderColor = "#f58220")} onBlur={e => (e.target.style.borderColor = "#e5e7eb")} />
+                  <input suppressHydrationWarning type="tel" value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })} placeholder="+91 00000 00000" style={iBase} onFocus={e => (e.target.style.borderColor = "#f58220")} onBlur={e => (e.target.style.borderColor = "#e5e7eb")} />
                 </div>
                 <div>
                   <label style={{ display: "block", color: "#555", fontSize: "11px", fontWeight: 700, letterSpacing: "1px", textTransform: "uppercase", marginBottom: "6px" }}>Service</label>
-                  <select value={form.service} onChange={e => setForm({ ...form, service: e.target.value })} style={{ ...iBase, color: form.service ? "#1a1a1a" : "#aaa" }}>
+                  <select suppressHydrationWarning value={form.service} onChange={e => setForm({ ...form, service: e.target.value })} style={{ ...iBase, color: form.service ? "#1a1a1a" : "#aaa" }}>
                     <option value="">Select service</option>
                     <option value="logo">Logo Design</option>
                     <option value="stationery">Stationery Design</option>
@@ -84,11 +101,14 @@ export default function Contact() {
               </div>
               <div>
                 <label style={{ display: "block", color: "#555", fontSize: "11px", fontWeight: 700, letterSpacing: "1px", textTransform: "uppercase", marginBottom: "6px" }}>Message</label>
-                <textarea value={form.message} onChange={e => setForm({ ...form, message: e.target.value })} required rows={4} placeholder="Tell us about your project..." style={{ ...iBase, resize: "none" }} onFocus={e => (e.target.style.borderColor = "#f58220")} onBlur={e => (e.target.style.borderColor = "#e5e7eb")} />
+                <textarea suppressHydrationWarning value={form.message} onChange={e => setForm({ ...form, message: e.target.value })} required rows={4} placeholder="Tell us about your project..." style={{ ...iBase, resize: "none" }} onFocus={e => (e.target.style.borderColor = "#f58220")} onBlur={e => (e.target.style.borderColor = "#e5e7eb")} />
               </div>
-              <button type="submit" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", padding: "15px", borderRadius: "0", border: "none", background: sent ? "#22c55e" : "#f58220", color: "#fff", fontWeight: 700, fontSize: "15px", cursor: "pointer", transition: "background 0.2s" }}>
-                {sent ? "Message Sent!" : <><span>Send Message</span><Send size={16} /></>}
+              {/* Honeypot — hidden from users, catches bots */}
+              <input suppressHydrationWarning type="text" name="company" tabIndex={-1} autoComplete="off" value={form.company} onChange={e => setForm({ ...form, company: e.target.value })} style={{ position: "absolute", left: "-9999px", width: "1px", height: "1px", opacity: 0 }} aria-hidden="true" />
+              <button suppressHydrationWarning type="submit" disabled={sending} style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", padding: "15px", borderRadius: "0", border: "none", background: sent ? "#22c55e" : "#f58220", color: "#fff", fontWeight: 700, fontSize: "15px", cursor: sending ? "wait" : "pointer", opacity: sending ? 0.7 : 1, transition: "background 0.2s" }}>
+                {sent ? "Message Sent!" : sending ? "Sending..." : <><span>Send Message</span><Send size={16} /></>}
               </button>
+              {error && <p style={{ color: "#dc2626", fontSize: "13px", textAlign: "center" }}>{error}</p>}
             </form>
           </div>
 

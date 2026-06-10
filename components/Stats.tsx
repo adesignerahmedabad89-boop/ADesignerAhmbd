@@ -22,13 +22,12 @@ export default function Stats() {
       <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: "linear-gradient(90deg, transparent, #f58220, transparent)" }} />
 
       <div className="site-wrap">
-        <div style={{ display: "grid", gap: "14px" }} className="grid-cols-1 sm:grid-cols-3">
+        <div className="grid grid-cols-3 gap-2 sm:gap-4">
           {stats.map((stat, i) => (
             <div
               key={stat.label}
               style={{
                 textAlign: "center",
-                padding: "20px 14px",
                 borderRadius: "0",
                 background: "#fff",
                 border: "1px solid rgba(0,0,0,0.07)", opacity: inView ? 1 : 0,
@@ -37,34 +36,35 @@ export default function Stats() {
                 position: "relative",
                 overflow: "hidden",
               }}
-              className="card-hover"
+              className="card-hover px-2 py-3 sm:p-5"
             >
               {/* Bottom gold accent */}
-              <div style={{ position: "absolute", bottom: 0, left: "50%", transform: "translateX(-50%)", width: "40px", height: "3px", background: "#f58220", borderRadius: "2px 2px 0 0" }} />
+              <div
+                style={{ position: "absolute", bottom: 0, left: "50%", transform: "translateX(-50%)", width: "40px", height: "3px", background: "#f58220", borderRadius: "2px 2px 0 0" }}
+                className="hidden sm:block"
+              />
 
               <div
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  width: "48px",
-                  height: "48px",
                   borderRadius: "0",
                   background: "#fff5eb",
-                  marginBottom: "14px",
                 }}
+                className="w-8 h-8 mb-2 sm:w-12 sm:h-12 sm:mb-4"
               >
-                <stat.icon size={20} style={{ color: "#f58220" }} />
+                <stat.icon className="w-4 h-4 sm:w-5 sm:h-5" style={{ color: "#f58220" }} />
               </div>
 
-              <div style={{ fontSize: "clamp(1.9rem, 5vw, 2.5rem)", fontWeight: 800, color: "#1a1a1a", lineHeight: 1 }}>
+              <div style={{ fontWeight: 800, color: "#1a1a1a", lineHeight: 1 }} className="text-[1.1rem] sm:text-[1.9rem] lg:text-[2.5rem]">
                 {inView ? (
                   <CountUp end={stat.value} duration={2.5} delay={i * 0.2} suffix={stat.suffix} />
                 ) : (
                   <span>0{stat.suffix}</span>
                 )}
               </div>
-              <p style={{ color: "#888", fontSize: "12px", fontWeight: 500, marginTop: "8px" }}>{stat.label}</p>
+              <p style={{ color: "#888", fontWeight: 500 }} className="text-[9px] sm:text-[12px] mt-1 sm:mt-2">{stat.label}</p>
             </div>
           ))}
         </div>

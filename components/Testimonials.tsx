@@ -98,15 +98,15 @@ export default function Testimonials() {
 
         {/* Controls */}
         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "16px", marginTop: "36px" }}>
-          <button onClick={prev} style={{ width: "42px", height: "42px", borderRadius: "50%", border: "1.5px solid #e5e7eb", background: "#fff", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", color: "#888", transition: "all 0.2s" }} className="hover:border-[#f58220] hover:text-[#f58220]">
+          <button suppressHydrationWarning onClick={prev} style={{ width: "42px", height: "42px", borderRadius: "50%", border: "1.5px solid #e5e7eb", background: "#fff", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", color: "#888", transition: "all 0.2s" }} className="hover:border-[#f58220] hover:text-[#f58220]">
             <ChevronLeft size={18} />
           </button>
           <div style={{ display: "flex", gap: "8px" }}>
             {testimonials.map((_, i) => (
-              <button key={i} onClick={() => setCurrent(i)} style={{ borderRadius: "999px", border: "none", cursor: "pointer", transition: "all 0.3s", width: i === current ? "24px" : "8px", height: "8px", background: i === current ? "#f58220" : "#d1d5db" }} />
+              <button suppressHydrationWarning key={i} onClick={() => setCurrent(i)} style={{ borderRadius: "999px", border: "none", cursor: "pointer", transition: "all 0.3s", width: i === current ? "24px" : "8px", height: "8px", background: i === current ? "#f58220" : "#d1d5db" }} />
             ))}
           </div>
-          <button onClick={next} style={{ width: "42px", height: "42px", borderRadius: "50%", border: "1.5px solid #e5e7eb", background: "#fff", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", color: "#888", transition: "all 0.2s" }} className="hover:border-[#f58220] hover:text-[#f58220]">
+          <button suppressHydrationWarning onClick={next} style={{ width: "42px", height: "42px", borderRadius: "50%", border: "1.5px solid #e5e7eb", background: "#fff", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", color: "#888", transition: "all 0.2s" }} className="hover:border-[#f58220] hover:text-[#f58220]">
             <ChevronRight size={18} />
           </button>
         </div>

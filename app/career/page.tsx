@@ -3,6 +3,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import PageHero from "@/components/PageHero";
 
 export const metadata: Metadata = {
   title: "Careers | Brandingo",
@@ -17,11 +18,12 @@ export default function CareerPage() {
   return (
     <main>
       <Navbar />
+      <PageHero />
       <div
         style={{
-          paddingTop: "120px",
+          paddingTop: "80px",
           paddingBottom: "100px",
-          minHeight: "70vh",
+          minHeight: "40vh",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",

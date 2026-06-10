@@ -34,7 +34,8 @@ export default function About({ showValues = true }: { showValues?: boolean }) {
       />
 
       <div className="site-wrap">
-        <div style={{ display: "grid", gap: "64px", alignItems: "center" }} className="lg:grid-cols-2">
+        {/* ── Desktop layout: image left, text right ── */}
+        <div className="hidden lg:grid grid-cols-2 gap-16 items-center">
           <div
             style={{
               opacity: inView ? 1 : 0,
@@ -110,34 +111,18 @@ export default function About({ showValues = true }: { showValues?: boolean }) {
           >
             <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "16px" }}>
               <div style={{ width: "32px", height: "2px", background: "#f58220" }} />
-              <span
-                style={{
-                  color: "#f58220",
-                  fontSize: "12px",
-                  fontWeight: 700,
-                  letterSpacing: "3px",
-                  textTransform: "uppercase",
-                }}
-              >
+              <span style={{ color: "#f58220", fontSize: "12px", fontWeight: 700, letterSpacing: "3px", textTransform: "uppercase" }}>
                 Who We Are
               </span>
             </div>
-            <h2
-              style={{
-                fontSize: "clamp(1.8rem,3.5vw,2.8rem)",
-                fontWeight: 800,
-                color: "#1a1a1a",
-                lineHeight: 1.2,
-                marginBottom: "20px",
-              }}
-            >
+            <h2 style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)", fontWeight: 800, color: "#1a1a1a", lineHeight: 1.2, marginBottom: "20px" }}>
               Crafting Your Vision, <span style={{ color: "#f58220" }}>Building Your Success</span>
             </h2>
             <p style={{ color: "#555", fontSize: "1rem", lineHeight: 1.8, marginBottom: "16px" }}>
-              Established in 2016, Brandingo was built on a foundation of over a decade of expertise in Designing, Printing, and Brand Development. Founded by the Patel & Sharma brothers, we bring a unique blend of global vision and local expertise to help transform emerging businesses into unforgettable brands.
+              Established in 2016, Brandingo was built on a foundation of over a decade of expertise in Designing, Printing, and Brand Development. Founded by the Patel &amp; Sharma brothers, we bring a unique blend of global vision and local expertise to help transform emerging businesses into unforgettable brands.
             </p>
             <p style={{ color: "#777", lineHeight: 1.8, marginBottom: "28px", fontSize: "0.95rem" }}>
-              Our objective is simple yet powerful: to make every customer feel "WoW." By blending
+              Our objective is simple yet powerful: to make every customer feel &quot;WoW.&quot; By blending
               strategic thinking with flawless creative execution, we deliver result-driven branding
               solutions that truly resonate with your audience and elevate your market presence.
             </p>
@@ -153,6 +138,64 @@ export default function About({ showValues = true }: { showValues?: boolean }) {
               ))}
             </ul>
           </div>
+        </div>
+
+        {/* ── Mobile / tablet layout: centered intro, photo + text row, centered why-choose ── */}
+        <div
+          className="lg:hidden"
+          style={{
+            opacity: inView ? 1 : 0,
+            transform: inView ? "translateY(0)" : "translateY(30px)",
+            transition: "opacity 0.7s ease, transform 0.7s ease",
+          }}
+        >
+          {/* Eyebrow — centered */}
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "10px", marginBottom: "14px" }}>
+            <div style={{ width: "28px", height: "2px", background: "#f58220" }} />
+            <span style={{ color: "#f58220", fontSize: "12px", fontWeight: 700, letterSpacing: "3px", textTransform: "uppercase" }}>
+              Who We Are
+            </span>
+            <div style={{ width: "28px", height: "2px", background: "#f58220" }} />
+          </div>
+
+          {/* Heading — centered */}
+          <h2 style={{ fontSize: "clamp(1.4rem, 6vw, 2rem)", fontWeight: 800, color: "#1a1a1a", lineHeight: 1.25, marginBottom: "16px", textAlign: "center" }}>
+            Crafting Your Vision, <span style={{ color: "#f58220" }}>Building Your Success</span>
+          </h2>
+
+          {/* Intro paragraphs — full width, centered */}
+          <p style={{ color: "#555", fontSize: "14px", lineHeight: 1.8, marginBottom: "16px", textAlign: "center" }}>
+            Established in 2016, Brandingo was built on a foundation of over a decade of expertise in Designing, Printing, and Brand Development. Founded by the Patel &amp; Sharma brothers, we bring a unique blend of global vision and local expertise to help transform emerging businesses into unforgettable brands.
+          </p>
+          <p style={{ color: "#777", fontSize: "13.5px", lineHeight: 1.8, marginBottom: "32px", textAlign: "center" }}>
+            Our objective is simple yet powerful: to make every customer feel &quot;WoW.&quot; By blending strategic thinking with flawless creative execution, we deliver result-driven branding solutions that truly resonate with your audience and elevate your market presence.
+          </p>
+
+          {/* Photo — full width, below the paragraphs */}
+          <div style={{ position: "relative", width: "100%", height: "240px", overflow: "hidden", border: "1px solid rgba(0,0,0,0.07)", marginBottom: "36px" }}>
+            <Image
+              src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=900&q=80"
+              alt="The Brandingo team collaborating"
+              fill
+              sizes="100vw"
+              style={{ objectFit: "cover" }}
+            />
+            <div style={{ position: "absolute", bottom: 0, left: 0, background: "#f58220", padding: "10px 16px", textAlign: "center" }}>
+              <div style={{ fontSize: "1.4rem", fontWeight: 900, color: "#fff", lineHeight: 1 }}>10+</div>
+              <div style={{ fontSize: "9px", fontWeight: 700, color: "#fff", textTransform: "uppercase", letterSpacing: "0.05em" }}>Years Experience</div>
+            </div>
+          </div>
+
+          {/* Why Choose Us — centered */}
+          <h3 style={{ fontSize: "1.15rem", fontWeight: 800, color: "#1a1a1a", textAlign: "center", marginBottom: "16px" }}>Why Choose Us?</h3>
+          <ul style={{ display: "flex", flexDirection: "column", gap: "10px", maxWidth: "440px", margin: "0 auto" }}>
+            {highlights.map((item) => (
+              <li key={item} style={{ display: "flex", alignItems: "flex-start", gap: "8px" }}>
+                <CheckCircle2 size={15} style={{ color: "#f58220", flexShrink: 0, marginTop: "2px" }} />
+                <span style={{ color: "#555", fontSize: "13px", lineHeight: 1.6 }}>{item}</span>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
 

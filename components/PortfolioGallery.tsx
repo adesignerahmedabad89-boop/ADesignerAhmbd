@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useInView } from "react-intersection-observer";
-import { ChevronRight, ArrowUpRight, X, ZoomIn } from "lucide-react";
+import { ChevronRight, ArrowUpRight, X, ZoomIn, ArrowUp } from "lucide-react";
 
 import { portfolioItems, portfolioCategories } from "@/lib/portfolio-data";
 
@@ -65,8 +65,17 @@ function BrandStory() {
 export default function PortfolioGallery() {
   const [active, setActive] = useState("All");
   const [lightbox, setLightbox] = useState<string | null>(null);
+  const [showTop, setShowTop] = useState(false);
   const { ref, inView } = useInView({ threshold: 0.02, triggerOnce: true });
   const filtered = active === "All" ? portfolioItems : portfolioItems.filter(p => p.category === active);
+
+  // Show the scroll-to-top button once the user has scrolled down a bit.
+  useEffect(() => {
+    const onScroll = () => setShowTop(window.scrollY > 600);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   // Close the lightbox on Escape + lock body scroll while it's open.
   useEffect(() => {
@@ -198,6 +207,36 @@ export default function PortfolioGallery() {
           />
         </div>
       )}
+
+      {/* Scroll to top */}
+      <button
+        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        aria-label="Back to top"
+        style={{
+          position: "fixed",
+          right: "24px",
+          bottom: "24px",
+          zIndex: 60,
+          width: "48px",
+          height: "48px",
+          borderRadius: "50%",
+          background: A,
+          color: "#fff",
+          border: "none",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          cursor: "pointer",
+          boxShadow: "0 8px 24px rgba(245,130,32,0.4)",
+          opacity: showTop ? 1 : 0,
+          transform: showTop ? "translateY(0)" : "translateY(16px)",
+          pointerEvents: showTop ? "auto" : "none",
+          transition: "opacity 0.3s ease, transform 0.3s ease, background 0.2s ease",
+        }}
+        className="hover:bg-[#ff933c]"
+      >
+        <ArrowUp size={22} />
+      </button>
     </>
   );
 }

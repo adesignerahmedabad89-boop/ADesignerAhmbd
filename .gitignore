@@ -12,7 +12,7 @@
 
 # testing
 /coverage
-
+hero.txt
 # next.js
 /.next/
 /out/

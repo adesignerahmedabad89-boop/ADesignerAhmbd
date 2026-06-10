@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Pricing from "@/components/Pricing";
+import PageHero from "@/components/PageHero";
 
 export const metadata: Metadata = {
   title: "Pricing | Brandigo",
@@ -16,9 +17,8 @@ export default function PricingPage() {
   return (
     <main>
       <Navbar />
-      <div style={{ paddingTop: "80px" }}>
-        <Pricing />
-      </div>
+      <PageHero />
+      <Pricing />
       <Footer />
     </main>
   );

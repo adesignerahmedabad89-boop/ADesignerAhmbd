@@ -1,10 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import PageHero from "@/components/PageHero";
 import { MapPin, Phone, Mail, Send, ChevronRight } from "lucide-react";
 
 const branches = [
@@ -20,36 +19,43 @@ const SocialYoutube = () => <svg viewBox="0 0 24 24" fill="currentColor" width="
 const iBase: React.CSSProperties = { width: "100%", padding: "13px 16px", background: "#f9fafb", border: "1.5px solid #e5e7eb", borderRadius: "0", fontSize: "14px", color: "#1a1a1a", outline: "none", transition: "border-color 0.2s" };
 
 export default function ContactClient() {
-  const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
+  const [form, setForm] = useState({ name: "", email: "", phone: "", message: "", company: "" });
   const [sent, setSent] = useState(false);
-  const submit = (e: React.FormEvent) => { e.preventDefault(); setSent(true); setForm({ name: "", email: "", phone: "", message: "" }); setTimeout(() => setSent(false), 3500); };
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState("");
+  const submit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+    setSending(true);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.ok) throw new Error(data.error || "Something went wrong.");
+      setSent(true);
+      setForm({ name: "", email: "", phone: "", message: "", company: "" });
+      setTimeout(() => setSent(false), 4000);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Could not send your message.");
+    } finally {
+      setSending(false);
+    }
+  };
 
   return (
     <>
       <Navbar />
 
-      {/* HERO */}
-      <section style={{ position: "relative", height: "480px", display: "flex", alignItems: "flex-end", paddingBottom: "56px", overflow: "hidden" }}>
-        <Image src="https://jkbrandingindia.com/wp-content/uploads/2024/10/Team-8.jpg" alt="Contact" fill style={{ objectFit: "cover", objectPosition: "center 25%" }} priority unoptimized />
-        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg, rgba(11,60,93,0.85) 0%, rgba(245,130,32,0.85) 100%)" }} />
-        <div style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(rgba(255,255,255,0.12) 1px, transparent 1px)", backgroundSize: "32px 32px" }} />
-        <div className="site-wrap" style={{ position: "relative", zIndex: 10 }}>
-          <h1 style={{ fontSize: "clamp(2.2rem,5vw,3.6rem)", fontWeight: 900, color: "#fff", marginBottom: "12px", lineHeight: 1.1 }}>
-            <span style={{ color: "#f58220" }}>C</span>ontac<span style={{ color: "#f58220" }}>t</span>
-          </h1>
-          <nav style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-            <Link href="/" style={{ color: "rgba(255,255,255,0.7)", fontSize: "13px", fontWeight: 500 }} className="hover:text-white transition-colors">Home</Link>
-            <ChevronRight size={13} style={{ color: "rgba(255,255,255,0.45)" }} />
-            <span style={{ color: "#fff", fontSize: "13px", fontWeight: 600 }}>Contact</span>
-          </nav>
-        </div>
-      </section>
+      <PageHero />
 
       {/* INFO CARDS */}
       <section style={{ background: "#f8f9fb", padding: "72px 0" }}>
         <div className="site-wrap">
           <div style={{ display: "grid", gap: "20px", marginBottom: "20px" }} className="sm:grid-cols-2">
-            {[{ icon: Phone, label: "Phone", value: "+91 99799 92804", href: "tel:+919979992804" }, { icon: Mail, label: "Email", value: "[EMAIL_ADDRESS]", href: "mailto:[EMAIL_ADDRESS]" }].map(({ icon: Icon, label, value, href }) => (
+            {[{ icon: Phone, label: "Phone", value: "+91 99799 92804", href: "tel:+919979992804" }, { icon: Mail, label: "Email", value: "sales@brandingo.in", href: "mailto:Sales@brandingo.in" }].map(({ icon: Icon, label, value, href }) => (
               <a key={label} href={href} style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "10px", padding: "36px 24px", background: "#fff", border: "1px solid rgba(0,0,0,0.07)", textDecoration: "none", transition: "border-color 0.2s", textAlign: "center" }} className="hover:border-[#f58220]/50 card-hover">
                 <div style={{ width: "52px", height: "52px", borderRadius: "50%", background: "#fff5eb", display: "flex", alignItems: "center", justifyContent: "center" }}><Icon size={22} style={{ color: "#f58220" }} /></div>
                 <div>
@@ -122,9 +128,12 @@ export default function ContactClient() {
                   <input type="checkbox" id="robot" style={{ width: "18px", height: "18px", accentColor: "#f58220", cursor: "pointer" }} />
                   <label htmlFor="robot" style={{ color: "#555", fontSize: "13px", cursor: "pointer", flex: 1 }}>I&apos;m not a robot</label>
                 </div>
-                <button type="submit" style={{ width: "100%", padding: "15px", background: sent ? "#22c55e" : "#f58220", color: "#fff", border: "none", fontWeight: 800, fontSize: "15px", letterSpacing: "1px", textTransform: "uppercase", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", transition: "background 0.2s" }}>
-                  {sent ? "Message Sent!" : <><span>SEND</span><Send size={16} /></>}
+                {/* Honeypot — hidden from users, catches bots */}
+                <input type="text" name="company" tabIndex={-1} autoComplete="off" value={form.company} onChange={e => setForm({ ...form, company: e.target.value })} style={{ position: "absolute", left: "-9999px", width: "1px", height: "1px", opacity: 0 }} aria-hidden="true" />
+                <button type="submit" disabled={sending} style={{ width: "100%", padding: "15px", background: sent ? "#22c55e" : "#f58220", color: "#fff", border: "none", fontWeight: 800, fontSize: "15px", letterSpacing: "1px", textTransform: "uppercase", cursor: sending ? "wait" : "pointer", opacity: sending ? 0.7 : 1, display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", transition: "background 0.2s" }}>
+                  {sent ? "Message Sent!" : sending ? "SENDING..." : <><span>SEND</span><Send size={16} /></>}
                 </button>
+                {error && <p style={{ color: "#dc2626", fontSize: "13px", textAlign: "center" }}>{error}</p>}
               </form>
             </div>
           </div>
