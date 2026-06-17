@@ -10,7 +10,12 @@ const ANIMATED_WORDS = [
   "Printing",
 ];
 
-export default function PageHero({ title = "" }: { title?: string }) {
+interface PageHeroProps {
+  title?: string;
+  bgImage?: string;
+}
+
+export default function PageHero({ title = "", bgImage }: PageHeroProps) {
   const [text, setText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
   const [loopNum, setLoopNum] = useState(0);
@@ -46,10 +51,13 @@ export default function PageHero({ title = "" }: { title?: string }) {
     return () => clearTimeout(timer);
   }, [text, isDeleting, loopNum, typingSpeed]);
 
+  const defaultBgClass = "bg-[linear-gradient(rgba(11,60,93,0.88),rgba(0,69,99,0.85)),url('/heroforpagesmobile.png')] md:bg-[linear-gradient(rgba(11,60,93,0.88),rgba(0,69,99,0.85)),url('/heroforpagestablet.png')] lg:bg-[linear-gradient(rgba(11,60,93,0.88),rgba(0,69,99,0.85)),url('/heroforpages.png')]";
+
   return (
     <section
-      className="bg-[linear-gradient(rgba(11,60,93,0.88),rgba(0,69,99,0.85)),url('/heroforpagesmobile.png')] md:bg-[linear-gradient(rgba(11,60,93,0.88),rgba(0,69,99,0.85)),url('/heroforpagestablet.png')] lg:bg-[linear-gradient(rgba(11,60,93,0.88),rgba(0,69,99,0.85)),url('/heroforpages.png')] bg-center bg-cover bg-no-repeat"
+      className={`${!bgImage ? defaultBgClass : ""} bg-center bg-cover bg-no-repeat`}
       style={{
+        backgroundImage: bgImage ? `linear-gradient(rgba(11,60,93,0.88),rgba(0,69,99,0.85)), url('${bgImage}')` : undefined,
         minHeight: "45vh",
         paddingTop: "90px",
         display: "flex",

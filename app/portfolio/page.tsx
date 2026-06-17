@@ -17,7 +17,7 @@ export default function PortfolioPage() {
   return (
     <main>
       <Navbar />
-      <PageHero />
+      <PageHero bgImage="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?auto=format&fit=crop&w=2000&q=80" />
       <PortfolioGallery />
       <Footer />
     </main>

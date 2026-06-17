@@ -17,7 +17,7 @@ export default function PricingPage() {
   return (
     <main>
       <Navbar />
-      <PageHero />
+      <PageHero bgImage="https://images.unsplash.com/photo-1553729459-efe14ef6055d?auto=format&fit=crop&w=2000&q=80" />
       <Pricing />
       <Footer />
     </main>

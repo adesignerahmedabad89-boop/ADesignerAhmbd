@@ -49,7 +49,7 @@ export default function ContactClient() {
     <>
       <Navbar />
 
-      <PageHero />
+      <PageHero bgImage="https://images.unsplash.com/photo-1516387938699-a93567ec168e?auto=format&fit=crop&w=2000&q=80" />
 
       {/* INFO CARDS */}
       <section style={{ background: "#f8f9fb", padding: "72px 0" }}>

@@ -18,7 +18,7 @@ export default function CareerPage() {
   return (
     <main>
       <Navbar />
-      <PageHero />
+      <PageHero bgImage="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=2000&q=80" />
       <div
         style={{
           paddingTop: "80px",

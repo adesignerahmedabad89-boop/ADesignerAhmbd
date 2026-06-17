@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans, Geist } from "next/font/google";
 import SplashCursor from "@/components/SplashCursor";
 import ImageProtection from "@/components/ImageProtection";
@@ -12,6 +12,13 @@ export const metadata: Metadata = {
   title: "Brandingo | Build Your Brand's Journey",
   description:
     "Brandingo - expert graphic design services: logo, stationery, banner & standee, packaging & label, menu, invitation card, tag, and brochure design.",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 };
 
 export default function RootLayout({
