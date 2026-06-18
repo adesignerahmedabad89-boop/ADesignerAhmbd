@@ -5,6 +5,7 @@ import Stats from "@/components/Stats";
 import About from "@/components/About";
 import Services from "@/components/Services";
 import WhyChooseUs from "@/components/WhyChooseUs";
+import HomeCTA from "@/components/HomeCTA";
 import Pricing from "@/components/Pricing";
 import Testimonials from "@/components/Testimonials";
 import FAQ from "@/components/FAQ";
@@ -21,6 +22,7 @@ export default function Home() {
       <About showValues={false} />
       <Services />
       <WhyChooseUs />
+      <HomeCTA />
       <Pricing />
       <Testimonials />
       <FAQ />

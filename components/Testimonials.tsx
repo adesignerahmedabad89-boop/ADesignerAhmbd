@@ -1,8 +1,15 @@
 "use client";
 
 import { useInView } from "react-intersection-observer";
-import { useEffect, useState } from "react";
-import { Quote, ChevronLeft, ChevronRight, Star } from "lucide-react";
+import { Quote, Star, ChevronLeft, ChevronRight } from "lucide-react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import { useRef, useState } from "react";
+import type { Swiper as SwiperType } from "swiper";
+
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
 
 const testimonials = [
   { name: "Firdous Ansari", role: "Client", image: "https://jkbrandingindia.com/wp-content/uploads/2024/10/Team-8.jpg", text: "Was a bit hesitant to pay & get a logo designed online but then this team helped me till i was completely satisfied..very enthusiastic,hardworking and excellent with their work!! Thanks once again for delivering it within the time given..Great Work!!", rating: 5 },
@@ -13,31 +20,14 @@ const testimonials = [
 ];
 
 export default function Testimonials() {
-  const [current, setCurrent] = useState(0);
-  const [paused, setPaused] = useState(false);
   const { ref, inView } = useInView({ threshold: 0.1, triggerOnce: true });
-  const prev = () => setCurrent(i => (i - 1 + testimonials.length) % testimonials.length);
-  const next = () => setCurrent(i => (i + 1) % testimonials.length);
-
-  // Auto-advance to the next testimonial; pauses on hover and when off-screen.
-  useEffect(() => {
-    if (paused || !inView) return;
-    const id = setInterval(() => {
-      setCurrent(i => (i + 1) % testimonials.length);
-    }, 4000);
-    return () => clearInterval(id);
-  }, [paused, inView]);
-  const getVisible = () => {
-    const p = (current - 1 + testimonials.length) % testimonials.length;
-    const n = (current + 1) % testimonials.length;
-    return [p, current, n];
-  };
+  const [swiperInstance, setSwiperInstance] = useState<SwiperType | null>(null);
 
   return (
-    <section id="testimonials" ref={ref} onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} style={{ padding: "100px 0", background: "linear-gradient(rgba(11,60,93,0.92), rgba(0,69,99,0.95)), url('https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=2000&q=80')", backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed", position: "relative", overflow: "hidden" }}>
+    <section id="testimonials" ref={ref} style={{ padding: "100px 0", background: "linear-gradient(rgba(11,60,93,0.92), rgba(0,69,99,0.95)), url('https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=2000&q=80')", backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed", position: "relative", overflow: "hidden" }}>
       
       <div className="site-wrap" style={{ position: "relative", zIndex: 10 }}>
-        <div style={{ textAlign: "center", marginBottom: "60px", opacity: inView ? 1 : 0, transform: inView ? "translateY(0)" : "translateY(24px)", transition: "opacity 0.6s ease, transform 0.6s ease" }}>
+        <div style={{ textAlign: "center", marginBottom: "50px", opacity: inView ? 1 : 0, transform: inView ? "translateY(0)" : "translateY(24px)", transition: "opacity 0.6s ease, transform 0.6s ease" }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "10px", marginBottom: "14px" }}>
             <div style={{ width: "32px", height: "2px", background: "#f58220" }} />
             <span style={{ color: "#f58220", fontSize: "12px", fontWeight: 700, letterSpacing: "3px", textTransform: "uppercase" }}>Client Reviews</span>
@@ -51,65 +41,81 @@ export default function Testimonials() {
           </p>
         </div>
 
-        {/* Desktop: 3 cards */}
-        <div key={current} style={{ opacity: inView ? 1 : 0, transition: "opacity 0.6s ease 0.2s" }} className="hidden md:grid md:grid-cols-3 gap-5">
-          {getVisible().map((idx, pos) => {
-            const t = testimonials[idx];
-            const isCenter = pos === 1;
-            return (
-              <div key={`${idx}-${pos}`} className="testimonial-flip" style={{ animationDelay: `${pos * 0.12}s`, padding: "32px 28px", borderRadius: "0", border: isCenter ? "2px solid rgba(245,130,32,0.4)" : "1px solid rgba(0,0,0,0.07)", background: isCenter ? "#fff" : "#fcfcfc", opacity: isCenter ? 1 : 0.65 }}>
-                <Quote size={28} style={{ color: isCenter ? "#f58220" : "#ddd", marginBottom: "16px", transform: "scaleX(-1)" }} />
-                <p style={{ color: "#555", fontSize: "14px", lineHeight: 1.75, marginBottom: "20px" }}>&ldquo;{t.text}&rdquo;</p>
-                <div style={{ display: "flex", gap: "3px", marginBottom: "16px" }}>
-                  {Array.from({ length: t.rating }).map((_, i) => <Star key={i} size={13} style={{ color: "#f58220" }} fill="#f58220" />)}
-                </div>
-                <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={t.image} alt={t.name} style={{ width: "44px", height: "44px", borderRadius: "50%", objectFit: "cover", border: isCenter ? "2px solid #f58220" : "2px solid #eee" }} />
-                  <div>
-                    <p style={{ fontWeight: 700, fontSize: "14px", color: "#1a1a1a" }}>{t.name}</p>
-                    <p style={{ fontSize: "12px", color: "#f58220", fontWeight: 500 }}>{t.role}</p>
+        <div style={{ opacity: inView ? 1 : 0, transition: "opacity 0.6s ease 0.2s", position: "relative", paddingBottom: "60px" }}>
+          <Swiper
+            modules={[Autoplay, Pagination, Navigation]}
+            spaceBetween={24}
+            slidesPerView={1}
+            breakpoints={{
+              768: { slidesPerView: 2 },
+              1024: { slidesPerView: 3 }
+            }}
+            autoplay={{ delay: 4000, disableOnInteraction: false, pauseOnMouseEnter: true }}
+            pagination={{ clickable: true, el: '.custom-pagination' }}
+            loop={true}
+            onSwiper={setSwiperInstance}
+            className="pb-4"
+          >
+            {testimonials.map((t, idx) => (
+              <SwiperSlide key={idx} style={{ height: "auto" }}>
+                <div style={{ height: "100%", padding: "36px 28px", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.08)", background: "#fff", display: "flex", flexDirection: "column" }}>
+                  <Quote size={32} style={{ color: "rgba(245,130,32,0.3)", marginBottom: "16px", transform: "scaleX(-1)" }} />
+                  <p style={{ color: "#444", fontSize: "15px", lineHeight: 1.75, marginBottom: "24px", flexGrow: 1 }}>&ldquo;{t.text}&rdquo;</p>
+                  <div style={{ display: "flex", gap: "3px", marginBottom: "16px" }}>
+                    {Array.from({ length: t.rating }).map((_, i) => <Star key={i} size={14} style={{ color: "#f58220" }} fill="#f58220" />)}
+                  </div>
+                  <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={t.image} alt={t.name} style={{ width: "50px", height: "50px", borderRadius: "50%", objectFit: "cover", border: "2px solid rgba(245,130,32,0.5)" }} />
+                    <div>
+                      <p style={{ fontWeight: 700, fontSize: "15px", color: "#111" }}>{t.name}</p>
+                      <p style={{ fontSize: "13px", color: "#f58220", fontWeight: 600 }}>{t.role}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
-        </div>
-
-        {/* Mobile: single card */}
-        <div className="md:hidden" style={{ opacity: inView ? 1 : 0, transition: "opacity 0.6s ease 0.2s" }}>
-          <div key={current} className="testimonial-flip" style={{ padding: "32px 24px", borderRadius: "0", border: "2px solid rgba(245,130,32,0.3)", background: "#fff" }}>
-            <Quote size={26} style={{ color: "#f58220", marginBottom: "14px", transform: "scaleX(-1)" }} />
-            <p style={{ color: "#555", fontSize: "14px", lineHeight: 1.75, marginBottom: "20px" }}>&ldquo;{testimonials[current].text}&rdquo;</p>
-            <div style={{ display: "flex", gap: "3px", marginBottom: "14px" }}>
-              {Array.from({ length: testimonials[current].rating }).map((_, i) => <Star key={i} size={13} style={{ color: "#f58220" }} fill="#f58220" />)}
-            </div>
-            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={testimonials[current].image} alt={testimonials[current].name} style={{ width: "42px", height: "42px", borderRadius: "50%", objectFit: "cover", border: "2px solid #f58220" }} />
-              <div>
-                <p style={{ fontWeight: 700, fontSize: "14px", color: "#1a1a1a" }}>{testimonials[current].name}</p>
-                <p style={{ fontSize: "12px", color: "#f58220" }}>{testimonials[current].role}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Controls */}
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "16px", marginTop: "36px" }}>
-          <button suppressHydrationWarning onClick={prev} style={{ width: "42px", height: "42px", borderRadius: "50%", border: "1.5px solid #e5e7eb", background: "#fff", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", color: "#888", transition: "all 0.2s" }} className="hover:border-[#f58220] hover:text-[#f58220]">
-            <ChevronLeft size={18} />
-          </button>
-          <div style={{ display: "flex", gap: "8px" }}>
-            {testimonials.map((_, i) => (
-              <button suppressHydrationWarning key={i} onClick={() => setCurrent(i)} style={{ borderRadius: "999px", border: "none", cursor: "pointer", transition: "all 0.3s", width: i === current ? "24px" : "8px", height: "8px", background: i === current ? "#f58220" : "#d1d5db" }} />
+              </SwiperSlide>
             ))}
+          </Swiper>
+
+          {/* Custom Controls */}
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "20px", position: "absolute", bottom: "0", left: "0", right: "0", zIndex: 10 }}>
+            <button 
+              onClick={() => swiperInstance?.slidePrev()} 
+              style={{ width: "42px", height: "42px", borderRadius: "50%", border: "1px solid rgba(255,255,255,0.2)", background: "rgba(255,255,255,0.05)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", color: "#fff", transition: "all 0.3s" }} 
+              className="hover:bg-[#f58220] hover:border-[#f58220]"
+            >
+              <ChevronLeft size={20} />
+            </button>
+            
+            <div className="custom-pagination" style={{ display: "flex", gap: "8px", justifyContent: "center", alignItems: "center" }} />
+            
+            <button 
+              onClick={() => swiperInstance?.slideNext()} 
+              style={{ width: "42px", height: "42px", borderRadius: "50%", border: "1px solid rgba(255,255,255,0.2)", background: "rgba(255,255,255,0.05)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", color: "#fff", transition: "all 0.3s" }} 
+              className="hover:bg-[#f58220] hover:border-[#f58220]"
+            >
+              <ChevronRight size={20} />
+            </button>
           </div>
-          <button suppressHydrationWarning onClick={next} style={{ width: "42px", height: "42px", borderRadius: "50%", border: "1.5px solid #e5e7eb", background: "#fff", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", color: "#888", transition: "all 0.2s" }} className="hover:border-[#f58220] hover:text-[#f58220]">
-            <ChevronRight size={18} />
-          </button>
+          
         </div>
       </div>
+      
+      <style dangerouslySetInnerHTML={{__html: `
+        .custom-pagination .swiper-pagination-bullet {
+          width: 8px;
+          height: 8px;
+          background: rgba(255,255,255,0.3);
+          opacity: 1;
+          border-radius: 999px;
+          transition: all 0.3s ease;
+          margin: 0 !important;
+        }
+        .custom-pagination .swiper-pagination-bullet-active {
+          width: 24px;
+          background: #f58220;
+        }
+      `}} />
     </section>
   );
 }

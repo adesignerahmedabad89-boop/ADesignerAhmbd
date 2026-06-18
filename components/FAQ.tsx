@@ -6,39 +6,39 @@ import { Plus } from "lucide-react";
 
 const faqs = [
   {
-    q: "WHEN DOES MY PROJECT START?",
+    q: "When does my project start?",
     a: "Work on your project starts soon after we get your logo request along with the advance payment.",
   },
   {
-    q: "HOW MANY CONCEPTS DO YOU OFFER?",
+    q: "How many concepts do you offer?",
     a: "We offer you with 3 or 6 initial design concepts depending on the package that you choose.",
   },
   {
-    q: "WHAT FILE FORMATS ARE SUPPLIED BY YOU?",
+    q: "What file formats are supplied by you?",
     a: "For your convenience, we provide the designs in the following file formats: PNG JPG PDF AI or CDR.",
   },
   {
-    q: "DO YOU PROVIDE A VECTOR FORMAT FOR LOGO?",
+    q: "Do you provide a vector format for logo?",
     a: "Yes, we do provide EPS / .AI/.CDR files which are all vector files.",
   },
   {
-    q: "HOW DO YOU DELIVER LOGO DESIGN FILES TO YOUR CLIENT?",
+    q: "How do you deliver logo design files to your client?",
     a: "We communicate via mail. We will send you the files via mail or send you a link to download the files if the file size is too big. We also use Drop box or wetransfer.com in such cases to send heavy files.",
   },
   {
-    q: "DO YOU PROVIDE MONEY BACK GUARANTEE?",
+    q: "Do you provide money back guarantee?",
     a: "No. Our services are not available with a money guarantee. However, we always assure that the needs and expectations of our clients are always fulfilled. We tirelessly work on your designing till the time you are satisfied with the results.",
   },
   {
-    q: "WHAT ARE THE OTHER DESIGN SERVICES THAT YOU OFFER?",
+    q: "What are the other design services that you offer?",
     a: "We have vast experience in designing different types of stationery which include brochures, business cards, flyers, banners, posters, signage, billboard and more. Our designers first understand the goals and objectives of your business then produce designs that perfectly meet your business requirements.",
   },
   {
-    q: "DO YOU PROVIDE PRINTING SERVICES?",
+    q: "Do you provide printing services?",
     a: "No. We provide the print ready files which can be printed by any local printers.",
   },
   {
-    q: "I HAVE SOME MORE QUESTIONS WHICH I CANNOT FIND HERE. HOW DO I GET THOSE ANSWERS?",
+    q: "I have some more questions which I cannot find here. How do I get those answers?",
     a: "You can ask your question anytime by filling in the “Your requirement” field in the form in ‘’Contact Us‘’ page. We will get back to you with our answers.",
   },
   {

@@ -5,15 +5,15 @@ import Link from "next/link";
 
 const plans = ["Basic Bliss Package", "Premium Prestige Package", "Ultimate Elegance Package"];
 
-const rows: { label: string; values: string[]; price?: boolean }[] = [
+const rows: { label: string; values: string[]; price?: boolean; highlight?: boolean }[] = [
   { label: "INR", values: ["₹1,999", "₹4,999", "₹9,999"], price: true },
-  { label: "Logo Design Samples/Concept", values: ["5", "5", "5"] },
+  { label: "Logo Design Samples/Concept", values: ["5", "5", "5"], highlight: true },
   { label: "Design Revisions/Changes Option in the Sample", values: ["Unlimited", "Unlimited", "Unlimited"] },
-  { label: "Designers Working on Your Project", values: ["1", "2", "2"] },
+  { label: "Designers Working on Your Project", values: ["1", "2", "2"], highlight: true },
   { label: "Mode of Communication", values: ["Whatsapp / Messenger", "Whatsapp / Messenger", "Whatsapp / Messenger"] },
   { label: "Logo Design Duration", values: ["3-4 working days", "5-7 working days", "5-7 working days"] },
   { label: "Logo Design Sample Format", values: ["JPG", "JPG", "JPG"] },
-  { label: "Logo Source File", values: ["CDR, PDF, PNG, JPG, AI", "CDR, PDF, PNG, JPG, AI", "CDR, PDF, PNG, JPG, AI"] },
+  { label: "Logo Source File", values: ["CDR, PDF, PNG, JPG, AI", "CDR, PDF, PNG, JPG, AI", "CDR, PDF, PNG, JPG, AI"], highlight: true },
   { label: "Free Logo Animation Video", values: ["2", "3", "5"] },
   { label: "Stationery design (Business card, letterhead & Envelope) (2 sample of each)", values: ["No", "Yes", "Yes"] },
   { label: "Festival Post", values: ["No", "No", "100 QTY"] },
@@ -89,7 +89,7 @@ export default function Pricing() {
           <table style={{ width: "100%", borderCollapse: "collapse", minWidth: "780px" }}>
             <thead>
               <tr>
-                <th style={{ padding: "26px 18px", background: "#2b2b2b", color: "#fff", fontSize: "16px", fontWeight: 800, textAlign: "center", width: "31%" }}>
+                <th style={{ padding: "26px 18px", background: "#0b3c5d", color: "#fff", fontSize: "16px", fontWeight: 800, textAlign: "center", width: "31%" }}>
                   Features
                 </th>
                 {plans.map((p, i) => (
@@ -97,7 +97,7 @@ export default function Pricing() {
                     key={p}
                     style={{
                       padding: "26px 18px",
-                      background: i === 1 ? "#0b3c5d" : "#2b2b2b",
+                      background: "#0b3c5d",
                       color: "#fff",
                       fontSize: "17px",
                       fontWeight: 800,
@@ -136,6 +136,7 @@ export default function Pricing() {
                         ...(row.price ? { fontSize: "1.4rem", fontWeight: 800, color: "#1a1a1a" } : {}),
                         ...(v === "Yes" ? { color: "#16a34a", fontWeight: 700 } : {}),
                         ...(v === "No" ? { color: "#bbb", fontWeight: 600 } : {}),
+                        ...(row.highlight ? { color: "#f58220", fontWeight: 800 } : {}),
                         background: ci === 1 ? "rgba(11,60,93,0.03)" : "transparent",
                       }}
                     >
@@ -209,7 +210,7 @@ export default function Pricing() {
                   transition: `opacity 0.55s ease ${0.18 + ci * 0.12}s, transform 0.65s ease ${0.18 + ci * 0.12}s`,
                 }}
               >
-                <div style={{ padding: "22px 18px", background: popular ? "#0b3c5d" : "#2b2b2b", color: "#fff", textAlign: "center" }}>
+                <div style={{ padding: "22px 18px", background: "#0b3c5d", color: "#fff", textAlign: "center" }}>
                   <div style={{ fontSize: "17px", fontWeight: 800, lineHeight: 1.3 }}>{plan}</div>
                   {popular && (
                     <span style={{ display: "block", marginTop: "6px", fontSize: "10px", fontWeight: 700, letterSpacing: "2px", color: "#f58220" }}>
@@ -226,8 +227,8 @@ export default function Pricing() {
                         <span
                           style={{
                             fontSize: row.price ? "1.4rem" : "13px",
-                            fontWeight: row.price ? 800 : 600,
-                            color: row.price ? "#1a1a1a" : v === "Yes" ? "#16a34a" : v === "No" ? "#bbb" : "#555",
+                            fontWeight: row.price ? 800 : (row.highlight ? 800 : 600),
+                            color: row.price ? "#1a1a1a" : v === "Yes" ? "#16a34a" : v === "No" ? "#bbb" : (row.highlight ? "#f58220" : "#555"),
                             textAlign: "right",
                             whiteSpace: "nowrap",
                             flexShrink: 0,
