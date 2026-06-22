@@ -2,14 +2,8 @@
 
 import { useInView } from "react-intersection-observer";
 import Image from "next/image";
-import { CheckCircle2, Eye, Target, Heart } from "lucide-react";
+import { Eye, Target, Heart } from "lucide-react";
 
-const highlights = [
-  "A Decade of Excellence: 10 years of proven experience in design, print, and brand strategy.",
-  "Founded on Trust: Led by the Patel & Sharma brothers with a dedicated team of creatives.",
-  'The "WoW" Factor: Driven by a singular mission to exceed client expectations every single time.',
-  "Strategic & Result-Driven: We don't just design logos; we build legal, trademark-ready brand identities that drive business growth.",
-];
 
 export default function About({ showValues = true }: { showValues?: boolean }) {
   const { ref, inView } = useInView({ threshold: 0.1, triggerOnce: true });
@@ -104,31 +98,7 @@ export default function About({ showValues = true }: { showValues?: boolean }) {
                   style={{ objectFit: "cover" }}
                 />
               </div>
-              <div
-                style={{
-                  position: "absolute",
-                  bottom: "-20px",
-                  right: "-20px",
-                  background: "#f58220",
-                  borderRadius: "0",
-                  padding: "18px 22px",
-                  textAlign: "center",
-                }}
-              >
-                <div style={{ fontSize: "2rem", fontWeight: 900, color: "#fff", lineHeight: 1 }}>10+</div>
-                <div
-                  style={{
-                    fontSize: "11px",
-                    fontWeight: 700,
-                    color: "#fff",
-                    textTransform: "uppercase",
-                    letterSpacing: "0.05em",
-                    marginTop: "2px",
-                  }}
-                >
-                  Years Experience
-                </div>
-              </div>
+
             </div>
           </div>
 
@@ -156,17 +126,7 @@ export default function About({ showValues = true }: { showValues?: boolean }) {
               strategic thinking with flawless creative execution, we deliver result-driven branding
               solutions that truly resonate with your audience and elevate your market presence.
             </p>
-            <div style={{ marginBottom: "18px" }}>
-              <h3 style={{ fontSize: "1rem", fontWeight: 800, color: "#1a1a1a" }}>Why Choose Us?</h3>
-            </div>
-            <ul style={{ display: "flex", flexDirection: "column", gap: "10px", marginBottom: "36px" }}>
-              {highlights.map((item) => (
-                <li key={item} style={{ display: "flex", alignItems: "flex-start", gap: "10px" }}>
-                  <CheckCircle2 size={17} style={{ color: "#f58220", flexShrink: 0, marginTop: "2px" }} />
-                  <span style={{ color: "#555", fontSize: "14px", lineHeight: 1.6 }}>{item}</span>
-                </li>
-              ))}
-            </ul>
+
           </div>
         </div>
 
@@ -210,22 +170,10 @@ export default function About({ showValues = true }: { showValues?: boolean }) {
               sizes="100vw"
               style={{ objectFit: "cover" }}
             />
-            <div style={{ position: "absolute", bottom: 0, left: 0, background: "#f58220", padding: "10px 16px", textAlign: "center" }}>
-              <div style={{ fontSize: "1.4rem", fontWeight: 900, color: "#fff", lineHeight: 1 }}>10+</div>
-              <div style={{ fontSize: "9px", fontWeight: 700, color: "#fff", textTransform: "uppercase", letterSpacing: "0.05em" }}>Years Experience</div>
-            </div>
+
           </div>
 
-          {/* Why Choose Us — centered */}
-          <h3 style={{ fontSize: "1.15rem", fontWeight: 800, color: "#1a1a1a", textAlign: "center", marginBottom: "16px" }}>Why Choose Us?</h3>
-          <ul style={{ display: "flex", flexDirection: "column", gap: "10px", maxWidth: "440px", margin: "0 auto" }}>
-            {highlights.map((item) => (
-              <li key={item} style={{ display: "flex", alignItems: "flex-start", gap: "8px" }}>
-                <CheckCircle2 size={15} style={{ color: "#f58220", flexShrink: 0, marginTop: "2px" }} />
-                <span style={{ color: "#555", fontSize: "13px", lineHeight: 1.6 }}>{item}</span>
-              </li>
-            ))}
-          </ul>
+
         </div>
       </div>
 
