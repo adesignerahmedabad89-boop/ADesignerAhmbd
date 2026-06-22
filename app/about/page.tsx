@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import About from "@/components/About";
 import PageHero from "@/components/PageHero";
 import ClientLogos from "@/components/ClientLogos";
+import Testimonials from "@/components/Testimonials";
 
 export const metadata: Metadata = {
   title: "About Us | Brandingo",
@@ -20,8 +21,10 @@ export default function AboutPage() {
       <Navbar />
       <PageHero bgImage="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=2000&q=80" />
       <About />
+      <Testimonials />
       <ClientLogos />
       <Footer />
     </main>
   );
 }
+

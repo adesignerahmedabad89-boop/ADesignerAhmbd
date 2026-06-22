@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useInView } from "react-intersection-observer";
 import Image from "next/image";
 import Link from "next/link";
@@ -31,13 +32,16 @@ const cardEntrance = [
 ];
 
 export default function Services() {
+  const [isHoveredAll, setIsHoveredAll] = useState(false);
+  const [isHoveredFree, setIsHoveredFree] = useState(false);
+
   // triggerOnce: false → re-animates every time the section scrolls into view
   const { ref, inView } = useInView({ threshold: 0.15, triggerOnce: false });
 
   return (
-    <section id="services" ref={ref} style={{ padding: "100px 0", background: "#ffffff", position: "relative", overflow: "hidden" }}>
+    <section id="services" ref={ref} style={{ padding: "100px 0", background: "#08090c", position: "relative", overflow: "hidden" }}>
       {/* Background watermark */}
-      <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", fontSize: "240px", fontWeight: 900, color: "rgba(0,0,0,0.015)", whiteSpace: "nowrap", pointerEvents: "none", userSelect: "none", letterSpacing: "-0.05em" }}>
+      <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", fontSize: "240px", fontWeight: 900, color: "rgba(255,255,255,0.015)", whiteSpace: "nowrap", pointerEvents: "none", userSelect: "none", letterSpacing: "-0.05em" }}>
         SERVICES
       </div>
 
@@ -58,10 +62,10 @@ export default function Services() {
             <span style={{ color: "#f58220", fontSize: "12px", fontWeight: 700, letterSpacing: "3px", textTransform: "uppercase" }}>What We Do</span>
             <div style={{ width: "32px", height: "2px", background: "#f58220" }} />
           </div>
-          <h2 style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)", fontWeight: 800, color: "#1a1a1a", marginBottom: "14px" }}>
+          <h2 style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)", fontWeight: 800, color: "#ffffff", marginBottom: "14px" }}>
             Our <span style={{ color: "#f58220" }}>Services</span>
           </h2>
-          <p style={{ color: "#777", maxWidth: "520px", margin: "0 auto", lineHeight: 1.75 }}>
+          <p style={{ color: "#94a3b8", maxWidth: "520px", margin: "0 auto", lineHeight: 1.75 }}>
             Comprehensive branding and marketing solutions tailored to elevate your business.
           </p>
         </div>
@@ -76,8 +80,8 @@ export default function Services() {
                 display: "flex",
                 flexDirection: "column",
                 borderRadius: "0",
-                background: "#fff",
-                border: "1px solid rgba(0,0,0,0.07)", position: "relative",
+                background: "#111216",
+                border: "1px solid rgba(255,255,255,0.06)", position: "relative",
                 overflow: "hidden",
                 opacity: inView ? 1 : 0,
                 transform: inView ? "translate(0,0) rotate(0deg) scale(1)" : cardEntrance[i % cardEntrance.length],
@@ -96,10 +100,10 @@ export default function Services() {
               </div>
 
               <div style={{ padding: "26px 28px 28px", display: "flex", flexDirection: "column", flex: 1 }}>
-                <h3 style={{ fontSize: "16px", fontWeight: 700, color: "#1a1a1a", marginBottom: "10px", transition: "color 0.2s" }} className="group-hover:text-[#f58220]">
+                <h3 style={{ fontSize: "16px", fontWeight: 700, color: "#ffffff", marginBottom: "10px", transition: "color 0.2s" }} className="group-hover:text-[#f58220]">
                   {service.title}
                 </h3>
-                <p style={{ color: "#888", fontSize: "13.5px", lineHeight: 1.7, marginBottom: "18px", flex: 1 }}>
+                <p style={{ color: "#94a3b8", fontSize: "13.5px", lineHeight: 1.7, marginBottom: "18px", flex: 1 }}>
                   {service.description}
                 </p>
 
@@ -115,6 +119,8 @@ export default function Services() {
         <div style={{ textAlign: "center", marginTop: "52px", display: "flex", justifyContent: "center", gap: "16px", flexWrap: "wrap" }}>
           <Link
             href="/services"
+            onMouseEnter={() => setIsHoveredAll(true)}
+            onMouseLeave={() => setIsHoveredAll(false)}
             style={{
               padding: "14px 32px",
               display: "inline-flex",
@@ -123,14 +129,18 @@ export default function Services() {
               borderRadius: "999px",
               fontWeight: 700,
               fontSize: "14px",
-              transition: "background 0.2s, color 0.2s, border-color 0.2s",
+              transition: "all 0.25s ease",
+              border: "2px solid #f58220",
+              background: isHoveredAll ? "#f58220" : "transparent",
+              color: isHoveredAll ? "#ffffff" : "#f58220",
             }}
-            className="border-2 border-[#f58220] bg-white text-[#f58220] hover:bg-[#f58220] hover:text-white"
           >
             View All Services <ArrowRight size={16} />
           </Link>
           <Link
             href="/contact"
+            onMouseEnter={() => setIsHoveredFree(true)}
+            onMouseLeave={() => setIsHoveredFree(false)}
             style={{
               padding: "14px 32px",
               display: "inline-flex",
@@ -139,9 +149,11 @@ export default function Services() {
               borderRadius: "999px",
               fontWeight: 700,
               fontSize: "14px",
-              transition: "background 0.2s, color 0.2s, border-color 0.2s",
+              transition: "all 0.25s ease",
+              border: "2px solid #f58220",
+              background: isHoveredFree ? "transparent" : "#f58220",
+              color: isHoveredFree ? "#f58220" : "#ffffff",
             }}
-            className="border-2 border-[#f58220] bg-[#f58220] text-white hover:bg-white hover:text-[#f58220]"
           >
             Get a Free Consultation <ArrowRight size={16} />
           </Link>

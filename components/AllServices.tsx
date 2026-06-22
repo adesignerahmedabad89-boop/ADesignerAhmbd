@@ -24,7 +24,7 @@ export default function AllServices() {
   const { ref, inView } = useInView({ threshold: 0.04, triggerOnce: true });
 
   return (
-    <section ref={ref} style={{ padding: "100px 0", background: "#ffffff", position: "relative", overflow: "hidden" }}>
+    <section ref={ref} style={{ padding: "100px 0", background: "#08090c", position: "relative", overflow: "hidden" }}>
       <div className="site-wrap">
         {/* Header */}
         <div style={{ textAlign: "center", marginBottom: "64px", opacity: inView ? 1 : 0, transform: inView ? "translateY(0)" : "translateY(24px)", transition: "opacity 0.6s ease, transform 0.6s ease" }}>
@@ -33,10 +33,10 @@ export default function AllServices() {
             <span style={{ color: "#f58220", fontSize: "12px", fontWeight: 700, letterSpacing: "3px", textTransform: "uppercase" }}>What We Do</span>
             <div style={{ width: "32px", height: "2px", background: "#f58220" }} />
           </div>
-          <h2 style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)", fontWeight: 800, color: "#1a1a1a", marginBottom: "14px" }}>
+          <h2 style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)", fontWeight: 800, color: "#ffffff", marginBottom: "14px" }}>
             Our <span style={{ color: "#f58220" }}>Services</span>
           </h2>
-          <p style={{ color: "#777", maxWidth: "560px", margin: "0 auto", lineHeight: 1.75 }}>
+          <p style={{ color: "#94a3b8", maxWidth: "560px", margin: "0 auto", lineHeight: 1.75 }}>
             Comprehensive branding, web and marketing solutions tailored to bring your brand to life — pick what your business needs.
           </p>
         </div>
@@ -47,8 +47,8 @@ export default function AllServices() {
             <div
               key={s.title}
               style={{
-                background: "#fff",
-                border: "1px solid rgba(0,0,0,0.07)",
+                background: "#111216",
+                border: "1px solid rgba(255,255,255,0.06)",
                 overflow: "hidden",
                 display: "flex",
                 flexDirection: "column",
@@ -62,8 +62,8 @@ export default function AllServices() {
                 <Image src={s.img} alt={s.title} fill sizes="(max-width: 640px) 100vw, 380px" style={{ objectFit: "cover", transition: "transform 0.5s ease" }} className="group-hover:scale-110" />
               </div>
               <div style={{ padding: "24px 26px 28px", display: "flex", flexDirection: "column", flex: 1 }}>
-                <h3 style={{ fontWeight: 700, color: "#1a1a1a", fontSize: "16px", marginBottom: "8px" }} className="group-hover:text-[#f58220]">{s.title}</h3>
-                <p style={{ color: "#888", fontSize: "13.5px", lineHeight: 1.7, flex: 1, marginBottom: "18px" }}>{s.desc}</p>
+                <h3 style={{ fontWeight: 700, color: "#ffffff", fontSize: "16px", marginBottom: "8px" }} className="group-hover:text-[#f58220]">{s.title}</h3>
+                <p style={{ color: "#94a3b8", fontSize: "13.5px", lineHeight: 1.7, flex: 1, marginBottom: "18px" }}>{s.desc}</p>
                 <Link
                   href={s.href}
                   style={{
