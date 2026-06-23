@@ -95,7 +95,7 @@ export default function Hero() {
         }}
       >
         <source
-          src="https://videos.pexels.com/video-files/3129671/3129671-hd_1920_1080_30fps.mp4"
+          src="https://public-assets.content-platform.envatousercontent.com/ad6f98f0-ec18-413b-9c3f-1355c191c3d0/66385907-c807-4a7a-8e26-37b757c28c18/ad6f98f0-ec18-413b-9c3f-1355c191c3d0/preview_540p_crf22_higher_quality.mp4"
           type="video/mp4"
         />
       </video>
