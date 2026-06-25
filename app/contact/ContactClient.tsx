@@ -7,8 +7,8 @@ import PageHero from "@/components/PageHero";
 import { MapPin, Phone, Mail, Send, ChevronRight } from "lucide-react";
 
 const branches = [
-  { label: "Head Office", city: "Ahmedabad", address: "607, Iconic Shyamal, Shyamal Cross Roads, 132 Feet Ring Rd, Shyamal, Ahmedabad, Gujarat 380015", phone: "+91 99799 92804" },
-  { label: "Banglore Branch", city: "Bengaluru", address: "Shanti Apartments, Behind Indian Bike Showroom, Bhaskaran Rd,  Bengaluru, Karnataka 560042" },
+  { label: "Head Office", city: "Ahmedabad", address: "607, Iconic Shyamal, Shyamal Cross Roads, 132 Feet Ring Rd, Shyamal, Ahmedabad, Gujarat 380015", phone: "+91 99799 92804", mapUrl: "https://maps.app.goo.gl/QHnofgohkDA459Hj9" },
+  { label: "Banglore Branch", city: "Bengaluru", address: "Shanti Apartments, Behind Indian Bike Showroom, Bhaskaran Rd,  Bengaluru, Karnataka 560042", mapUrl: "https://maps.google.com/?q=Shanti+Apartments,+Behind+Indian+Bike+Showroom,+Bhaskaran+Rd,++Bengaluru,+Karnataka+560042" },
 ];
 
 const SocialFacebook = () => <svg viewBox="0 0 24 24" fill="currentColor" width="17" height="17"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" /></svg>;
@@ -20,7 +20,7 @@ const socialLinks = [
   { Icon: SocialFacebook, href: "https://www.facebook.com/brandingo.logomaker" },
   { Icon: SocialLinkedin, href: "https://www.linkedin.com/company/brandingoindia/" },
   { Icon: SocialInstagram, href: "https://www.instagram.com/logoworld.brandingo" },
-  { Icon: SocialYoutube, href: "#" }
+  { Icon: SocialYoutube, href: "https://www.youtube.com/@BRANDINGO-Designer" }
 ];
 
 const iBase: React.CSSProperties = { width: "100%", padding: "13px 16px", background: "#f9fafb", border: "1.5px solid #e5e7eb", borderRadius: "0", fontSize: "14px", color: "#1a1a1a", outline: "none", transition: "border-color 0.2s" };
@@ -74,11 +74,11 @@ export default function ContactClient() {
           </div>
           <div style={{ display: "grid", gap: "20px" }} className="sm:grid-cols-2 lg:grid-cols-3">
             {branches.map(b => (
-              <div key={b.city} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "10px", padding: "36px 24px", background: "#fff", border: "1px solid rgba(0,0,0,0.07)", textAlign: "center", transition: "border-color 0.2s" }} className="hover:border-[#f58220]/50 card-hover">
+              <a key={b.city} href={b.mapUrl} target="_blank" rel="noopener noreferrer" style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "10px", padding: "36px 24px", background: "#fff", border: "1px solid rgba(0,0,0,0.07)", textAlign: "center", transition: "border-color 0.2s", textDecoration: "none" }} className="hover:border-[#f58220]/50 card-hover">
                 <div style={{ width: "52px", height: "52px", borderRadius: "50%", background: "#fff5eb", display: "flex", alignItems: "center", justifyContent: "center" }}><MapPin size={22} style={{ color: "#f58220" }} /></div>
                 <p style={{ fontWeight: 800, color: "#1a1a1a", fontSize: "15px" }}>{b.label}</p>
                 <p style={{ color: "#777", fontSize: "13px", lineHeight: 1.7 }}>{b.address}</p>
-              </div>
+              </a>
             ))}
           </div>
         </div>

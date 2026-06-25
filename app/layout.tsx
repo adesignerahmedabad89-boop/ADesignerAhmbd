@@ -1,11 +1,7 @@
 import type { Metadata, Viewport } from "next";
-import { Plus_Jakarta_Sans, Geist } from "next/font/google";
 import ImageProtection from "@/components/ImageProtection";
 import "./globals.css";
-import { cn } from "@/lib/utils";
 import Script from "next/script";
-
-const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata: Metadata = {
   title: "Brandingo | Build Your Brand's Journey",
@@ -18,13 +14,18 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
-};
+ };
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={cn("font-sans", geist.variable)}>
+    <html lang="en" className="font-sans">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Geist:wght@100..900&display=swap" rel="stylesheet" />
+      </head>
       <body suppressHydrationWarning>
         <ImageProtection />
         <Script id="meta-pixel" strategy="afterInteractive">

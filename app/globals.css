@@ -9,7 +9,7 @@
   --color-brand-orange: #f58220;
   --color-brand-orange-hover: #ff933c;
   --color-brand-orange-light: #fff5eb;
-  --font-sans: var(--font-sans), 'Plus Jakarta Sans', 'Segoe UI', system-ui, sans-serif;
+  --font-sans: 'Geist', 'Plus Jakarta Sans', 'Segoe UI', system-ui, sans-serif;
 }
 
 * {

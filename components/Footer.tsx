@@ -22,7 +22,7 @@ const socialLinks = [
   { Icon: SocialFacebook, href: "https://www.facebook.com/brandingo.logomaker" },
   { Icon: SocialLinkedin, href: "https://www.linkedin.com/company/brandingoindia/" },
   { Icon: SocialInstagram, href: "https://www.instagram.com/logoworld.brandingo" },
-  { Icon: SocialYoutube, href: "#" }
+  { Icon: SocialYoutube, href: "https://www.youtube.com/@BRANDINGO-Designer" }
 ];
 
 const quickLinks = [
@@ -110,9 +110,9 @@ export default function Footer() {
                   <MapPin size={14} style={{ color: "#f58220", flexShrink: 0, marginTop: "2px" }} />
                   <div>
                     <p style={{ color: "#fff", fontSize: "11px", fontWeight: 600, marginBottom: "2px" }}>Ahmedabad (Head Office)</p>
-                    <span style={{ color: "rgba(255,255,255,0.4)", fontSize: "13px", lineHeight: 1.65 }}>
+                    <a href="https://maps.app.goo.gl/QHnofgohkDA459Hj9" target="_blank" rel="noopener noreferrer" style={{ color: "rgba(255,255,255,0.4)", fontSize: "13px", lineHeight: 1.65, transition: "color 0.2s" }} className="hover:text-[#f58220]">
                       607, Iconic Shyamal, Shyamal Cross Roads, 132 Feet Ring Rd, Shyamal, Ahmedabad, Gujarat 380015
-                    </span>
+                    </a>
                   </div>
                 </li>
                 <li style={{ display: "flex", gap: "10px" }}>
