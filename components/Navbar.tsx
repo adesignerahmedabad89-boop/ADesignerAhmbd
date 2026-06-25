@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
@@ -17,31 +17,12 @@ const navLinks = [
   { label: "Contact", href: "/contact" },
 ];
 
-const DARK_HERO_ROUTES = ["/contact", "/blog", "/portfolio", "/about", "/services", "/career", "/pricing", "/faq"];
-
 export default function Navbar() {
   const pathname = usePathname();
-  const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const isDarkHero = DARK_HERO_ROUTES.some((r) => pathname.startsWith(r));
-
-  useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 40);
-    const id = requestAnimationFrame(handler);
-    window.addEventListener("scroll", handler, { passive: true });
-    return () => {
-      cancelAnimationFrame(id);
-      window.removeEventListener("scroll", handler);
-    };
-  }, []);
-
-  const isHome = pathname === "/";
-  const transparentText = (isHome || isDarkHero) ? "#fff" : "#333";
-  const transparentPhone = (isHome || isDarkHero) ? "rgba(255,255,255,0.85)" : "#555";
-
-  const textColor = scrolled ? "#333" : transparentText;
-  const phoneColor = scrolled ? "#555" : transparentPhone;
+  const textColor = "#333";
+  const phoneColor = "#555";
   const logoFilter = "none";
 
   return (
@@ -52,11 +33,10 @@ export default function Navbar() {
         left: 0,
         right: 0,
         zIndex: 50,
-        background: scrolled ? "rgba(255,255,255,0.95)" : "transparent",
-        backdropFilter: scrolled ? "blur(16px)" : "none",
-        boxShadow: scrolled ? "0 2px 20px rgba(0,0,0,0.08)" : "none",
-        borderBottom: scrolled ? "1px solid rgba(0,0,0,0.06)" : "none",
-        transition: "background 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease",
+        background: "#ffffff",
+        boxShadow: "0 2px 20px rgba(0,0,0,0.08)",
+        borderBottom: "1px solid rgba(0,0,0,0.06)",
+        transition: "background 0.3s ease, box-shadow 0.3s ease",
       }}
     >
       <div className="site-wrap">

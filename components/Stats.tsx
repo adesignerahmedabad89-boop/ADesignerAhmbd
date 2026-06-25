@@ -6,8 +6,8 @@ import { Briefcase, Users, Clock } from "lucide-react";
 
 const stats = [
   { icon: Clock, value: 10, suffix: "+", label: "Years of Experience" },
-  { icon: Briefcase, value: 40000, suffix: "+", label: "Projects Completed" },
-  { icon: Users, value: 35000, suffix: "+", label: "Happy Clients" }
+  { icon: Briefcase, value: 5000, suffix: "+", label: "Projects Completed" },
+  { icon: Users, value: 4200, suffix: "+", label: "Happy Clients" }
 ];
 
 export default function Stats() {
