@@ -3,20 +3,19 @@
 import { motion } from "framer-motion";
 
 const logos = [
-  { src: "https://granth.in/wp-content/uploads/2025/06/IDFC.svg", alt: "IDFC FIRST Bank" },
-  { src: "https://granth.in/wp-content/uploads/2025/08/Granth-Main-Clients-Logo.zip-2.svg", alt: "Welspun" },
-  { src: "https://granth.in/wp-content/uploads/2025/08/adani.svg", alt: "Adani" },
-  { src: "https://granth.in/wp-content/uploads/2025/06/Fleet-1.svg", alt: "Fleet Management" },
-  { src: "https://granth.in/wp-content/uploads/2025/04/SAGILITY-1.webp", alt: "Sagility" },
-  { src: "https://granth.in/wp-content/uploads/2025/06/uplers.svg", alt: "Uplers" },
-  { src: "https://granth.in/wp-content/uploads/2025/08/Granth-Main-Clients-Logo.zip-7.svg", alt: "Volkswagen" },
-  { src: "https://granth.in/wp-content/uploads/2025/08/hyfun-2.svg", alt: "Hyfun" },
-  { src: "https://granth.in/wp-content/uploads/2025/08/Corona-150x90-1.svg", alt: "Corona" },
-  { src: "https://granth.in/wp-content/uploads/2025/08/Granth-Main-Clients-Logo.zip-10.svg", alt: "Rasna" },
-  { src: "https://granth.in/wp-content/uploads/2025/08/Granth-Main-Clients-Logo.zip-11.svg", alt: "ShareChat" },
-  { src: "https://granth.in/wp-content/uploads/2025/08/two-brothers-1-1.svg", alt: "Two Brothers" },
-  { src: "https://granth.in/wp-content/uploads/2025/08/Granth-Main-Clients-Logo.zip-13.svg", alt: "Mygate" },
-  { src: "https://granth.in/wp-content/uploads/2025/08/Granth-Main-Clients-Logo.zip-14.svg", alt: "Sahaj" },
+  { src: "/logos/idfc.svg", alt: "IDFC FIRST Bank", style: { transform: "scale(0.85)" } },
+  { src: "/logos/welspun.svg", alt: "Welspun", style: { transform: "scale(1.15)" } },
+  { src: "/logos/adani.svg", alt: "Adani", style: { transform: "scale(1.1)" } },
+  { src: "/logos/fleet.svg", alt: "Fleet Management", style: { transform: "scale(1.1)" } },
+  { src: "/logos/sagility.webp", alt: "Sagility", style: { transform: "scale(1.5)" } },
+  { src: "/logos/uplers.svg", alt: "Uplers", style: { transform: "scale(1.1)" } },
+  { src: "/logos/volkswagen.svg", alt: "Volkswagen", style: { transform: "scale(1.3)" } },
+  { src: "/logos/hyfun.svg", alt: "Hyfun", style: { transform: "scale(1.2)" } },
+  { src: "/logos/corona.svg", alt: "Corona", style: { transform: "scale(1.2)" } },
+  { src: "/logos/rasna.svg", alt: "Rasna", style: { transform: "scale(1.2)" } },
+  { src: "/logos/two-brothers.svg", alt: "Two Brothers", style: { transform: "scale(1.3)" } },
+  { src: "/logos/mygate.svg", alt: "Mygate", style: { transform: "scale(1.2)" } },
+  { src: "/logos/sahaj.svg", alt: "Sahaj", style: { transform: "scale(1.2)" } },
 ];
 
 const track = [...logos, ...logos, ...logos];
@@ -65,20 +64,26 @@ export default function ClientLogos() {
               key={i}
               style={{
                 flexShrink: 0,
-                height: "45px",
-                width: "140px",
+                height: "50px",
+                width: "150px",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 transition: "transform 0.3s ease",
               }}
-              className="hover:scale-110 cursor-pointer"
+              className="hover:scale-105 cursor-pointer"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={logo.src}
                 alt={logo.alt}
-                style={{ maxHeight: "38px", maxWidth: "120px", objectFit: "contain" }}
+                style={{
+                  maxHeight: "42px",
+                  maxWidth: "130px",
+                  objectFit: "contain",
+                  transition: "all 0.3s ease",
+                  ...logo.style,
+                }}
                 loading="lazy"
               />
             </div>
