@@ -55,7 +55,7 @@ export async function POST(request: Request) {
     auth: { user: SMTP_USER, pass: SMTP_PASS },
   });
 
-  const to = CONTACT_TO || SMTP_USER;
+  const to = CONTACT_TO || "sales@brandingo.in";
   const from = CONTACT_FROM || SMTP_USER;
 
   const lines = [
