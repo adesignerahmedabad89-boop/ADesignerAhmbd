@@ -17,7 +17,7 @@ export default function ServicesPage() {
   return (
     <main>
       <Navbar />
-      <PageHero bgImage="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=2000&q=80" />
+      <PageHero bgImage="https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=2000&q=80" />
       <AllServices />
       <Footer />
     </main>

@@ -11,10 +11,12 @@ import Testimonials from "@/components/Testimonials";
 import FAQ from "@/components/FAQ";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import EnquiryModal from "@/components/EnquiryModal";
 
 export default function Home() {
   return (
     <main>
+      <EnquiryModal />
       <Navbar />
       <Hero />
       <ClientLogos />

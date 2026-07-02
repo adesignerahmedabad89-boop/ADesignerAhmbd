@@ -56,7 +56,7 @@ export default function ContactClient() {
     <>
       <Navbar />
 
-      <PageHero bgImage="https://images.unsplash.com/photo-1516387938699-a93567ec168e?auto=format&fit=crop&w=2000&q=80" />
+      <PageHero bgImage="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=2000&q=80" />
 
       {/* FORM */}
       <section style={{ background: "#fff", padding: "80px 0" }}>

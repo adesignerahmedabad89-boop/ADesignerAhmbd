@@ -41,7 +41,7 @@ export default function Testimonials() {
           </p>
         </div>
 
-        <div style={{ opacity: inView ? 1 : 0, transition: "opacity 0.6s ease 0.2s", position: "relative", paddingBottom: "60px" }}>
+        <div className={inView ? "testimonials-container visible" : "testimonials-container"} style={{ position: "relative", paddingBottom: "60px" }}>
           <Swiper
             modules={[Autoplay, Pagination, Navigation]}
             spaceBetween={24}
@@ -58,18 +58,38 @@ export default function Testimonials() {
           >
             {testimonials.map((t, idx) => (
               <SwiperSlide key={idx} style={{ height: "auto" }}>
-                <div style={{ height: "100%", padding: "36px 28px", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.08)", background: "#fff", display: "flex", flexDirection: "column" }}>
-                  <Quote size={32} style={{ color: "rgba(245,130,32,0.3)", marginBottom: "16px", transform: "scaleX(-1)" }} />
-                  <p style={{ color: "#444", fontSize: "15px", lineHeight: 1.75, marginBottom: "24px", flexGrow: 1 }}>&ldquo;{t.text}&rdquo;</p>
-                  <div style={{ display: "flex", gap: "3px", marginBottom: "16px" }}>
-                    {Array.from({ length: t.rating }).map((_, i) => <Star key={i} size={14} style={{ color: "#f58220" }} fill="#f58220" />)}
+                <div className="testimonial-card">
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "20px" }}>
+                    <div style={{ display: "flex", gap: "3px" }}>
+                      {Array.from({ length: t.rating }).map((_, i) => (
+                        <Star key={i} size={16} style={{ color: "#f58220" }} fill="#f58220" />
+                      ))}
+                    </div>
+                    <Quote size={36} className="quote-icon" style={{ color: "rgba(245,130,32,0.15)", transform: "scaleX(-1)", marginTop: "-6px" }} />
                   </div>
-                  <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={t.image} alt={t.name} style={{ width: "50px", height: "50px", borderRadius: "50%", objectFit: "cover", border: "2px solid rgba(245,130,32,0.5)" }} />
+                  <p style={{ color: "#4b5563", fontSize: "14.5px", lineHeight: 1.8, marginBottom: "24px", flexGrow: 1, fontWeight: 400 }}>
+                    &ldquo;{t.text}&rdquo;
+                  </p>
+                  <div style={{ display: "flex", alignItems: "center", gap: "14px", borderTop: "1px solid #f3f4f6", paddingTop: "20px" }}>
+                    <div className="avatar-initials" style={{ 
+                      width: "48px", 
+                      height: "48px", 
+                      borderRadius: "50%", 
+                      background: "linear-gradient(135deg, #fff5eb 0%, #ffe4cc 100%)", 
+                      color: "#f58220", 
+                      display: "flex", 
+                      alignItems: "center", 
+                      justifyContent: "center", 
+                      fontWeight: 800, 
+                      fontSize: "15px", 
+                      boxShadow: "0 4px 12px rgba(245,130,32,0.15)",
+                      flexShrink: 0 
+                    }}>
+                      {t.name.split(" ").map(w => w.charAt(0)).slice(0, 2).join("").toUpperCase()}
+                    </div>
                     <div>
-                      <p style={{ fontWeight: 700, fontSize: "15px", color: "#111" }}>{t.name}</p>
-                      <p style={{ fontSize: "13px", color: "#f58220", fontWeight: 600 }}>{t.role}</p>
+                      <p style={{ fontWeight: 700, fontSize: "15px", color: "#1f2937", marginBottom: "2px" }}>{t.name}</p>
+                      <p style={{ fontSize: "12px", color: "#f58220", fontWeight: 700, letterSpacing: "0.5px", textTransform: "uppercase" }}>{t.role}</p>
                     </div>
                   </div>
                 </div>
@@ -102,6 +122,62 @@ export default function Testimonials() {
       </div>
       
       <style dangerouslySetInnerHTML={{__html: `
+        .testimonials-container {
+          opacity: 0;
+          transform: translateY(30px);
+          transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+          transition-delay: 0.2s;
+        }
+        .testimonials-container.visible {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        .testimonial-card {
+          height: 100%;
+          padding: 38px 30px;
+          border-radius: 16px;
+          background: #ffffff;
+          border: 1px solid rgba(0, 0, 0, 0.04);
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+          display: flex;
+          flex-direction: column;
+          transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+          position: relative;
+          overflow: hidden;
+        }
+        .testimonial-card::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 4px;
+          background: linear-gradient(90deg, #f58220, #ff9e42);
+          opacity: 0.6;
+          transition: opacity 0.3s ease;
+        }
+        .testimonial-card:hover {
+          transform: translateY(-8px);
+          box-shadow: 0 20px 40px rgba(245, 130, 32, 0.08), 0 1px 3px rgba(0, 0, 0, 0.02);
+          border-color: rgba(245, 130, 32, 0.2);
+        }
+        .testimonial-card:hover::before {
+          opacity: 1;
+        }
+        .testimonial-card .quote-icon {
+          transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .testimonial-card:hover .quote-icon {
+          transform: scale(1.15) rotate(12deg) scaleX(-1);
+          color: rgba(245, 130, 32, 0.3) !important;
+        }
+        .testimonial-card .avatar-initials {
+          transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .testimonial-card:hover .avatar-initials {
+          transform: scale(1.06);
+          box-shadow: 0 6px 16px rgba(245, 130, 32, 0.2);
+        }
         .custom-pagination .swiper-pagination-bullet {
           width: 8px;
           height: 8px;

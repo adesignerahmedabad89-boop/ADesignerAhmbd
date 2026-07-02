@@ -19,7 +19,7 @@ export default function AboutPage() {
   return (
     <main>
       <Navbar />
-      <PageHero bgImage="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=2000&q=80" />
+      <PageHero bgImage="https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&w=2000&q=80" />
       <About />
       <Testimonials />
       <ClientLogos />

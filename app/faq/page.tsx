@@ -17,7 +17,7 @@ export default function FAQPage() {
   return (
     <main>
       <Navbar />
-      <PageHero bgImage="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=2000&q=80" />
+      <PageHero bgImage="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=2000&q=80" />
       <FAQ />
       <Footer />
     </main>
