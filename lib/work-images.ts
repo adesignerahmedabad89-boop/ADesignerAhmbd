@@ -543,7 +543,6 @@ export const workImages: Record<string, string[]> = {
     "/Stationary Design/packaging/00e4f642-160b-48db-a900-9f6e46defb31.jpg",
     "/Stationary Design/packaging/0e07f956-1776-4e9d-9231-fc911bedb615.jpg",
     "/Stationary Design/packaging/10.jpeg",
-    "/Stationary Design/packaging/11.jpg",
     "/Stationary Design/packaging/13.jpeg",
     "/Stationary Design/packaging/16.jpeg",
     "/Stationary Design/packaging/18.jpeg",
