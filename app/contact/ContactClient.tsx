@@ -58,32 +58,6 @@ export default function ContactClient() {
 
       <PageHero bgImage="https://images.unsplash.com/photo-1516387938699-a93567ec168e?auto=format&fit=crop&w=2000&q=80" />
 
-      {/* INFO CARDS */}
-      <section style={{ background: "#f8f9fb", padding: "72px 0" }}>
-        <div className="site-wrap">
-          <div style={{ display: "grid", gap: "20px", marginBottom: "20px" }} className="sm:grid-cols-2">
-            {[{ icon: Phone, label: "Phone", value: "+91 99799 92804", href: "tel:+919979992804" }, { icon: Mail, label: "Email", value: "sales@brandingo.in", href: "mailto:Sales@brandingo.in" }].map(({ icon: Icon, label, value, href }) => (
-              <a key={label} href={href} style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "10px", padding: "36px 24px", background: "#fff", border: "1px solid rgba(0,0,0,0.07)", textDecoration: "none", transition: "border-color 0.2s", textAlign: "center" }} className="hover:border-[#f58220]/50 card-hover">
-                <div style={{ width: "52px", height: "52px", borderRadius: "50%", background: "#fff5eb", display: "flex", alignItems: "center", justifyContent: "center" }}><Icon size={22} style={{ color: "#f58220" }} /></div>
-                <div>
-                  <p style={{ color: "#aaa", fontSize: "12px", fontWeight: 600, letterSpacing: "1px", textTransform: "uppercase", marginBottom: "4px" }}>{label}</p>
-                  <p style={{ color: "#1a1a1a", fontSize: "15px", fontWeight: 700 }}>{value}</p>
-                </div>
-              </a>
-            ))}
-          </div>
-          <div style={{ display: "grid", gap: "20px" }} className="sm:grid-cols-2 lg:grid-cols-3">
-            {branches.map(b => (
-              <a key={b.city} href={b.mapUrl} target="_blank" rel="noopener noreferrer" style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "10px", padding: "36px 24px", background: "#fff", border: "1px solid rgba(0,0,0,0.07)", textAlign: "center", transition: "border-color 0.2s", textDecoration: "none" }} className="hover:border-[#f58220]/50 card-hover">
-                <div style={{ width: "52px", height: "52px", borderRadius: "50%", background: "#fff5eb", display: "flex", alignItems: "center", justifyContent: "center" }}><MapPin size={22} style={{ color: "#f58220" }} /></div>
-                <p style={{ fontWeight: 800, color: "#1a1a1a", fontSize: "15px" }}>{b.label}</p>
-                <p style={{ color: "#777", fontSize: "13px", lineHeight: 1.7 }}>{b.address}</p>
-              </a>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* FORM */}
       <section style={{ background: "#fff", padding: "80px 0" }}>
         <div className="site-wrap">
@@ -143,6 +117,32 @@ export default function ContactClient() {
                 {error && <p style={{ color: "#dc2626", fontSize: "13px", textAlign: "center" }}>{error}</p>}
               </form>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* INFO CARDS */}
+      <section style={{ background: "#f8f9fb", padding: "72px 0" }}>
+        <div className="site-wrap">
+          <div style={{ display: "grid", gap: "20px", marginBottom: "20px" }} className="sm:grid-cols-2">
+            {[{ icon: Phone, label: "Phone", value: "+91 99799 92804", href: "tel:+919979992804" }, { icon: Mail, label: "Email", value: "sales@brandingo.in", href: "mailto:Sales@brandingo.in" }].map(({ icon: Icon, label, value, href }) => (
+              <a key={label} href={href} style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "10px", padding: "36px 24px", background: "#fff", border: "1px solid rgba(0,0,0,0.07)", textDecoration: "none", transition: "border-color 0.2s", textAlign: "center" }} className="hover:border-[#f58220]/50 card-hover">
+                <div style={{ width: "52px", height: "52px", borderRadius: "50%", background: "#fff5eb", display: "flex", alignItems: "center", justifyContent: "center" }}><Icon size={22} style={{ color: "#f58220" }} /></div>
+                <div>
+                  <p style={{ color: "#aaa", fontSize: "12px", fontWeight: 600, letterSpacing: "1px", textTransform: "uppercase", marginBottom: "4px" }}>{label}</p>
+                  <p style={{ color: "#1a1a1a", fontSize: "15px", fontWeight: 700 }}>{value}</p>
+                </div>
+              </a>
+            ))}
+          </div>
+          <div style={{ display: "grid", gap: "20px" }} className="sm:grid-cols-2 lg:grid-cols-3">
+            {branches.map(b => (
+              <a key={b.city} href={b.mapUrl} target="_blank" rel="noopener noreferrer" style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "10px", padding: "36px 24px", background: "#fff", border: "1px solid rgba(0,0,0,0.07)", textAlign: "center", transition: "border-color 0.2s", textDecoration: "none" }} className="hover:border-[#f58220]/50 card-hover">
+                <div style={{ width: "52px", height: "52px", borderRadius: "50%", background: "#fff5eb", display: "flex", alignItems: "center", justifyContent: "center" }}><MapPin size={22} style={{ color: "#f58220" }} /></div>
+                <p style={{ fontWeight: 800, color: "#1a1a1a", fontSize: "15px" }}>{b.label}</p>
+                <p style={{ color: "#777", fontSize: "13px", lineHeight: 1.7 }}>{b.address}</p>
+              </a>
+            ))}
           </div>
         </div>
       </section>

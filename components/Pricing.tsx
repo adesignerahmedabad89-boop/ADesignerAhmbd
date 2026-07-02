@@ -16,7 +16,8 @@ const rows: { label: string; values: string[]; price?: boolean; highlight?: bool
   { label: "Logo Source File", values: ["CDR, PDF, PNG, JPG, AI", "CDR, PDF, PNG, JPG, AI", "CDR, PDF, PNG, JPG, AI"], highlight: true },
   { label: "Free Logo Animation Video", values: ["2", "3", "5"] },
   { label: "Stationery design (Business card, letterhead & Envelope) (2 sample of each)", values: ["No", "Yes", "Yes"] },
-  { label: "Festival Post", values: ["No", "No", "100 QTY"] },
+  { label: "Festival Post", values: ["No", "20 QTY", "50 QTY"] },
+  { label: "Customize business promotional post", values: ["No", "5 QTY", "15 QTY"] },
   { label: "Payment Options - 100% Advance", values: ["Yes", "Yes", "Yes"] },
 ];
 

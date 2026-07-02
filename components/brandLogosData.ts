@@ -22,6 +22,7 @@ export const brandLogos = [
   { src: "/brandlogos/3.png", alt: "Logo", style: {} },
   { src: "/brandlogos/30.05.202601.png", alt: "Logo", style: {} },
   { src: "/brandlogos/3d png (1).png", alt: "Logo", style: {} },
+  { src: "/brandlogos/4.png", alt: "Logo", style: {} },
   { src: "/brandlogos/5.png", alt: "Logo", style: {} },
   { src: "/brandlogos/7.png", alt: "Logo", style: {} },
   { src: "/brandlogos/8.png", alt: "Logo", style: {} },
