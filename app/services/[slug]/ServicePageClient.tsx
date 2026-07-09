@@ -245,7 +245,7 @@ function WebsiteDevelopment() {
       eyebrow="Web Studio"
       heading={<>Websites that <span style={{ color: A }}>perform</span> as good as they look</>}
       intro={[
-        "Your website is the digital home of your brand — often the very first interaction a customer has with you. At Brandingo we build fast, mobile-first, search-friendly websites that don't just look beautiful, they convert visitors into enquiries and sales.",
+        "Your website is the digital home of your brand — often the very first interaction a customer has with you. At A Designer Ahmedabad we build fast, mobile-first, search-friendly websites that don't just look beautiful, they convert visitors into enquiries and sales.",
         "From a simple business website to a full-scale e-commerce store, every site we build is responsive across devices, optimised for speed, and structured for SEO from day one — so your brand is ready to grow online.",
       ]}
       tags={["Responsive Design", "E-Commerce", "Landing Pages", "WordPress", "Web Apps", "SEO-Ready"]}
@@ -277,7 +277,7 @@ function SearchEngineOptimization() {
       heading={<>Get found by customers <span style={{ color: A }}>searching</span> for you</>}
       intro={[
         "Showing up on the first page of Google is one of the most powerful ways to grow your brand. Our SEO specialists use proven, white-hat strategies to improve your rankings, drive qualified organic traffic and turn searches into customers.",
-        "From technical audits and on-page optimisation to local SEO and content strategy, Brandingo builds a search foundation that delivers compounding, long-term results — not quick fixes that fade away.",
+        "From technical audits and on-page optimisation to local SEO and content strategy, A Designer Ahmedabad builds a search foundation that delivers compounding, long-term results — not quick fixes that fade away.",
       ]}
       tags={["Keyword Research", "On-Page SEO", "Technical SEO", "Local SEO", "Link Building", "Analytics"]}
       stats={[{ v: "3x", l: "Avg Traffic Growth" }, { v: "Top 10", l: "Ranking Focus" }, { v: "100%", l: "White-Hat" }, { v: "30d", l: "First Reports" }]}
@@ -307,7 +307,7 @@ function DigitalMarketing() {
       eyebrow="Performance Marketing"
       heading={<>Reach the right audience at the <span style={{ color: A }}>right time</span></>}
       intro={[
-        "Great marketing puts your brand in front of the people most likely to buy. Brandingo runs full-funnel digital campaigns across social, search and email — building awareness, driving engagement and delivering measurable growth.",
+        "Great marketing puts your brand in front of the people most likely to buy. A Designer Ahmedabad runs full-funnel digital campaigns across social, search and email — building awareness, driving engagement and delivering measurable growth.",
         "Every campaign is data-led: we test, track and optimise continuously so your budget works harder and every rupee is accountable to real business results.",
       ]}
       tags={["Social Media", "Google Ads", "Meta Ads", "Email", "Content", "Analytics"]}
@@ -333,7 +333,7 @@ function DigitalMarketing() {
 
 /* ══════════════════════════════════════════════════════════════════
    Design sub-services — each gets its own page, built from StandardLayout
-   and showcasing Brandingo's real work (images in /public/Stationary Design).
+   and showcasing A Designer Ahmedabad's real work (images in /public/Stationary Design).
 ══════════════════════════════════════════════════════════════════ */
 const SD = "/Stationary Design";
 
@@ -343,7 +343,7 @@ const DESIGN_CONTENT: Record<string, StandardContent> = {
     heading: <>A logo your customers <span style={{ color: A }}>remember</span></>,
     intro: [
       "A professional, well-designed logo is the crucial first step in establishing your brand — it creates the first impression of your company and expresses its values, all in one mark.",
-      "At Brandingo we craft distinctive, versatile logos that work everywhere — from a tiny app icon to a giant hoarding — and come delivered in every format you'll ever need.",
+      "At A Designer Ahmedabad we craft distinctive, versatile logos that work everywhere — from a tiny app icon to a giant hoarding — and come delivered in every format you'll ever need.",
     ],
     tags: ["Wordmark", "Lettermark", "Pictorial", "Abstract", "Mascot", "Combination"],
     stats: [{ v: "1000+", l: "Logos Designed" }, { v: "5", l: "Concepts to Start" }, { v: "∞", l: "Revisions" }, { v: "AI/CDR", l: "Source Files" }],
@@ -607,7 +607,7 @@ function WorkGallery({ title, images }: { title: string; images: string[] }) {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={src}
-                alt={`${title} design ${i + 1} by Brandingo`}
+                alt={`${title} design ${i + 1} by A Designer Ahmedabad`}
                 loading="lazy"
                 style={{ width: "100%", height: "auto", display: "block", transition: "transform 0.5s ease" }}
                 className="group-hover:scale-105"

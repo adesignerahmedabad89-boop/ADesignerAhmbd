@@ -10,6 +10,7 @@ const navLinks = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Services", href: "/services" },
+  { label: "Scientific Logo", href: "/scientific-logo" },
   { label: "Portfolio", href: "/portfolio" },
   { label: "Career", href: "/career" },
   { label: "Pricing", href: "/pricing" },
@@ -43,8 +44,8 @@ export default function Navbar() {
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: "72px" }}>
           <Link href="/">
             <Image
-              src="/brandingo-logo-v2.png"
-              alt="Brandingo"
+              src="/A designer 2.png"
+              alt="A Designer Ahmedabad"
               width={180}
               height={40}
               style={{ height: "40px", width: "auto", objectFit: "contain", filter: logoFilter, transition: "filter 0.3s ease" }}
@@ -61,12 +62,12 @@ export default function Navbar() {
                   style={{
                     fontSize: "14px",
                     fontWeight: 500,
-                    color: isActive ? "#f58220" : textColor,
+                    color: isActive ? "#e31e24" : textColor,
                     position: "relative",
                     paddingBottom: "4px",
                     transition: "color 0.3s",
                   }}
-                  className="group hover:!text-[#f58220]"
+                  className="group hover:!text-[#e31e24]"
                 >
                   {link.label}
                   <span
@@ -76,7 +77,7 @@ export default function Navbar() {
                       left: 0,
                       height: "2px",
                       width: isActive ? "100%" : 0,
-                      background: "#f58220",
+                      background: "#e31e24",
                       borderRadius: "2px",
                       transition: "width 0.25s ease",
                     }}
@@ -93,7 +94,7 @@ export default function Navbar() {
               target="_blank"
               rel="noopener noreferrer"
               style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "13px", fontWeight: 600, color: phoneColor, transition: "color 0.3s" }}
-              className="hover:!text-[#f58220]"
+              className="hover:!text-[#e31e24]"
             >
               <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
                 <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
@@ -104,7 +105,7 @@ export default function Navbar() {
               href="/contact"
               style={{
                 padding: "10px 24px",
-                background: "#f58220",
+                background: "#e31e24",
                 color: "#fff",
                 fontWeight: 700,
                 fontSize: "13px",
@@ -112,7 +113,7 @@ export default function Navbar() {
                 transition: "background 0.2s",
                 whiteSpace: "nowrap",
               }}
-              className="hover:bg-[#ff933c]"
+              className="hover:bg-[#ff3b42]"
             >
               Get Quote
             </Link>
@@ -147,8 +148,8 @@ export default function Navbar() {
                 key={link.label}
                 href={link.href}
                 onClick={() => setMobileOpen(false)}
-                style={{ display: "block", padding: "12px 16px", fontSize: "14px", fontWeight: 500, color: isActive ? "#f58220" : "#444", backgroundColor: isActive ? "#fff5eb" : "transparent", borderRadius: "8px", transition: "background 0.15s, color 0.15s" }}
-                className="hover:bg-[#fff5eb] hover:text-[#f58220]"
+                style={{ display: "block", padding: "12px 16px", fontSize: "14px", fontWeight: 500, color: isActive ? "#e31e24" : "#444", backgroundColor: isActive ? "#fff0f0" : "transparent", borderRadius: "8px", transition: "background 0.15s, color 0.15s" }}
+                className="hover:bg-[#fff0f0] hover:text-[#e31e24]"
               >
                 {link.label}
               </Link>
@@ -157,7 +158,7 @@ export default function Navbar() {
           <Link
             href="/contact"
             onClick={() => setMobileOpen(false)}
-            style={{ display: "block", marginTop: "12px", textAlign: "center", padding: "14px", background: "#f58220", color: "#fff", fontWeight: 700, borderRadius: "999px", fontSize: "14px" }}
+            style={{ display: "block", marginTop: "12px", textAlign: "center", padding: "14px", background: "#e31e24", color: "#fff", fontWeight: 700, borderRadius: "999px", fontSize: "14px" }}
           >
             Get Quote
           </Link>

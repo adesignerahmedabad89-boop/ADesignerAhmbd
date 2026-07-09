@@ -51,7 +51,7 @@ function BrandStory() {
           A decade of turning emerging businesses into <span style={{ color: A }}>unforgettable brands</span>
         </h2>
         <p style={{ color: "#666", lineHeight: 1.85, marginBottom: "16px", fontSize: "15.5px" }}>
-          Established in 2016, Brandingo was built on a foundation of over a decade of expertise in Designing, Printing and Brand Development. Founded by the Patel &amp; Sharma brothers, we bring a unique blend of global vision and local expertise to help transform emerging businesses into unforgettable brands.
+          Established in 2016, A Designer Ahmedabad was built on a foundation of over a decade of expertise in Designing, Printing and Brand Development. Founded by the Patel &amp; Sharma brothers, we bring a unique blend of global vision and local expertise to help transform emerging businesses into unforgettable brands.
         </p>
         <p style={{ color: "#666", lineHeight: 1.85, fontSize: "15.5px" }}>
           Our objective is simple yet powerful: to make every customer feel <strong style={{ color: "#1a1a1a" }}>&ldquo;WoW.&rdquo;</strong> By blending strategic thinking with flawless creative execution, we deliver result-driven branding solutions that truly resonate with your audience and elevate your market presence.
@@ -152,7 +152,7 @@ export default function PortfolioGallery() {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={item.image}
-                  alt={`${item.category} design by Brandingo`}
+                  alt={`${item.category} design by A Designer Ahmedabad`}
                   loading="lazy"
                 />
                 {/* Hover overlay */}
@@ -215,7 +215,7 @@ export default function PortfolioGallery() {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={lightbox}
-            alt="Brandingo portfolio work"
+            alt="A Designer Ahmedabad portfolio work"
             onClick={(e) => e.stopPropagation()}
             style={{ maxWidth: "100%", maxHeight: "88vh", objectFit: "contain", boxShadow: "0 20px 60px rgba(0,0,0,0.5)", cursor: "default" }}
           />

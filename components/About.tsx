@@ -92,7 +92,7 @@ export default function About({ showValues = true }: { showValues?: boolean }) {
               >
                 <Image
                   src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=900&q=80"
-                  alt="The Brandingo team collaborating"
+                  alt="The A Designer Ahmedabad team collaborating"
                   fill
                   sizes="(max-width: 1024px) 100vw, 600px"
                   style={{ objectFit: "cover" }}
@@ -119,7 +119,7 @@ export default function About({ showValues = true }: { showValues?: boolean }) {
               Crafting Your Vision, <span style={{ color: "#f58220" }}>Building Your Success</span>
             </h2>
             <p style={{ color: "#555", fontSize: "1rem", lineHeight: 1.8, marginBottom: "16px" }}>
-              Established in 2016, Brandingo was built on a foundation of over a decade of expertise in Designing, Printing, and Brand Development. Founded by the Patel &amp; Sharma brothers, we bring a unique blend of global vision and local expertise to help transform emerging businesses into unforgettable brands.
+              Established in 2016, A Designer Ahmedabad was built on a foundation of over a decade of expertise in Designing, Printing, and Brand Development. Founded by the Patel &amp; Sharma brothers, we bring a unique blend of global vision and local expertise to help transform emerging businesses into unforgettable brands.
             </p>
             <p style={{ color: "#777", lineHeight: 1.8, marginBottom: "28px", fontSize: "0.95rem" }}>
               Our objective is simple yet powerful: to make every customer feel &quot;WoW.&quot; By blending
@@ -155,7 +155,7 @@ export default function About({ showValues = true }: { showValues?: boolean }) {
 
           {/* Intro paragraphs — full width, centered */}
           <p style={{ color: "#555", fontSize: "14px", lineHeight: 1.8, marginBottom: "16px", textAlign: "center" }}>
-            Established in 2016, Brandingo was built on a foundation of over a decade of expertise in Designing, Printing, and Brand Development. Founded by the Patel &amp; Sharma brothers, we bring a unique blend of global vision and local expertise to help transform emerging businesses into unforgettable brands.
+            Established in 2016, A Designer Ahmedabad was built on a foundation of over a decade of expertise in Designing, Printing, and Brand Development. Founded by the Patel &amp; Sharma brothers, we bring a unique blend of global vision and local expertise to help transform emerging businesses into unforgettable brands.
           </p>
           <p style={{ color: "#777", fontSize: "13.5px", lineHeight: 1.8, marginBottom: "32px", textAlign: "center" }}>
             Our objective is simple yet powerful: to make every customer feel &quot;WoW.&quot; By blending strategic thinking with flawless creative execution, we deliver result-driven branding solutions that truly resonate with your audience and elevate your market presence.
@@ -165,7 +165,7 @@ export default function About({ showValues = true }: { showValues?: boolean }) {
           <div style={{ position: "relative", width: "100%", height: "240px", overflow: "hidden", border: "1px solid rgba(0,0,0,0.07)", marginBottom: "36px" }}>
             <Image
               src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=900&q=80"
-              alt="The Brandingo team collaborating"
+              alt="The A Designer Ahmedabad team collaborating"
               fill
               sizes="100vw"
               style={{ objectFit: "cover" }}
@@ -299,7 +299,7 @@ export default function About({ showValues = true }: { showValues?: boolean }) {
             </h3>
             <p style={{ color: "#555", fontSize: "0.95rem", lineHeight: 1.7 }}>
               Creativity, Integrity, Excellence, and a Client-First approach form the cornerstone
-              of everything we do at Brandingo.
+              of everything we do at A Designer Ahmedabad.
             </p>
           </div>
         </div>

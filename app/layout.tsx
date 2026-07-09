@@ -4,9 +4,9 @@ import "./globals.css";
 import Script from "next/script";
 
 export const metadata: Metadata = {
-  title: "Brandingo | Build Your Brand's Journey",
+  title: "A Designer Ahmedabad | Build Your Brand's Journey",
   description:
-    "Brandingo - expert graphic design services: logo, stationery, banner & standee, packaging & label, menu, invitation card, tag, and brochure design.",
+    "A Designer Ahmedabad - expert graphic design services: logo, stationery, banner & standee, packaging & label, menu, invitation card, tag, and brochure design.",
 };
 
 export const viewport: Viewport = {

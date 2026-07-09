@@ -16,7 +16,7 @@ export async function generateMetadata({
   const project = getProject(slug);
   if (!project) return {};
   return {
-    title: `${project.title} Case Study | Brandingo`,
+    title: `${project.title} Case Study | A Designer Ahmedabad`,
     description: project.description,
   };
 }

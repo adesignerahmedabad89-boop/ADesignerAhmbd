@@ -5,9 +5,9 @@ import Link from "next/link";
 import { ChevronRight, ShieldCheck } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | Brandingo",
+  title: "Privacy Policy | A Designer Ahmedabad",
   description:
-    "Read our privacy policy to understand how Brandingo collects, uses, and safeguards your personal data.",
+    "Read our privacy policy to understand how A Designer Ahmedabad collects, uses, and safeguards your personal data.",
 };
 
 const A = "#f58220";
@@ -97,7 +97,7 @@ export default function PrivacyPolicyPage() {
               1. Introduction
             </h2>
             <p style={{ color: "#444", fontSize: "15px", lineHeight: "1.8", marginBottom: "14px" }}>
-              Welcome to Brandingo. We are committed to protecting your personal data and respecting your privacy. This Privacy Policy describes how we collect, store, share, and protect your information when you visit our website, use our services, or contact us.
+              Welcome to A Designer Ahmedabad. We are committed to protecting your personal data and respecting your privacy. This Privacy Policy describes how we collect, store, share, and protect your information when you visit our website, use our services, or contact us.
             </p>
             <p style={{ color: "#444", fontSize: "15px", lineHeight: "1.8" }}>
               By accessing our website or using our services, you consent to the data practices described in this policy. If you do not agree with the terms outlined here, please discontinue use of our site and services.
@@ -123,7 +123,7 @@ export default function PrivacyPolicyPage() {
               3. How We Use Your Information
             </h2>
             <p style={{ color: "#444", fontSize: "15px", lineHeight: "1.8", marginBottom: "14px" }}>
-              Brandingo uses your data for the following purposes:
+              A Designer Ahmedabad uses your data for the following purposes:
             </p>
             <ul style={{ paddingLeft: "20px", display: "flex", flexDirection: "column", gap: "10px", color: "#444", fontSize: "15px", lineHeight: "1.7" }}>
               <li>To answer your requests, schedule consultation calls, and prepare custom project quotes.</li>
@@ -180,7 +180,7 @@ export default function PrivacyPolicyPage() {
               If you have any questions about this Privacy Policy, the practices of this site, or your dealings with our brand, please reach out to us at:
             </p>
             <div style={{ fontSize: "14px", color: "#333", display: "flex", flexDirection: "column", gap: "4px" }}>
-              <strong>Brandingo</strong>
+              <strong>A Designer Ahmedabad</strong>
               <span>607, Iconic Shyamal, Shyamal Cross Roads, 132 Feet Ring Rd, Shyamal,</span>
               <span>Ahmedabad, Gujarat 380015, India.</span>
               <span>Email: <a href="mailto:sales@brandingo.in" style={{ color: A, fontWeight: 600, textDecoration: "none" }}>sales@brandingo.in</a></span>

@@ -5,9 +5,9 @@ import PortfolioGallery from "@/components/PortfolioGallery";
 import PageHero from "@/components/PageHero";
 
 export const metadata: Metadata = {
-  title: "Our Portfolio | Brandingo",
+  title: "Our Portfolio | A Designer Ahmedabad",
   description:
-    "Explore Brandingo's portfolio of branding, graphic design, website development and digital marketing projects delivered across industries.",
+    "Explore A Designer Ahmedabad's portfolio of branding, graphic design, website development and digital marketing projects delivered across industries.",
   alternates: {
     canonical: "https://jkbrandingindia.com/portfolio",
   },

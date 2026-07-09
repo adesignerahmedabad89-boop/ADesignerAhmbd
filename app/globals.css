@@ -3,12 +3,12 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --color-brand-teal: #0b3c5d;
-  --color-brand-teal-dark: #07273d;
-  --color-brand-teal-light: #f0f6fa;
-  --color-brand-orange: #f58220;
-  --color-brand-orange-hover: #ff933c;
-  --color-brand-orange-light: #fff5eb;
+  --color-brand-teal: #0046ad;
+  --color-brand-teal-dark: #002a6b;
+  --color-brand-teal-light: #f0f4fa;
+  --color-brand-orange: #e31e24;
+  --color-brand-orange-hover: #ff3b42;
+  --color-brand-orange-light: #fff0f0;
   --font-sans: 'Geist', 'Plus Jakarta Sans', 'Segoe UI', system-ui, sans-serif;
 }
 
@@ -45,7 +45,7 @@ a {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #f58220;
+  background: #e31e24;
   border-radius: 3px;
 }
 
@@ -149,7 +149,7 @@ a {
 
 /* Brand text */
 .brand-text {
-  color: #f58220;
+  color: #e31e24;
 }
 
 /* Centered page container */
@@ -184,7 +184,7 @@ a {
   display: inline-block;
   width: 32px;
   height: 2px;
-  background: #f58220;
+  background: #e31e24;
   vertical-align: middle;
   margin: 0 10px;
 }
@@ -346,3 +346,70 @@ img {
   /* Allow pointer events so lightbox clicks still work */
   pointer-events: auto;
 }
+
+/* Global Overrides to force logo colors (Blue #0046ad and Red #e31e24) on all inline style references */
+[style*="color: #f58220"], [style*="color:#f58220"],
+[style*="color: #ff933c"], [style*="color:#ff933c"],
+[style*="color: rgb(245, 130, 32)"], [style*="color:rgb(245, 130, 32)"] {
+  color: var(--color-brand-orange, #e31e24) !important;
+}
+
+[style*="border-color: #f58220"], [style*="border-color:#f58220"],
+[style*="border-color: #ff933c"], [style*="border-color:#ff933c"],
+[style*="border-color: rgb(245, 130, 32)"], [style*="border-color:rgb(245, 130, 32)"] {
+  border-color: var(--color-brand-orange, #e31e24) !important;
+}
+
+/* Fallback for elements that have orange borders or colors set in style but might not fit the exact pattern above, while sparing elements with white/other colors */
+span:not([style*="color"]), a:not([style*="color"]), button:not([style*="color"]) {
+  /* No action needed if color is not set, or we can let color inherit */
+}
+
+div[style*="background: #f58220"], 
+div[style*="background:#f58220"], 
+span[style*="background: #f58220"], 
+span[style*="background:#f58220"],
+a[style*="background: #f58220"], 
+a[style*="background:#f58220"],
+button[style*="background: #f58220"], 
+button[style*="background:#f58220"] {
+  background: var(--color-brand-orange, #e31e24) !important;
+  background-color: var(--color-brand-orange, #e31e24) !important;
+}
+
+/* Specific background styles override */
+[style*="background-color: #f58220"], [style*="background-color:#f58220"] {
+  background-color: var(--color-brand-orange, #e31e24) !important;
+}
+
+/* SVG Fill and Stroke Overrides for Orange -> Red */
+[stroke="#f58220"] {
+  stroke: var(--color-brand-orange, #e31e24) !important;
+}
+[fill="#f58220"] {
+  fill: var(--color-brand-orange, #e31e24) !important;
+}
+
+/* Light orange background sections -> Light red */
+[style*="#fff5eb"], [style*="rgb(255, 245, 235)"] {
+  background-color: var(--color-brand-orange-light, #fff0f0) !important;
+  background: var(--color-brand-orange-light, #fff0f0) !important;
+}
+
+/* Dark teal backgrounds -> Royal blue */
+[style*="color: #0b3c5d"], [style*="color:#0b3c5d"] {
+  color: var(--color-brand-teal, #0046ad) !important;
+}
+div[style*="background: #0b3c5d"], div[style*="background:#0b3c5d"],
+div[style*="background: linear-gradient"], div[style*="background:linear-gradient"] {
+  /* Let background match if it explicitly targets it, but avoid matching generic gradients that might contain it if unnecessary */
+}
+/* Specifically match background and border colors for brand navy */
+[style*="background: #0b3c5d"], [style*="background:#0b3c5d"],
+[style*="background-color: #0b3c5d"], [style*="background-color:#0b3c5d"] {
+  background: var(--color-brand-teal, #0046ad) !important;
+  background-color: var(--color-brand-teal, #0046ad) !important;
+}
+[style*="border-color: #0b3c5d"], [style*="border-color:#0b3c5d"] {
+  border-color: var(--color-brand-teal, #0046ad) !important;
+}

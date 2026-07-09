@@ -6,9 +6,9 @@ import { ArrowRight } from "lucide-react";
 import PageHero from "@/components/PageHero";
 
 export const metadata: Metadata = {
-  title: "Careers | Brandingo",
+  title: "Careers | A Designer Ahmedabad",
   description:
-    "Join Brandingo and build your career in design, marketing, and web development with a team of creative professionals.",
+    "Join A Designer Ahmedabad and build your career in design, marketing, and web development with a team of creative professionals.",
   alternates: {
     canonical: "https://jkbrandingindia.com/career",
   },

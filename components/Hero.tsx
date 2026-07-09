@@ -1,59 +1,88 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Play, Star } from "lucide-react";
+import { ArrowRight, PenTool, Palette, Brush, Layers, Compass } from "lucide-react";
 
 const words = ["Brands", "Identities", "Success", "Futures", "Legacy"];
 
-const DoodleStar = ({ size = 48, color = "#f58220", style = {} }: { size?: number; color?: string; style?: React.CSSProperties }) => (
-  <svg width={size} height={size} viewBox="0 0 100 100" fill="none" stroke={color} strokeWidth="8" strokeLinecap="round" style={{ transform: "rotate(15deg)", ...style }}>
-    <path d="M50 15 L50 85 M15 50 L85 50 M25 25 L75 75 M75 25 L25 75" />
-  </svg>
-);
+// Stars data for the floating celestial particles
+const STARS_COUNT = 40;
+const roundVal = (n: number) => Math.round(n * 10000) / 10000;
+interface StarData {
+  id: number;
+  top: string;
+  left: string;
+  size: number;
+  delay: string;
+  duration: string;
+}
 
-const SquiggleLoop = ({ width = 110, height = 70, color = "#4d62e0", style = {} }: { width?: number; height?: number; color?: string; style?: React.CSSProperties }) => (
-  <svg width={width} height={height} viewBox="0 0 120 80" fill="none" stroke={color} strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" style={style}>
-    <path d="M10,40 C30,10 50,70 70,25 C85,-5 100,20 110,45 C115,55 105,75 90,75 C70,75 65,50 80,40 C95,30 110,60 115,65" />
-  </svg>
-);
-
-const SunburstSpokes = ({ size = 90, color = "#0b3c5d", style = {}, className = "" }: { size?: number; color?: string; style?: React.CSSProperties; className?: string }) => (
-  <svg width={size} height={size} viewBox="0 0 100 100" fill="none" stroke={color} strokeWidth="6" strokeLinecap="round" style={style} className={className}>
-    {Array.from({ length: 12 }).map((_, i) => {
-      const angle = (i * 360) / 12;
-      return (
-        <line
-          key={i}
-          x1="50"
-          y1="50"
-          x2="50"
-          y2="15"
-          transform={`rotate(${angle} 50 50)`}
-        />
-      );
-    })}
-  </svg>
-);
+interface FloatingIconData {
+  id: number;
+  top: string;
+  left: string;
+  size: number;
+  delay: string;
+  duration: string;
+  iconName: 'PenTool' | 'Palette' | 'Brush' | 'Layers' | 'Compass';
+  rotation: number;
+}
 
 export default function Hero() {
   const [wordIdx, setWordIdx] = useState(0);
   const [fadeIn, setFadeIn] = useState(true);
-
-  // One-time entrance: content slides in from the left on mount.
   const [entered, setEntered] = useState(false);
+  const [stars, setStars] = useState<StarData[]>([]);
+  const [floatingIcons, setFloatingIcons] = useState<FloatingIconData[]>([]);
+
+  // Generate random star and icon positions after client mount
   useEffect(() => {
-    const t = setTimeout(() => setEntered(true), 80);
-    return () => clearTimeout(t);
+    setEntered(true);
+    const generatedStars = Array.from({ length: STARS_COUNT }).map((_, i) => ({
+      id: i,
+      top: `${Math.random() * 100}%`,
+      left: `${Math.random() * 100}%`,
+      size: Math.random() * 2.5 + 0.8,
+      delay: `${Math.random() * 5}s`,
+      duration: `${Math.random() * 4 + 2.5}s`,
+    }));
+    setStars(generatedStars);
+
+    const iconTypes: ('PenTool' | 'Palette' | 'Brush' | 'Layers' | 'Compass')[] = [
+      'PenTool', 'Palette', 'Brush', 'Layers', 'Compass'
+    ];
+    const generatedIcons = Array.from({ length: 8 }).map((_, i) => {
+      const isLeftSide = i % 2 === 0;
+      const leftVal = isLeftSide 
+        ? Math.random() * 30 + 5    // 5% to 35%
+        : Math.random() * 30 + 65;  // 65% to 95%
+      
+      return {
+        id: i,
+        top: `${Math.random() * 70 + 10}%`,
+        left: `${leftVal}%`,
+        size: Math.random() * 12 + 20, // 20px to 32px
+        delay: `${Math.random() * 5}s`,
+        duration: `${Math.random() * 6 + 9}s`, // 9s to 15s
+        iconName: iconTypes[i % iconTypes.length],
+        rotation: Math.random() * 360,
+      };
+    });
+    setFloatingIcons(generatedIcons);
   }, []);
-  // Per-word entrance: each word eases up + fades in, staggered one after another.
-  const wordEnter = (i: number): React.CSSProperties => ({
-    display: "inline-block",
-    opacity: entered ? 1 : 0,
-    transform: entered ? "translateY(0)" : "translateY(24px)",
-    transition: `opacity 0.7s cubic-bezier(0.16,1,0.3,1) ${0.1 + i * 0.13}s, transform 0.8s cubic-bezier(0.16,1,0.3,1) ${0.1 + i * 0.13}s`,
-  });
+
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      const x = (e.clientX / window.innerWidth) - 0.5;
+      const y = (e.clientY / window.innerHeight) - 0.5;
+      setMousePos({ x, y });
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -66,6 +95,14 @@ export default function Hero() {
     return () => clearInterval(interval);
   }, []);
 
+  // Per-word entrance animation style
+  const wordEnter = (i: number): React.CSSProperties => ({
+    display: "inline-block",
+    opacity: entered ? 1 : 0,
+    transform: entered ? "translateY(0)" : "translateY(24px)",
+    transition: `opacity 0.7s cubic-bezier(0.16,1,0.3,1) ${0.1 + i * 0.13}s, transform 0.8s cubic-bezier(0.16,1,0.3,1) ${0.1 + i * 0.13}s`,
+  });
+
   return (
     <section
       id="home"
@@ -75,175 +112,523 @@ export default function Hero() {
         overflow: "hidden",
         display: "flex",
         alignItems: "center",
-        background: "#07273d", // Fallback color
+        background: "radial-gradient(circle at 80% 20%, #174261 0%, #051829 55%, #02080f 100%)",
       }}
     >
-      {/* Background Video */}
-      <video
-        autoPlay
-        loop
-        muted
-        playsInline
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          objectFit: "cover",
-          zIndex: 0,
-        }}
-      >
-        <source
-          src="https://public-assets.content-platform.envatousercontent.com/ad6f98f0-ec18-413b-9c3f-1355c191c3d0/66385907-c807-4a7a-8e26-37b757c28c18/ad6f98f0-ec18-413b-9c3f-1355c191c3d0/preview_540p_crf22_higher_quality.mp4"
-          type="video/mp4"
-        />
-      </video>
+      {/* Inject premium CSS keyframe animations */}
+      <style dangerouslySetInnerHTML={{ __html: `
+        @keyframes spin-cw {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+        @keyframes spin-ccw {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(-360deg); }
+        }
+        @keyframes float-gentle {
+          0%, 100% { transform: translateY(0px) rotate(0deg); }
+          50% { transform: translateY(-12px) rotate(2deg); }
+        }
+        @keyframes twinkle-star {
+          0%, 100% { opacity: 0.15; transform: scale(0.8); }
+          50% { opacity: 1; transform: scale(1.3); }
+        }
+        @keyframes nebula-pulse {
+          0%, 100% { opacity: 0.35; filter: blur(60px); transform: scale(1); }
+          50% { opacity: 0.55; filter: blur(75px); transform: scale(1.05); }
+        }
+        @keyframes shooting-star-left-right {
+          0% { transform: translateX(-10vw) translateY(10vh) rotate(-35deg) scale(0); opacity: 0; }
+          4% { transform: translateX(5vw) translateY(-5vh) rotate(-35deg) scale(1); opacity: 1; }
+          12% { transform: translateX(35vw) translateY(-35vh) rotate(-35deg) scale(0); opacity: 0; }
+          100% { transform: translateX(35vw) translateY(-35vh) rotate(-35deg) scale(0); opacity: 0; }
+        }
+        @keyframes button-shimmer {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
 
-      {/* Dark overlay to ensure contrast */}
+        /* Default spin states */
+        .spin-clockwise-slow {
+          animation: spin-cw 75s linear infinite;
+          transition: animation-duration 0.6s ease;
+        }
+        .spin-counter-clockwise {
+          animation: spin-ccw 55s linear infinite;
+          transition: animation-duration 0.6s ease;
+        }
+        .spin-clockwise-fast {
+          animation: spin-cw 35s linear infinite;
+          transition: animation-duration 0.6s ease;
+        }
+        .chakra-float {
+          animation: float-gentle 7s ease-in-out infinite;
+        }
+        .star-twinkle {
+          animation: twinkle-star var(--duration) ease-in-out infinite;
+          animation-delay: var(--delay);
+        }
+        .nebula {
+          animation: nebula-pulse 12s ease-in-out infinite;
+        }
+        .shooting-star {
+          position: absolute;
+          width: 140px;
+          height: 1.5px;
+          background: linear-gradient(90deg, rgba(255,255,255,0.8), transparent);
+          pointer-events: none;
+          z-index: 2;
+        }
+        .shooting-star-1 {
+          animation: shooting-star-left-right 14s linear infinite;
+          animation-delay: 1s;
+        }
+        .shooting-star-2 {
+          animation: shooting-star-left-right 19s linear infinite;
+          animation-delay: 7s;
+        }
+
+        /* Interactive Hover: Accelerate spin on hover */
+        .chakra-container:hover .spin-clockwise-slow {
+          animation-duration: 35s;
+        }
+        .chakra-container:hover .spin-counter-clockwise {
+          animation-duration: 25s;
+        }
+        .chakra-container:hover .spin-clockwise-fast {
+          animation-duration: 15s;
+        }
+        .chakra-container:hover .chakra-core-glow {
+          filter: drop-shadow(0 0 12px #f58220) brightness(1.25);
+        }
+
+        .btn-gradient-shimmer {
+          background: linear-gradient(90deg, #f58220, #ff9e42, #f58220);
+          background-size: 200% auto;
+          animation: button-shimmer 3s linear infinite;
+        }
+
+        @keyframes float-icon-anim {
+          0%, 100% { transform: translateY(0px) rotate(var(--rot, 0deg)); opacity: 0.16; }
+          50% { transform: translateY(-16px) rotate(calc(var(--rot, 0deg) + 12deg)); opacity: 0.34; }
+        }
+
+        @keyframes space-drift {
+          0%, 100% { transform: scale(1) rotate(0deg); }
+          50% { transform: scale(1.08) rotate(2deg); }
+        }
+      `}} />
+
+      {/* Shooting Stars */}
+      <div className="shooting-star shooting-star-1" style={{ top: "35%", left: "20%" }} />
+      <div className="shooting-star shooting-star-2" style={{ top: "60%", left: "40%" }} />
+
+      {/* Nebula glowing aura behind the chakra */}
       <div
+        className="nebula"
         style={{
           position: "absolute",
-          inset: 0,
-          background: "linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35))",
-          zIndex: 1,
+          top: "10%",
+          right: "-10%",
+          width: "600px",
+          height: "600px",
+          borderRadius: "50%",
+          background: "radial-gradient(circle, rgba(245,130,32,0.22) 0%, rgba(21,78,115,0.12) 50%, transparent 75%)",
+          filter: "blur(60px)",
           pointerEvents: "none",
+          zIndex: 1,
+          transform: `translate(${mousePos.x * -12}px, ${mousePos.y * -12}px)`,
+          transition: "transform 0.3s cubic-bezier(0.1, 0.8, 0.2, 1)",
+        }}
+      />
+      <div
+        className="nebula"
+        style={{
+          position: "absolute",
+          bottom: "-5%",
+          left: "5%",
+          width: "400px",
+          height: "400px",
+          borderRadius: "50%",
+          background: "radial-gradient(circle, rgba(21,78,115,0.18) 0%, transparent 70%)",
+          filter: "blur(50px)",
+          pointerEvents: "none",
+          zIndex: 1,
+          animationDelay: "3s",
+          transform: `translate(${mousePos.x * -12}px, ${mousePos.y * -12}px)`,
+          transition: "transform 0.3s cubic-bezier(0.1, 0.8, 0.2, 1)",
         }}
       />
 
-      {/* Subtle dot grid */}
+      {/* Floating Constellation Stars (Parallax Outer + Orbit Inner) */}
+      <div 
+        style={{ 
+          position: "absolute", 
+          inset: "-60px", 
+          zIndex: 2, 
+          pointerEvents: "none",
+          transform: `translate(${mousePos.x * -25}px, ${mousePos.y * -25}px)`,
+          transition: "transform 0.2s cubic-bezier(0.15, 0.85, 0.3, 1)",
+        }}
+      >
+        <div style={{ width: "100%", height: "100%", animation: "space-drift 28s ease-in-out infinite" }}>
+          {stars.map((star) => (
+            <div
+              key={star.id}
+              className="star-twinkle"
+              style={{
+                position: "absolute",
+                top: star.top,
+                left: star.left,
+                width: `${star.size}px`,
+                height: `${star.size}px`,
+                borderRadius: "50%",
+                background: "#ffffff",
+                boxShadow: star.size > 2 ? "0 0 6px #ffffff, 0 0 10px rgba(245,130,32,0.6)" : "none",
+                WebkitAnimationDelay: star.delay,
+                animationDelay: star.delay,
+                animationDuration: star.duration,
+                WebkitAnimationDuration: star.duration,
+              } as React.CSSProperties}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Floating Design Icons (Parallax Outer + Drift Inner) */}
+      <div 
+        style={{ 
+          position: "absolute", 
+          inset: "-80px", 
+          zIndex: 2, 
+          pointerEvents: "none", 
+          overflow: "hidden",
+          transform: `translate(${mousePos.x * -42}px, ${mousePos.y * -42}px)`,
+          transition: "transform 0.18s cubic-bezier(0.15, 0.85, 0.3, 1)",
+        }}
+      >
+        <div style={{ width: "100%", height: "100%", animation: "space-drift 38s ease-in-out infinite alternate" }}>
+          {floatingIcons.map((item) => {
+            let IconComponent;
+            switch (item.iconName) {
+              case 'PenTool': IconComponent = PenTool; break;
+              case 'Palette': IconComponent = Palette; break;
+              case 'Brush': IconComponent = Brush; break;
+              case 'Layers': IconComponent = Layers; break;
+              case 'Compass': IconComponent = Compass; break;
+              default: IconComponent = PenTool;
+            }
+            return (
+              <div
+                key={item.id}
+                style={{
+                  position: "absolute",
+                  top: item.top,
+                  left: item.left,
+                  color: "rgba(245, 130, 32, 0.22)",
+                  filter: "drop-shadow(0 0 8px rgba(245,130,32,0.15))",
+                  animation: `float-icon-anim ${item.duration} ease-in-out infinite`,
+                  animationDelay: item.delay,
+                  ['--rot' as any]: `${item.rotation}deg`,
+                } as React.CSSProperties}
+              >
+                <IconComponent size={item.size} strokeWidth={1.2} />
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Subtle Dot Grid */}
       <div
         style={{
           position: "absolute",
-          inset: 0,
-          backgroundImage: "radial-gradient(circle, rgba(11,60,93,0.15) 1px, transparent 1px)",
+          inset: "-40px",
+          backgroundImage: "radial-gradient(circle, rgba(245,130,32,0.06) 1px, transparent 1px)",
           backgroundSize: "40px 40px",
           pointerEvents: "none",
           opacity: 0.6,
           zIndex: 2,
+          transform: `translate(${mousePos.x * -8}px, ${mousePos.y * -8}px)`,
+          transition: "transform 0.25s cubic-bezier(0.1, 0.8, 0.2, 1)",
         }}
       />
 
-      {/* Gold blob decorations */}
       <div
-        className="animate-blob"
-        style={{
-          position: "absolute",
-          top: "-80px",
-          right: "-80px",
-          width: "500px",
-          height: "500px",
-          borderRadius: "50%",
-          background: "radial-gradient(circle, rgba(11,60,93,0.08) 0%, transparent 70%)",
-          pointerEvents: "none",
-          zIndex: 2,
-        }}
-      />
-      <div
-        className="animate-blob"
-        style={{
-          position: "absolute",
-          bottom: "-100px",
-          left: "-60px",
-          width: "400px",
-          height: "400px",
-          borderRadius: "50%",
-          background: "radial-gradient(circle, rgba(245,130,32,0.06) 0%, transparent 70%)",
-          pointerEvents: "none",
-          animationDelay: "4s",
-          zIndex: 2,
-        }}
-      />
-
-      {/* Background is now banner.png */}
-
-      {/* Content */}
-      <div
-        style={{ position: "relative", zIndex: 10, width: "100%", paddingTop: "96px", paddingBottom: "60px" }}
+        style={{ position: "relative", zIndex: 10, width: "100%", paddingTop: "100px", paddingBottom: "80px" }}
       >
         <div className="site-wrap">
-          <div style={{ maxWidth: "660px" }}>
+          <div style={{ display: "grid", alignItems: "center", gap: "40px" }} className="lg:grid-cols-12">
+            
+            {/* Left side: Copy content */}
+            <div className="lg:col-span-7" style={{ position: "relative", zIndex: 12 }}>
+              <h1
+                style={{
+                  fontSize: "clamp(2.4rem, 5.5vw, 4.2rem)",
+                  fontWeight: 600,
+                  lineHeight: 1.1,
+                  marginBottom: "24px",
+                  color: "#ffffff",
+                }}
+              >
+                {["We", "are", "Helping", "\n", "to", "Build"].map((w, i) =>
+                  w === "\n" ? (
+                    <br key={`br-${i}`} />
+                  ) : (
+                    <span key={i} style={{ ...wordEnter(i), marginRight: "0.28em" }}>
+                      {w}
+                    </span>
+                  )
+                )}
+                {/* Rotating word */}
+                <span style={{ ...wordEnter(6), color: "#f58220" }}>
+                  <span
+                    style={{
+                      display: "inline-block",
+                      opacity: fadeIn ? 1 : 0,
+                      transform: fadeIn ? "translateY(0)" : "translateY(10px)",
+                      transition: "opacity 350ms ease, transform 350ms ease",
+                    }}
+                  >
+                    {words[wordIdx]}
+                  </span>
+                </span>
+              </h1>
 
+              <p style={{ color: "#cbd5e1", fontSize: "1.1rem", lineHeight: 1.75, marginBottom: "36px", maxWidth: "540px" }}>
+                Build Your Brand&apos;s Journey with A Designer Ahmedabad — your partner in
+                Logo, Packaging, Brochure &amp; all things graphic design.
+              </p>
 
-            {/* Heading */}
-            <h1
-              style={{
-                fontSize: "clamp(2.4rem, 5.5vw, 4.2rem)",
-                fontWeight: 600,
-                lineHeight: 1.1,
-                marginBottom: "24px",
-                color: "#ffffff",
+              {/* CTA buttons */}
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "14px", marginBottom: "56px" }}>
+                <Link
+                  href="#about"
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "8px",
+                    padding: "14px 32px",
+                    color: "#fff",
+                    fontWeight: 700,
+                    borderRadius: "999px",
+                    fontSize: "15px",
+                    transition: "all 0.3s ease",
+                  }}
+                  className="btn-gradient-shimmer hover:shadow-[0_0_20px_rgba(245,130,32,0.4)]"
+                >
+                  Discover More <ArrowRight size={17} />
+                </Link>
+              </div>
+
+              {/* Stats row */}
+              <div
+                style={{ display: "grid", gap: "12px", maxWidth: "560px" }}
+                className="grid-cols-3"
+              >
+                {[{ value: "5000+", label: "Projects Completed" }, { value: "4200+", label: "Happy Clients" }, { value: "10+", label: "Years Experience" }].map((s) => (
+                  <div key={s.label} style={{ borderLeft: "2px solid #f58220", paddingLeft: "10px", minWidth: 0 }}>
+                    <div style={{ fontSize: "clamp(1rem, 3vw, 1.55rem)", fontWeight: 800, color: "#ffffff", lineHeight: 1.1, whiteSpace: "nowrap" }}>{s.value}</div>
+                    <div style={{ fontSize: "clamp(10px, 2vw, 11px)", color: "#cbd5e1", marginTop: "3px", fontWeight: 500 }}>{s.label}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Right side: Rotating Sacred Astrology-style Design Chakra */}
+            <div 
+              className="lg:col-span-5 flex justify-center items-center chakra-container" 
+              style={{ 
+                position: "relative",
+                zIndex: 10,
+                cursor: "pointer",
               }}
             >
-              {["We", "are", "Helping", "\n", "to", "Build"].map((w, i) =>
-                w === "\n" ? (
-                  <br key={`br-${i}`} />
-                ) : (
-                  <span key={i} style={{ ...wordEnter(i), marginRight: "0.28em" }}>
-                    {w}
-                  </span>
-                )
-              )}
-              {/* Rotating word — entrance reveal on outer span, swap-fade on inner */}
-              <span style={{ ...wordEnter(6), color: "#f58220" }}>
-                <span
-                  style={{
-                    display: "inline-block",
-                    opacity: fadeIn ? 1 : 0,
-                    transform: fadeIn ? "translateY(0)" : "translateY(10px)",
-                    transition: "opacity 350ms ease, transform 350ms ease",
+              <div 
+                className="chakra-float"
+                style={{
+                  position: "relative",
+                  width: "100%",
+                  maxWidth: "430px",
+                  aspectRatio: "1",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                {/* SVG Astrology/Design Mandala Chakra */}
+                <svg 
+                  viewBox="0 0 500 500" 
+                  fill="none" 
+                  style={{ 
+                    width: "100%", 
+                    height: "100%", 
+                    overflow: "visible",
+                    filter: "drop-shadow(0 0 25px rgba(245,130,32,0.22))"
                   }}
                 >
-                  {words[wordIdx]}
-                </span>
-              </span>
-            </h1>
+                  {/* LAYER 1: Outer Rotating Ring with Degree Marks (Dashed, slowly clockwise) */}
+                  <g className="spin-clockwise-slow" style={{ transformOrigin: "250px 250px" }}>
+                    <circle cx="250" cy="250" r="230" stroke="#f58220" strokeWidth="1.5" strokeDasharray="5 7" opacity="0.3" />
+                    <circle cx="250" cy="250" r="238" stroke="#154e73" strokeWidth="1" strokeDasharray="30 20" opacity="0.5" />
+                    
+                    {/* Degree Ticks (astrological markings) */}
+                    {Array.from({ length: 24 }).map((_, i) => {
+                      const angle = (i * 15 * Math.PI) / 180;
+                      const x1 = roundVal(250 + 230 * Math.cos(angle));
+                      const y1 = roundVal(250 + 230 * Math.sin(angle));
+                      const x2 = roundVal(250 + 238 * Math.cos(angle));
+                      const y2 = roundVal(250 + 238 * Math.sin(angle));
+                      return (
+                        <line
+                           key={i}
+                           x1={x1}
+                           y1={y1}
+                           x2={x2}
+                           y2={y2}
+                           stroke="#f58220"
+                           strokeWidth="1"
+                           opacity="0.6"
+                        />
+                      );
+                    })}
 
-            <p style={{ color: "#e5e5e5", fontSize: "1.1rem", lineHeight: 1.75, marginBottom: "36px", maxWidth: "520px" }}>
-              Build Your Brand&apos;s Journey with Barndingo — your partner in
-              Logo, Packaging, Brochure &amp; all things graphic design.
-            </p>
+                    {/* Orbit stars */}
+                    {Array.from({ length: 8 }).map((_, i) => {
+                      const angle = (i * Math.PI) / 4;
+                      return (
+                        <circle 
+                          key={i} 
+                          cx={roundVal(250 + 230 * Math.cos(angle))} 
+                          cy={roundVal(250 + 230 * Math.sin(angle))} 
+                          r="3" 
+                          fill="#f58220" 
+                          opacity="0.8" 
+                        />
+                      );
+                    })}
+                  </g>
 
-            {/* Mobile-only hero visual removed */}
+                  {/* LAYER 2: Constellation Wheel Middle Ring (Counter-Clockwise) */}
+                  <g className="spin-counter-clockwise" style={{ transformOrigin: "250px 250px" }}>
+                    <circle cx="250" cy="250" r="190" stroke="#154e73" strokeWidth="1.5" opacity="0.8" />
+                    <circle cx="250" cy="250" r="175" stroke="#f58220" strokeWidth="0.8" strokeDasharray="3 3" opacity="0.5" />
+                    
+                    {/* Geometric connecting constellation lines */}
+                    {Array.from({ length: 12 }).map((_, i) => {
+                      const angle1 = (i * 30 * Math.PI) / 180;
+                      const angle2 = (((i + 5) % 12) * 30 * Math.PI) / 180;
+                      return (
+                        <line
+                          key={i}
+                          x1={roundVal(250 + 190 * Math.cos(angle1))}
+                          y1={roundVal(250 + 190 * Math.sin(angle1))}
+                          x2={roundVal(250 + 190 * Math.cos(angle2))}
+                          y2={roundVal(250 + 190 * Math.sin(angle2))}
+                          stroke="rgba(245, 130, 32, 0.2)"
+                          strokeWidth="1.2"
+                        />
+                      );
+                    })}
+                    
+                    {/* Constellation Nodes */}
+                    {Array.from({ length: 12 }).map((_, i) => {
+                      const angle = (i * 30 * Math.PI) / 180;
+                      const x = roundVal(250 + 190 * Math.cos(angle));
+                      const y = roundVal(250 + 190 * Math.sin(angle));
+                      return (
+                        <g key={i}>
+                          <circle cx={x} cy={y} r="5" fill="#f58220" opacity="0.8" />
+                          <circle cx={x} cy={y} r="9" stroke="#ffffff" strokeWidth="1" opacity="0.3" />
+                        </g>
+                      );
+                    })}
+                  </g>
 
-            {/* CTA buttons */}
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "14px", marginBottom: "56px" }}>
-              <Link
-                href="#about"
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "8px",
-                  padding: "14px 32px",
-                  background: "#f58220",
-                  color: "#fff",
-                  fontWeight: 700,
-                  borderRadius: "999px",
-                  fontSize: "15px", transition: "background 0.2s",
-                }}
-                className="hover:bg-[#ff933c]"
-              >
-                Discover More <ArrowRight size={17} />
-              </Link>
+                  {/* LAYER 3: Sacred Geometry Rays & Flower Pattern (Clockwise) */}
+                  <g className="spin-clockwise-fast" style={{ transformOrigin: "250px 250px" }}>
+                    <circle cx="250" cy="250" r="135" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
+                    
+                    {/* Sacred circles */}
+                    {Array.from({ length: 12 }).map((_, i) => {
+                      const angle = (i * 30 * Math.PI) / 180;
+                      return (
+                        <circle
+                          key={i}
+                          cx={roundVal(250 + 65 * Math.cos(angle))}
+                          cy={roundVal(250 + 65 * Math.sin(angle))}
+                          r="65"
+                          stroke="rgba(245,130,32,0.18)"
+                          strokeWidth="1"
+                        />
+                      );
+                    })}
+                    {/* Central spokes */}
+                    {Array.from({ length: 24 }).map((_, i) => {
+                      const angle = (i * 360) / 24;
+                      return (
+                        <line
+                          key={i}
+                          x1="250"
+                          y1="250"
+                          x2="250"
+                          y2="115"
+                          transform={`rotate(${angle} 250 250)`}
+                          stroke="#154e73"
+                          strokeWidth="1"
+                          opacity="0.6"
+                        />
+                      );
+                    })}
+                  </g>
 
+                  {/* LAYER 4: Inner Coordinates & Degree Text */}
+                  <g className="spin-counter-clockwise" style={{ transformOrigin: "250px 250px" }}>
+                    <circle cx="250" cy="250" r="85" stroke="#f58220" strokeWidth="1" strokeDasharray="4 4" opacity="0.4" />
+                    {Array.from({ length: 4 }).map((_, i) => {
+                      const angle = i * 90;
+                      const textMap = ["0°", "90°", "180°", "270°"];
+                      return (
+                        <g key={i} transform={`rotate(${angle} 250 250)`}>
+                          <text 
+                            x="250" 
+                            y="180" 
+                            fill="rgba(255,255,255,0.65)" 
+                            fontSize="8" 
+                            fontWeight="bold" 
+                            textAnchor="middle"
+                            style={{ userSelect: "none" }}
+                          >
+                            {textMap[i]}
+                          </text>
+                        </g>
+                      );
+                    })}
+                  </g>
+
+                  {/* LAYER 5: Creative Emblem Core (Complex multi-point star with glow) */}
+                  <g className="spin-counter-clockwise chakra-core-glow" style={{ transformOrigin: "250px 250px", transition: "all 0.5s ease" }}>
+                    <circle cx="250" cy="250" r="45" fill="rgba(5, 24, 41, 0.75)" stroke="#f58220" strokeWidth="2" />
+                    
+                    {/* Multi-point mystical star */}
+                    <polygon 
+                      points="250,210 255,235 275,235 258,248 268,272 250,256 232,272 242,248 225,235 245,235"
+                      fill="#ffffff"
+                      style={{ filter: "drop-shadow(0 0 6px #f58220)" }}
+                    />
+                    
+                    {/* Micro concentric rings */}
+                    <circle cx="250" cy="250" r="18" stroke="rgba(245,130,32,0.4)" strokeWidth="0.8" />
+                    <circle cx="250" cy="250" r="5" fill="#f58220" />
+                  </g>
+                </svg>
+              </div>
             </div>
 
-            {/* Stats row */}
-            <div
-              style={{ display: "grid", gap: "12px", maxWidth: "560px" }}
-              className="grid-cols-3"
-            >
-              {[{ value: "5000+", label: "Projects Completed" }, { value: "4200+", label: "Happy Clients" }, { value: "10+", label: "Years Experience" }].map((s) => (
-                <div key={s.label} style={{ borderLeft: "2px solid #f58220", paddingLeft: "10px", minWidth: 0 }}>
-                  <div style={{ fontSize: "clamp(1rem, 3vw, 1.55rem)", fontWeight: 800, color: "#ffffff", lineHeight: 1.1, whiteSpace: "nowrap" }}>{s.value}</div>
-                  <div style={{ fontSize: "clamp(10px, 2vw, 11px)", color: "#cbd5e1", marginTop: "3px", fontWeight: 500 }}>{s.label}</div>
-                </div>
-              ))}
-            </div>
           </div>
         </div>
       </div>
-
     </section>
   );
 }

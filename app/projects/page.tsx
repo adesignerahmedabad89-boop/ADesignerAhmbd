@@ -15,7 +15,7 @@ import Footer from "@/components/Footer";
 import Portfolio from "@/components/Portfolio";
 
 export const metadata: Metadata = {
-  title: "Our Projects | Brandingo",
+  title: "Our Projects | A Designer Ahmedabad",
   description: "Discover our portfolio of branding and graphic design projects across various industries.",
   alternates: {
     canonical: "https://jkbrandingindia.com/projects",

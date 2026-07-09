@@ -5,7 +5,7 @@ import AllServices from "@/components/AllServices";
 import PageHero from "@/components/PageHero";
 
 export const metadata: Metadata = {
-  title: "Our Services | Brandingo",
+  title: "Our Services | A Designer Ahmedabad",
   description:
     "Explore our comprehensive branding, printing, website development, and digital marketing services tailored to elevate your business.",
   alternates: {

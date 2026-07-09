@@ -41,7 +41,7 @@ export default function WhyChooseUs() {
             Commitment, Quality, <span style={{ color: "#f58220" }}>&amp; Results</span>
           </h2>
           <p style={{ color: "#777", maxWidth: "520px", margin: "0 auto", lineHeight: 1.75 }}>
-            We don&apos;t just build brands — we build legacies. Here&apos;s why leading businesses choose Brandingo.
+            We don&apos;t just build brands — we build legacies. Here&apos;s why leading businesses choose A Designer Ahmedabad.
           </p>
         </div>
 

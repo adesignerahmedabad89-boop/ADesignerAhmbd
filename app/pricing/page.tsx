@@ -5,9 +5,9 @@ import Pricing from "@/components/Pricing";
 import PageHero from "@/components/PageHero";
 
 export const metadata: Metadata = {
-  title: "Pricing | Brandigo",
+  title: "Pricing | A Designer Ahmedabad",
   description:
-    "Explore Brandingo's logo design and branding packages with clear deliverables, smooth revisions, and premium creative support.",
+    "Explore A Designer Ahmedabad's logo design and branding packages with clear deliverables, smooth revisions, and premium creative support.",
   alternates: {
     canonical: "https://jkbrandingindia.com/pricing",
   },

@@ -6,7 +6,7 @@ import { Eye, Target, Heart } from "lucide-react";
 const pillars = [
   { icon: Eye, title: "Our Vision", text: "To be a global leader in the branding industry, recognized for our creativity, strategic thinking, and commitment to excellence." },
   { icon: Target, title: "Our Mission", text: "To deliver innovative, result-driven branding solutions that transform businesses into iconic brands, making every customer feel WoW." },
-  { icon: Heart, title: "Our Values", text: "Creativity, Integrity, Excellence, and a Client-First approach form the cornerstone of everything we do at Brandingo." },
+  { icon: Heart, title: "Our Values", text: "Creativity, Integrity, Excellence, and a Client-First approach form the cornerstone of everything we do at A Designer Ahmedabad." },
 ];
 
 export default function Vision() {
