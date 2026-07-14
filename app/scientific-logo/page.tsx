@@ -5,9 +5,123 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Check, X, ShieldAlert, Sparkles, Trophy, Star, ArrowRight, Eye, Sun, Moon, Compass, Globe } from "lucide-react";
 
+const getZodiacIcon = (name: string) => {
+  const props = {
+    className: "w-8 h-8 text-[#dfb15b] transition-transform group-hover:scale-110 duration-300",
+    stroke: "currentColor",
+    strokeWidth: "2",
+    strokeLinecap: "round" as const,
+    strokeLinejoin: "round" as const,
+    fill: "none",
+    viewBox: "0 0 24 24"
+  };
+
+  switch (name) {
+    case "Aries":
+      return (
+        <svg {...props}>
+          <path d="M12 21v-10c0-2.2-1.8-4-4-4S4 8.8 4 11M12 11c0-2.2 1.8-4 4-4s4 1.8 4 4" />
+        </svg>
+      );
+    case "Taurus":
+      return (
+        <svg {...props}>
+          <circle cx="12" cy="14" r="5" />
+          <path d="M4 6c0 3 3 5 8 5s8-2 8-5" />
+        </svg>
+      );
+    case "Gemini":
+      return (
+        <svg {...props}>
+          <path d="M8 4h8M8 20h8M9 4v16M15 4v16" />
+        </svg>
+      );
+    case "Cancer":
+      return (
+        <svg {...props}>
+          <circle cx="8" cy="8" r="3" />
+          <circle cx="16" cy="16" r="3" />
+          <path d="M8 5h8a4 4 0 0 1 4 4M16 19H8a4 4 0 0 1-4-4" />
+        </svg>
+      );
+    case "Leo":
+      return (
+        <svg {...props}>
+          <circle cx="7.5" cy="14.5" r="2.5" />
+          <path d="M10 14.5c2.5-3.5 5.5-6.5 8-5.5s2.5 3.5.5 6-6.5 7-6.5 7" />
+        </svg>
+      );
+    case "Virgo":
+      return (
+        <svg {...props}>
+          <path d="M4 8v10M8 8v10M12 8v6c0 2 1 3 3 3s3-1.5 3-4V8" />
+          <path d="M18 12c1-1 2-1 2.5 0s0 2.5-1.5 4.5l-3 3.5" />
+        </svg>
+      );
+    case "Libra":
+      return (
+        <svg {...props}>
+          <path d="M4 14h5a3 3 0 1 1 6 0h5M4 19h16" />
+        </svg>
+      );
+    case "Scorpio":
+      return (
+        <svg {...props}>
+          <path d="M4 8v10M8 8v10M12 8v8c0 1.5.5 2.5 2 2.5s2.5-1 2.5-3v-4" />
+          <path d="M16.5 11.5l3-3 2.5 2.5 M19.5 8.5v3h-3" />
+        </svg>
+      );
+    case "Sagittarius":
+      return (
+        <svg {...props}>
+          <path d="M5 19L19 5M13 5h6v6M9 15l4-4" />
+        </svg>
+      );
+    case "Capricorn":
+      return (
+        <svg {...props}>
+          <path d="M4 12c0-3 3-5 5-2v7c0 2 2 3.5 4 2s2.5-2 2.5-4V11c0-2 1.5-3 3-1.5s1 3.5-1.5 5.5l-3 2" />
+        </svg>
+      );
+    case "Aquarius":
+      return (
+        <svg {...props}>
+          <path d="M4 9l3.5-3.5L12 10l4.5-4.5L20 9M4 15l3.5-3.5L12 16l4.5-4.5L20 15" />
+        </svg>
+      );
+    case "Pisces":
+      return (
+        <svg {...props}>
+          <path d="M7 4c-3 4-3 12 0 16M17 4c3 4 3 12 0 16M5 12h14" />
+        </svg>
+      );
+    default:
+      return null;
+  }
+};
+
 export default function ScientificLogoPage() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
+
+  // Form states & submission handler
+  const [formData, setFormData] = useState({
+    name: "",
+    email: ""
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [selectedZodiac, setSelectedZodiac] = useState<string>("Aries");
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setTimeout(() => {
+      setIsSubmitting(false);
+      setSubmitSuccess(true);
+    }, 1500);
+  };
+
 
   useEffect(() => {
     // Dynamic Spiral Galaxy Simulator on Canvas
@@ -42,20 +156,20 @@ export default function ScientificLogoPage() {
     for (let i = 0; i < numStars; i++) {
       // Distance from center
       const r = Math.pow(Math.random(), 2.5) * Math.max(canvas.width, canvas.height) * 0.75;
-      
+
       // Determine which arm this star belongs to
       const armIndex = i % numArms;
       const armAngle = (armIndex / numArms) * Math.PI * 2;
-      
+
       // Spiral curvature factor
       const spiralFactor = r * 0.005;
-      
+
       // Random angle dispersion in the arm
       const dispersion = (Math.random() - 0.5) * armWidth;
       const angle = armAngle + spiralFactor + dispersion;
 
-      // Color scheme (mystical gold, deep indigo, neon violet, soft white)
-      const colors = ["#dfb15b", "#7c3aed", "#ec4899", "#fcd34d", "#ffffff", "#38bdf8"];
+      // Color scheme (mystical gold, brand blue, brand orange/red, soft white)
+      const colors = ["#dfb15b", "#0046ad", "#e31e24", "#fcd34d", "#ffffff", "#38bdf8"];
       const color = colors[Math.floor(Math.random() * colors.length)];
 
       stars.push({
@@ -69,7 +183,7 @@ export default function ScientificLogoPage() {
 
     const draw = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
+
       // Deep space gradient backdrop
       const bgGrad = ctx.createRadialGradient(
         canvas.width / 2,
@@ -101,11 +215,11 @@ export default function ScientificLogoPage() {
       ctx.restore();
 
       // Render rotating spiral galaxy
-      angleOffset += 0.0005; // Base rotation rate
+      angleOffset += 0.003; // Increased rotation rate for visible motion
 
       stars.forEach((star) => {
         const currentAngle = star.angle + angleOffset;
-        
+
         // Calculate coordinates relative to center
         const x = cx + Math.cos(currentAngle) * star.r;
         const y = cy + Math.sin(currentAngle) * star.r;
@@ -116,7 +230,7 @@ export default function ScientificLogoPage() {
         // Draw star
         ctx.beginPath();
         ctx.arc(x, y, star.size, 0, Math.PI * 2);
-        
+
         // Twinkling effect
         const twinkle = 0.6 + 0.4 * Math.sin(Date.now() * 0.003 + star.r);
         ctx.fillStyle = star.color;
@@ -139,13 +253,13 @@ export default function ScientificLogoPage() {
   return (
     <>
       <Navbar />
-      
+
       {/* Dynamic Spiral Galaxy Canvas Background */}
       <canvas ref={canvasRef} className="fixed inset-0 z-0 pointer-events-none" />
 
       {/* Cosmic Astrology UI Layout */}
       <div className="relative z-10 text-white overflow-hidden bg-transparent font-sans">
-        
+
         {/* Fixed Header Spacer block to push content completely below the fixed Navbar */}
         <div style={{ height: "60px", width: "100%" }} className="shrink-0"></div>
 
@@ -155,7 +269,7 @@ export default function ScientificLogoPage() {
           className="relative px-6 flex flex-col items-center justify-center border-b border-[#dfb15b]/10"
         >
           <div className="site-wrap text-center flex flex-col items-center">
-            
+
             {/* Celestial Badge */}
             <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-[#dfb15b]/30 bg-black/60 shadow-[0_0_15px_rgba(223,177,91,0.15)] text-xs font-semibold text-[#dfb15b] mb-8 animate-pulse">
               <Moon className="w-4 h-4 text-[#dfb15b] fill-current" />
@@ -211,7 +325,7 @@ export default function ScientificLogoPage() {
                 href="https://wa.me/919979992804"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center px-12 py-5 bg-gradient-to-r from-[#dfb15b] to-[#7c3aed] text-white font-extrabold text-lg rounded-full shadow-[0_0_30px_rgba(223,177,91,0.3)] transition-all hover:scale-105 hover:shadow-[0_0_40px_rgba(124,58,237,0.4)]"
+                className="inline-flex items-center justify-center px-12 py-5 bg-gradient-to-r from-[#dfb15b] via-[#0046ad] to-[#e31e24] text-white font-extrabold text-lg rounded-full shadow-[0_0_30px_rgba(0,70,173,0.3)] transition-all hover:scale-105 hover:shadow-[0_0_40px_rgba(0,70,173,0.5)]"
               >
                 Schedule Your 1:1 Cosmic Audit
                 <ArrowRight className="ml-2 w-5 h-5" />
@@ -232,7 +346,7 @@ export default function ScientificLogoPage() {
 
         {/* ============ CELESTIAL WARNING SECTION ============ */}
         <section
-          style={{ width: "100%", paddingTop: "50px", paddingBottom: "80px" }}
+          style={{ width: "100%", paddingTop: "50px", paddingBottom: "50px" }}
           className="px-6 bg-black/45 border-b border-[#dfb15b]/10"
         >
           <div className="site-wrap flex justify-center">
@@ -246,7 +360,243 @@ export default function ScientificLogoPage() {
         </section>
 
 
-        {/* ============ ASTRO-METRICS AUDIT SCOPE ============ */}
+        {/* ============ WHAT WE DO (ROTATING COSMIC STRUCTURE) ============ */}
+        <section
+          style={{ width: "100%", paddingTop: "80px", paddingBottom: "80px" }}
+          className="px-6 border-b border-[#dfb15b]/10"
+        >
+          <div className="site-wrap px-8 md:px-12">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+
+              {/* Left Column: Rotating Cosmic SVG Structure */}
+              <div className="lg:col-span-5 flex justify-center items-center relative min-h-[300px]">
+                {/* Outer Glow Effect */}
+                <div className="absolute w-[280px] h-[280px] bg-gradient-to-r from-[#dfb15b]/10 to-[#7c3aed]/10 rounded-full blur-2xl filter opacity-40"></div>
+
+                {/* SVG Structure */}
+                <svg viewBox="0 0 300 300" className="w-full max-w-[340px] md:max-w-[380px] mx-auto filter drop-shadow-[0_0_30px_rgba(223,177,91,0.15)] relative z-10">
+                  {/* Outer boundary guidelines */}
+                  <circle cx="150" cy="150" r="145" fill="none" stroke="rgba(223, 177, 91, 0.05)" strokeWidth="1" strokeDasharray="5 5" />
+                  <circle cx="150" cy="150" r="125" fill="none" stroke="rgba(223, 177, 91, 0.03)" strokeWidth="1" />
+
+                  {/* Outer Tilted Orbits */}
+                  <ellipse cx="150" cy="150" rx="135" ry="55" fill="none" stroke="rgba(223, 177, 91, 0.15)" strokeWidth="1" transform="rotate(-30, 150, 150)" />
+                  <ellipse cx="150" cy="150" rx="120" ry="75" fill="none" stroke="rgba(124, 58, 237, 0.15)" strokeWidth="1.2" transform="rotate(45, 150, 150)" />
+
+                  {/* Outer Spinning Group (60s slow spin) */}
+                  <g className="animate-[spin_60s_linear_infinite] origin-center">
+                    <circle cx="150" cy="150" r="105" fill="none" stroke="rgba(255, 255, 255, 0.07)" strokeWidth="1" />
+                    <circle cx="150" cy="150" r="85" fill="none" stroke="rgba(223, 177, 91, 0.1)" strokeWidth="1" strokeDasharray="3 3" />
+
+                    {/* Floating Planets */}
+                    <circle cx="150" cy="45" r="7" fill="url(#goldGrad)" className="filter drop-shadow-[0_0_8px_#dfb15b]" />
+                    <circle cx="45" cy="150" r="4.5" fill="#7c3aed" />
+                    <circle cx="150" cy="255" r="5" fill="#ec4899" />
+                  </g>
+
+                  {/* Inner Fast Reverse Spinning Group (30s spin) */}
+                  <g className="animate-[spin_30s_linear_infinite_reverse] origin-center">
+                    <ellipse cx="150" cy="150" rx="65" ry="65" fill="none" stroke="rgba(255, 255, 255, 0.1)" strokeWidth="1" />
+                    <circle cx="215" cy="150" r="5.5" fill="#38bdf8" />
+                    <circle cx="85" cy="150" r="4" fill="#dfb15b" />
+                  </g>
+
+                  {/* Central Sacred Geometry Structure */}
+                  <g>
+                    {/* Shadow core backdrop */}
+                    <circle cx="150" cy="150" r="45" fill="black" stroke="rgba(223, 177, 91, 0.25)" strokeWidth="1" />
+
+                    {/* Detailed Tetrahedron structure */}
+                    <polygon points="150,118 112,176 188,176" fill="none" stroke="#ffffff" strokeWidth="1.2" strokeLinejoin="round" />
+                    <polygon points="150,132 122,176 178,176" fill="none" stroke="rgba(223, 177, 91, 0.4)" strokeWidth="1" strokeLinejoin="round" />
+
+                    {/* Projection Lines */}
+                    <line x1="150" y1="118" x2="150" y2="155" stroke="#ffffff" strokeWidth="1.2" />
+                    <line x1="112" y1="176" x2="150" y2="155" stroke="#ffffff" strokeWidth="1.2" />
+                    <line x1="188" y1="176" x2="150" y2="155" stroke="#ffffff" strokeWidth="1.2" />
+
+                    {/* Center glowing focal point */}
+                    <circle cx="150" cy="155" r="5" fill="#dfb15b" className="filter drop-shadow-[0_0_5px_#dfb15b]" />
+                  </g>
+
+                  <defs>
+                    <radialGradient id="goldGrad" cx="50%" cy="50%" r="50%">
+                      <stop offset="0%" stopColor="#fcd34d" />
+                      <stop offset="100%" stopColor="#dfb15b" />
+                    </radialGradient>
+                  </defs>
+                </svg>
+              </div>
+
+              {/* Right Column: Content Section */}
+              <div className="lg:col-span-7 flex flex-col justify-center text-left">
+                <span className="text-xs uppercase tracking-widest text-[#dfb15b] font-bold block mb-3">
+                  Predict Future
+                </span>
+                <h2 className="font-serif text-3xl md:text-5xl font-extrabold text-white leading-tight mb-6">
+                  What We Do
+                </h2>
+                <p className="text-slate-300 text-base md:text-lg mb-8 leading-relaxed max-w-2xl">
+                  At A Designer Ahmedabad, we blend creative graphic design with scientific logo principles, astrology, and Vastu Shastra to create powerful brand identities. Whether you’re launching a new venture, optimizing an existing corporate logo, or aligning your brand colors with your zodiac elements, we ensure your logo is not only visually stunning but mathematically and astronomically tuned to attract growth, success, and prosperity.
+                </p>
+                <div>
+                  <a
+                    href="https://wa.me/919979992804"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center px-8 py-3.5 border border-[#dfb15b]/40 text-[#dfb15b] font-bold text-sm rounded-full transition-all hover:bg-[#dfb15b]/10 hover:border-[#dfb15b]"
+                  >
+                    Discover More
+                    <ArrowRight className="ml-2 w-4 h-4" />
+                  </a>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+
+
+        {/* ============ INTERACTIVE ZODIAC BRAND ALIGNMENT CALCULATOR ============ */}
+        <section
+          id="zodiac-calculator"
+          style={{ width: "100%", paddingTop: "60px", paddingBottom: "80px" }}
+          className="border-b border-[#dfb15b]/10 bg-slate-950/10"
+        >
+          {/* Load Google Fonts directly inside page container */}
+          <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet" />
+
+          <div className="site-wrap mx-auto px-8 md:px-12 flex flex-col items-center">
+            <div className="text-center" style={{ marginBottom: "50px" }}>
+              <span className="text-xs uppercase tracking-widest text-[#dfb15b] font-bold block mb-3">Astrological Tool</span>
+              <h2 style={{ fontFamily: "'Cinzel', serif" }} className="text-3xl md:text-5xl font-extrabold text-white leading-tight text-center">
+                Zodiac Brand Alignment Calculator
+              </h2>
+              <p className="text-sm text-slate-400 mt-3 max-w-xl mx-auto leading-relaxed text-center">
+                Select your Zodiac Sign (Rashi) to discover the ideal planetary elements, colors, and geometries for your brand logo.
+              </p>
+            </div>
+
+            {/* Zodiac Selection Grid */}
+            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4 mb-10 max-w-5xl mx-auto w-full">
+              {[
+                { name: "Aries", hindi: "Mesh", symbol: "♈\uFE0E" },
+                { name: "Taurus", hindi: "Vrishabha", symbol: "♉\uFE0E" },
+                { name: "Gemini", hindi: "Mithuna", symbol: "♊\uFE0E" },
+                { name: "Cancer", hindi: "Karka", symbol: "♋\uFE0E" },
+                { name: "Leo", hindi: "Simha", symbol: "♌\uFE0E" },
+                { name: "Virgo", hindi: "Kanya", symbol: "♍\uFE0E" },
+                { name: "Libra", hindi: "Tula", symbol: "♎\uFE0E" },
+                { name: "Scorpio", hindi: "Vrishchika", symbol: "♏\uFE0E" },
+                { name: "Sagittarius", hindi: "Dhanu", symbol: "♐\uFE0E" },
+                { name: "Capricorn", hindi: "Makara", symbol: "♑\uFE0E" },
+                { name: "Aquarius", hindi: "Kumbha", symbol: "♒\uFE0E" },
+                { name: "Pisces", hindi: "Meena", symbol: "♓\uFE0E" }
+              ].map((zodiac) => {
+                const isActive = selectedZodiac === zodiac.name;
+                return (
+                  <button
+                    key={zodiac.name}
+                    onClick={() => setSelectedZodiac(zodiac.name)}
+                    style={{
+                      borderColor: isActive ? "#dfb15b" : "rgba(223,177,91,0.15)",
+                      backgroundColor: isActive ? "rgba(223,177,91,0.12)" : "rgba(0,0,0,0.6)"
+                    }}
+                    className="flex flex-col items-center justify-center p-5 rounded-2xl border text-center transition-all hover:border-[#dfb15b]/60 cursor-pointer hover:translate-y-[-2px] group"
+                  >
+                    <div className="mb-2 text-[#dfb15b]">{getZodiacIcon(zodiac.name)}</div>
+                    <span className="font-serif text-sm font-bold text-white group-hover:text-[#dfb15b] transition-colors">{zodiac.name}</span>
+                    <span className="text-[10px] text-slate-400 mt-0.5">{zodiac.hindi}</span>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Dynamically Rendered Result Card */}
+            {selectedZodiac && (
+              <div 
+                style={{ padding: "40px" }}
+                className="max-w-5xl mx-auto w-full rounded-3xl border border-[#dfb15b]/20 bg-gradient-to-br from-black/90 to-slate-950/90 shadow-[0_0_50px_rgba(0,0,0,0.8)] backdrop-blur-md relative overflow-hidden"
+              >
+                <div className="absolute right-[-40px] top-[-40px] w-48 h-48 bg-[#dfb15b]/5 rounded-full blur-2xl filter pointer-events-none"></div>
+                
+                {/* Result Columns */}
+                {(() => {
+                  const data = [
+                    { name: "Aries", hindi: "Mesh", symbol: "♈\uFE0E", planet: "Mars (Mangal)", element: "Fire", colors: "Crimson Red, Metallic Gold, Warm Orange", geometry: "Triangles, Sharp points, Dynamic angles", direction: "East (Purva)" },
+                    { name: "Taurus", hindi: "Vrishabha", symbol: "♉\uFE0E", planet: "Venus (Shukra)", element: "Earth", colors: "Emerald Green, Pearl White, Olive Green", geometry: "Symmetric curves, circles, heavy borders", direction: "Southeast (Agneya)" },
+                    { name: "Gemini", hindi: "Mithuna", symbol: "♊\uFE0E", planet: "Mercury (Budh)", element: "Air", colors: "Bright Yellow, Light Green, Soft Teal", geometry: "Hexagons, clean lines, twin elements, grids", direction: "West (Paschim)" },
+                    { name: "Cancer", hindi: "Karka", symbol: "♋\uFE0E", planet: "Moon (Chandra)", element: "Water", colors: "Silver, Pearl White, Light Blue", geometry: "Crescents, soft waves, organic curves", direction: "North (Uttar)" },
+                    { name: "Leo", hindi: "Simha", symbol: "♌\uFE0E", planet: "Sun (Surya)", element: "Fire", colors: "Metallic Gold, Deep Yellow, Crimson", geometry: "Radiant lines, sunbursts, bold circles", direction: "East (Purva)" },
+                    { name: "Virgo", hindi: "Kanya", symbol: "♍\uFE0E", planet: "Mercury (Budh)", element: "Earth", colors: "Forest Green, Dark Ochre, Beige", geometry: "Mathematical grids, precise squares", direction: "North (Uttar)" },
+                    { name: "Libra", hindi: "Tula", symbol: "♎\uFE0E", planet: "Venus (Shukra)", element: "Air", colors: "Royal Blue, Sky Blue, Rose Gold", geometry: "Perfect horizontal symmetry, balance scales", direction: "West (Paschim)" },
+                    { name: "Scorpio", hindi: "Vrishchika", symbol: "♏\uFE0E", planet: "Mars (Mangal)", element: "Water", colors: "Deep Maroon, Dark Violet, Crimson Black", geometry: "Intricate spirals, strong upward points", direction: "Northwest (Vayavya)" },
+                    { name: "Sagittarius", hindi: "Dhanu", symbol: "♐\uFE0E", planet: "Jupiter (Guru)", element: "Fire", colors: "Saffron, Royal Yellow, Purple", geometry: "Upward arrows, expanding radial lines", direction: "Northeast (Eeshanya)" },
+                    { name: "Capricorn", hindi: "Makara", symbol: "♑\uFE0E", planet: "Saturn (Shani)", element: "Earth", colors: "Charcoal Black, Dark Cobalt, Olive Green", geometry: "Heavy solid structures, pillars, squares", direction: "South (Dakshin)" },
+                    { name: "Aquarius", hindi: "Kumbha", symbol: "♒\uFE0E", planet: "Saturn / Rahu", element: "Air", colors: "Electric Blue, Indigo, Violet", geometry: "Zigzag waves, modern asymmetric grids", direction: "West (Paschim)" },
+                    { name: "Pisces", hindi: "Meena", symbol: "♓\uFE0E", planet: "Jupiter (Guru)", element: "Water", colors: "Seafoam Green, Aquamarine, Deep Saffron", geometry: "Double overlapping circles, wavy lines", direction: "North (Uttar)" }
+                  ].find(z => z.name === selectedZodiac);
+
+                  if (!data) return null;
+
+                  return (
+                    <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-stretch">
+                      
+                      {/* Left Block: Info details */}
+                      <div className="md:col-span-6 flex flex-col justify-between">
+                        <div>
+                          <div className="flex items-center gap-4 mb-6">
+                            <div className="text-[#dfb15b] drop-shadow-[0_0_12px_rgba(223,177,91,0.4)] select-none w-14 h-14 flex items-center justify-center scale-[1.5] origin-left">{getZodiacIcon(data.name)}</div>
+                            <div>
+                              <h3 style={{ fontFamily: "'Cinzel', serif" }} className="text-2xl font-bold text-white tracking-wide">{data.name} <span className="text-sm font-sans text-[#dfb15b] font-semibold">({data.hindi})</span></h3>
+                              <p className="text-xs text-slate-500 mt-0.5">Selected Zodiac Sign Profile</p>
+                            </div>
+                          </div>
+
+                          <div className="space-y-4">
+                            <div className="border-b border-[#dfb15b]/10 pb-3 flex gap-4 items-center">
+                              <span className="text-xs text-slate-400 font-bold w-36 shrink-0">Ruling Planet:</span>
+                              <span className="text-xs text-[#dfb15b] font-black">{data.planet}</span>
+                            </div>
+                            <div className="border-b border-[#dfb15b]/10 pb-3 flex gap-4 items-center">
+                              <span className="text-xs text-slate-400 font-bold w-36 shrink-0">Core Element:</span>
+                              <span className="text-xs text-white font-bold">{data.element}</span>
+                            </div>
+                            <div className="border-b border-[#dfb15b]/10 pb-3 flex gap-4 items-center">
+                              <span className="text-xs text-slate-400 font-bold w-36 shrink-0">Ideal Vastu Direction:</span>
+                              <span className="text-xs text-white font-bold">{data.direction}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Right Block: Brand Recommendations */}
+                      <div className="md:col-span-6 p-6 rounded-2xl bg-black/60 border border-[#dfb15b]/15 flex flex-col justify-center">
+                        <h4 className="text-xs uppercase tracking-widest text-[#dfb15b] font-bold mb-4">Brand Logo Guidelines</h4>
+                        
+                        <div className="space-y-4 text-xs">
+                          <div>
+                            <div className="text-slate-400 font-bold mb-1.5">Recommended Colors:</div>
+                            <div className="text-white bg-[#05020a]/60 px-3 py-2.5 rounded-lg border border-[#dfb15b]/5 font-medium leading-relaxed">{data.colors}</div>
+                          </div>
+                          <div>
+                            <div className="text-slate-400 font-bold mb-1.5">Recommended Geometry:</div>
+                            <div className="text-white bg-[#05020a]/60 px-3 py-2.5 rounded-lg border border-[#dfb15b]/5 font-medium leading-relaxed">{data.geometry}</div>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  );
+                })()}
+              </div>
+            )}
+          </div>
+        </section>
+
+
+        {/* ============ OUR SERVICES SECTION ============ */}
         <section
           id="discover"
           style={{ width: "100%", paddingTop: "60px", paddingBottom: "80px" }}
@@ -254,32 +604,81 @@ export default function ScientificLogoPage() {
         >
           <div className="site-wrap px-8 md:px-12">
             <div className="text-center" style={{ marginBottom: "60px" }}>
-              <span className="text-xs uppercase tracking-widest text-[#dfb15b] font-bold block mb-3">Astrological Core</span>
+              <span className="text-xs uppercase tracking-widest text-[#dfb15b] font-bold block mb-3">About</span>
               <h2 className="font-serif text-3xl md:text-5xl font-extrabold text-white leading-tight">
-                Astrological Auditing Framework
+                Our Services
               </h2>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full">
               {[
-                { icon: "🪐", title: "Zodiac Element Balance", desc: "Verifying whether your brand elements align with Fire, Earth, Air, or Water representations according to your birth chart." },
-                { icon: "✨", title: "Planetary Color Tuning", desc: "Choosing primary brand hues that match your ruling planets (e.g. Sun, Jupiter, Mercury) to remove growth barriers." },
-                { icon: "📐", title: "Vastu Shape Geometry", desc: "Auditing logo shapes to ensure visual lines facilitate positive energetic directions and avoid blocked patterns." },
-                { icon: "🔮", title: "Vibrational Numerology", desc: "Syncing logo stroke counts, typography weights, and company character names to optimal wealth numbers." },
-                { icon: "✍️", title: "Signature Graphology", desc: "Reviewing the founder&apos;s signature to ensure the start, angle, and end strokes reflect professional scaling." },
-                { icon: "🕰️", title: "Wristwatch Energy Alignment", desc: "Analyzing dial parameters, straps, and dials to synchronize decision-making with cosmological time." }
+                {
+                  img: "/mystical_moon_eye.png",
+                  title: "Custom Logo Design",
+                  desc: "Unique logos tailored to your scientific niche and branding goals."
+                },
+                {
+                  img: "/celestial_planet.png",
+                  title: "Research Group Identity Kits",
+                  desc: "Logo, typography, and color palettes for research labs and academic groups."
+                },
+                {
+                  img: "/hand_holding_universe.png",
+                  title: "Science Startup Branding",
+                  desc: "Full logo suites for biotech, pharma, and tech startups in the science sector."
+                }
               ].map((card, idx) => (
-                <div key={idx} style={{ padding: "40px 32px" }} className="group relative rounded-2xl border border-[#dfb15b]/10 bg-black/80 transition-all hover:border-[#dfb15b]/40 hover:translate-y-[-4px] hover:shadow-[0_0_20px_rgba(223,177,91,0.05)]">
-                  <div className="w-12 h-12 rounded-full bg-slate-900 border border-[#dfb15b]/20 flex items-center justify-center text-2xl mb-6">
-                    {card.icon}
+                <div key={idx} className="group relative rounded-3xl border border-[#dfb15b]/10 bg-black/85 overflow-hidden flex flex-col justify-between shadow-[0_0_30px_rgba(0,0,0,0.5)] transition-all hover:border-[#dfb15b]/30 hover:translate-y-[-4px]">
+
+                  {/* Card Image Wrapper with soft backdrop glow */}
+                  <div className="w-full h-56 bg-[#0c0617] flex items-center justify-center relative border-b border-[#dfb15b]/5 overflow-hidden">
+                    <div className="absolute inset-0 bg-cover bg-center opacity-5 filter blur-[2px]" style={{ backgroundImage: `url(${card.img})` }}></div>
+                    <div className="absolute w-32 h-32 bg-gradient-to-r from-[#dfb15b]/10 to-[#7c3aed]/10 rounded-full blur-2xl filter opacity-30"></div>
+
+                    {/* The Illustration with background-removal filters */}
+                    {idx === 1 ? (
+                      /* Planet - rendered as a circular sphere with gold glow */
+                      <img
+                        src={card.img}
+                        alt={card.title}
+                        className="w-44 h-44 rounded-full object-cover relative z-10 shadow-[0_0_30px_rgba(223,177,91,0.25)] transition-transform duration-500 group-hover:scale-105"
+                      />
+                    ) : (
+                      /* Line drawings (Card 1 & 3) - inverted to white-on-black lines with transparent backgrounds */
+                      <img
+                        src={card.img}
+                        alt={card.title}
+                        className="w-full h-full p-3 object-contain relative z-10 filter invert brightness-110 contrast-125 mix-blend-screen transition-transform duration-500 group-hover:scale-105"
+                      />
+                    )}
                   </div>
-                  <h3 className="text-lg font-bold text-white mb-2">{card.title}</h3>
-                  <p className="text-sm text-slate-400 leading-relaxed">{card.desc}</p>
+
+                  {/* Card Info */}
+                  <div style={{ padding: "32px 28px" }} className="flex-1 flex flex-col justify-between text-center items-center">
+                    <div>
+                      <h3 className="text-xl font-bold text-white mb-3 tracking-tight">{card.title}</h3>
+                      <p className="text-sm text-slate-400 leading-relaxed mb-6">{card.desc}</p>
+                    </div>
+
+                    <div>
+                      <a
+                        href="https://wa.me/919979992804"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ backgroundColor: "#ffffff", color: "#000000", padding: "12px 32px" }}
+                        className="inline-flex items-center justify-center font-extrabold text-xs rounded-full transition-all hover:bg-slate-200 shadow-[0_4px_15px_rgba(255,255,255,0.1)] hover:scale-105"
+                      >
+                        Learn More
+                      </a>
+                    </div>
+                  </div>
+
                 </div>
               ))}
             </div>
           </div>
         </section>
+
 
 
         {/* ============ COSMIC STAGNATION WARNINGS ============ */}
@@ -330,7 +729,7 @@ export default function ScientificLogoPage() {
                   A Designer Ahmedabad
                 </h2>
                 <p className="text-[#dfb15b] font-semibold text-lg mb-6">Zodiac &amp; Planetary Geometry Specialists</p>
-                
+
                 <div className="space-y-4 text-slate-300 leading-relaxed">
                   <p>We are India&apos;s leading brand optimization studio. We combine 10+ years of creative typography, geometry mapping, and custom Vastu protocols to build identities aligned with universal patterns.</p>
                   <p>By mapping your date of birth, zodiac element, and ruling planets, our diagnostics team designs brand structures that maximize energetic flow and command market trust.</p>
@@ -421,105 +820,113 @@ export default function ScientificLogoPage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch w-full">
-              
-              {/* Starter Plan */}
-              <div style={{ padding: "40px 32px" }} className="rounded-2xl border border-[#dfb15b]/15 bg-black/80 flex flex-col justify-between transition-all hover:translate-y-[-4px]">
-                <div>
-                  <h3 className="font-serif text-xl font-bold text-[#dfb15b] mb-1">Starter / Lunar Plan</h3>
-                  <div className="inline-block px-3 py-1 rounded-full text-[10px] font-semibold bg-[#dfb15b]/10 text-[#dfb15b] mb-4">
-                    Diagnostics &amp; Audit
-                  </div>
-                  <div className="font-mono text-3xl font-bold text-white mb-1">₹45,000</div>
-                  <div className="text-xs text-slate-500 mb-6">+ 18% GST</div>
-                  <div className="text-xs text-[#dfb15b] uppercase font-bold tracking-wider mb-3">Details:</div>
-                  <ul className="space-y-3 text-xs text-slate-400">
-                    <li className="flex items-center gap-2">✓ Existing Logo Vibration Audit</li>
-                    <li className="flex items-center gap-2">✓ Planetary Element Check</li>
-                    <li className="flex items-center gap-2">✓ Color Remediation Sheet</li>
-                  </ul>
-                  <p className="text-[10px] text-slate-500 italic mt-6 leading-relaxed">
-                    *Focused on diagnosing existing layout errors. Custom logo design files are not included.
-                  </p>
-                </div>
-                <a href="https://wa.me/919979992804" target="_blank" rel="noopener noreferrer" className="mt-8 block text-center py-3 rounded-full border border-[#dfb15b]/30 text-[#dfb15b] font-bold text-sm transition-all hover:bg-[#dfb15b]/10">
-                  Select Lunar Plan
-                </a>
-              </div>
 
               {/* Silver Plan */}
-              <div style={{ padding: "40px 32px" }} className="relative rounded-2xl border border-[#dfb15b] bg-black/90 flex flex-col justify-between shadow-[0_0_40px_rgba(223,177,91,0.2)] transition-all hover:translate-y-[-4px]">
-                <div className="absolute top-0 left-1/2 translate-x-[-50%] translate-y-[-50%] px-4 py-1 rounded-full bg-gradient-to-r from-[#dfb15b] to-[#7c3aed] text-white text-[9px] font-black uppercase tracking-widest whitespace-nowrap">
-                  Most Popular
-                </div>
+              <div style={{ padding: "40px 32px" }} className="rounded-2xl border border-[#dfb15b]/15 bg-black/80 flex flex-col justify-between transition-all hover:translate-y-[-4px]">
                 <div>
-                  <h3 className="font-serif text-xl font-bold text-white mb-1">Silver / Solar Plan</h3>
-                  <div className="inline-block px-3 py-1 rounded-full text-[10px] font-semibold bg-[#dfb15b]/15 text-[#dfb15b] mb-4">
-                    Turnover: ₹10 Cr - ₹100 Cr
+                  <h3 className="font-serif text-xl font-bold text-[#dfb15b] mb-1">Silver Plan ✨</h3>
+                  <div className="inline-block px-3 py-1 rounded-full text-[10px] font-semibold bg-[#dfb15b]/10 text-[#dfb15b] mb-4">
+                    Delivery: 4–7 Days
                   </div>
-                  <div className="font-mono text-3xl font-bold text-[#dfb15b] mb-1">₹90,000</div>
-                  <div className="text-xs text-slate-500 mb-6">+ 18% GST</div>
-                  <div className="text-xs text-[#dfb15b] uppercase font-bold tracking-wider mb-3">Details:</div>
-                  <ul className="space-y-3 text-xs text-slate-300">
-                    <li className="flex items-center gap-2">✓ Zodiac Aligned Logo Design</li>
-                    <li className="flex items-center gap-2">✓ Signature Graphology Remedy</li>
-                    <li className="flex items-center gap-2">✓ Wristwatch Alignment Advice</li>
-                    <li className="flex items-center gap-2">✓ Astrological Visiting Card Layout</li>
-                    <li className="flex items-center gap-2">✓ Letterhead &amp; Invoice Standards</li>
-                    <li className="flex items-center gap-2">✓ Dedicated Alignment Manager</li>
-                    <li className="flex items-center gap-2">✓ 90 Days Dynamic Support</li>
+                  <div className="font-mono text-3xl font-bold text-white mb-6">₹4,999</div>
+                  <div className="text-xs text-[#dfb15b] uppercase font-bold tracking-wider mb-3">Deliverables:</div>
+                  <ul className="space-y-3 text-xs">
+                    <li className="flex items-center gap-2 text-slate-300">✓ Scientific &amp; Astrology Logo Design</li>
+                    <li className="flex items-center gap-2 text-slate-300">✓ Telephonic Session With Our Astrologer</li>
+                    <li className="flex items-center gap-2 text-slate-500 opacity-60">✗ Business Card Design</li>
+                    <li className="flex items-center gap-2 text-slate-500 opacity-60">✗ Invoice Design</li>
+                    <li className="flex items-center gap-2 text-slate-500 opacity-60">✗ Letterhead Design</li>
+                    <li className="flex items-center gap-2 text-slate-500 opacity-60">✗ Sign Board Design</li>
+                    <li className="flex items-center gap-2 text-slate-500 opacity-60">✗ Offline Session (Physical meet)</li>
                   </ul>
                 </div>
-                <a href="https://wa.me/919979992804" target="_blank" rel="noopener noreferrer" className="mt-8 block text-center py-3 rounded-full bg-gradient-to-r from-[#dfb15b] to-[#7c3aed] text-white font-extrabold text-sm transition-all hover:brightness-110">
-                  Select Solar Plan
+                <a href="https://wa.me/919979992804" target="_blank" rel="noopener noreferrer" className="mt-8 block text-center py-3 rounded-full border border-[#dfb15b]/30 text-[#dfb15b] font-bold text-sm transition-all hover:bg-[#dfb15b]/10">
+                  Select Silver Plan
                 </a>
               </div>
 
               {/* Gold Plan */}
+              <div style={{ padding: "40px 32px" }} className="relative rounded-2xl border border-[#dfb15b] bg-black/90 flex flex-col justify-between shadow-[0_0_40px_rgba(0,70,173,0.25)] transition-all hover:translate-y-[-4px]">
+                <div className="absolute top-0 left-1/2 translate-x-[-50%] translate-y-[-50%] px-4 py-1 rounded-full bg-gradient-to-r from-[#dfb15b] to-[#0046ad] text-white text-[9px] font-black uppercase tracking-widest whitespace-nowrap">
+                  Most Popular
+                </div>
+                <div>
+                  <h3 className="font-serif text-xl font-bold text-white mb-1">Gold Plan ✨</h3>
+                  <div className="inline-block px-3 py-1 rounded-full text-[10px] font-semibold bg-[#dfb15b]/15 text-[#dfb15b] mb-4">
+                    Delivery: 5–7 Days
+                  </div>
+                  <div className="font-mono text-3xl font-bold text-[#dfb15b] mb-6">₹9,999</div>
+                  <div className="text-xs text-[#dfb15b] uppercase font-bold tracking-wider mb-3">Deliverables:</div>
+                  <ul className="space-y-3 text-xs">
+                    <li className="flex items-center gap-2 text-white">✓ Scientific &amp; Astrology Logo Design</li>
+                    <li className="flex items-center gap-2 text-white">✓ Business Card Design</li>
+                    <li className="flex items-center gap-2 text-white">✓ Telephonic or Online Session</li>
+                    <li className="flex items-center gap-2 text-slate-500 opacity-60">✗ Invoice Design</li>
+                    <li className="flex items-center gap-2 text-slate-500 opacity-60">✗ Letterhead Design</li>
+                    <li className="flex items-center gap-2 text-slate-500 opacity-60">✗ Sign Board Design</li>
+                    <li className="flex items-center gap-2 text-slate-500 opacity-60">✗ Offline Session (Physical meet)</li>
+                  </ul>
+                </div>
+                <a href="https://wa.me/919979992804" target="_blank" rel="noopener noreferrer" className="mt-8 block text-center py-3 rounded-full bg-gradient-to-r from-[#dfb15b] via-[#0046ad] to-[#e31e24] text-white font-extrabold text-sm transition-all hover:brightness-110">
+                  Select Gold Plan
+                </a>
+              </div>
+
+              {/* Diamond Plan */}
               <div style={{ padding: "40px 32px" }} className="rounded-2xl border border-[#dfb15b]/15 bg-black/80 flex flex-col justify-between transition-all hover:translate-y-[-4px]">
                 <div>
-                  <h3 className="font-serif text-xl font-bold text-[#dfb15b] mb-1">Gold / Cosmic Plan</h3>
+                  <h3 className="font-serif text-xl font-bold text-[#dfb15b] mb-1">Diamond Plan ✨</h3>
                   <div className="inline-block px-3 py-1 rounded-full text-[10px] font-semibold bg-[#dfb15b]/10 text-[#dfb15b] mb-4">
-                    Turnover: ₹100 Cr+
+                    Delivery: 7–10 Days
                   </div>
-                  <div className="font-mono text-3xl font-bold text-white mb-1">₹1,80,000</div>
-                  <div className="text-xs text-slate-500 mb-6">+ 18% GST</div>
-                  <div className="text-xs text-[#dfb15b] uppercase font-bold tracking-wider mb-3">Details:</div>
+                  <div className="font-mono text-3xl font-bold text-white mb-6">₹19,999</div>
+                  <div className="text-xs text-[#dfb15b] uppercase font-bold tracking-wider mb-3">Deliverables:</div>
                   <ul className="space-y-3 text-xs text-slate-400">
-                    <li className="flex items-center gap-2 text-white">✓ Everything in Solar Plan +</li>
-                    <li className="flex items-center gap-2">✓ 1:1 Live Alignment Session</li>
-                    <li className="flex items-center gap-2">✓ Personal Brand Astrology Audit</li>
-                    <li className="flex items-center gap-2">✓ Numerological Name Tuning</li>
-                    <li className="flex items-center gap-2">✓ Mobile Number Numerology</li>
-                    <li className="flex items-center gap-2">✓ Market Sector Strategy Tuning</li>
+                    <li className="flex items-center gap-2 text-slate-300">✓ Scientific &amp; Astrology Logo Design</li>
+                    <li className="flex items-center gap-2 text-slate-300">✓ Business Card Design</li>
+                    <li className="flex items-center gap-2 text-slate-300">✓ Letterhead Design</li>
+                    <li className="flex items-center gap-2 text-slate-300">✓ Envelope Design</li>
+                    <li className="flex items-center gap-2 text-slate-300">✓ Telephonic or Online Session</li>
+                    <li className="flex items-center gap-2 text-slate-500 opacity-60">✗ Sign Board Design</li>
+                    <li className="flex items-center gap-2 text-slate-500 opacity-60">✗ Offline Session (Physical meet)</li>
                   </ul>
                 </div>
                 <a href="https://wa.me/919979992804" target="_blank" rel="noopener noreferrer" className="mt-8 block text-center py-3 rounded-full border border-[#dfb15b]/30 text-[#dfb15b] font-bold text-sm transition-all hover:bg-[#dfb15b]/10">
-                  Select Cosmic Plan
+                  Select Diamond Plan
                 </a>
               </div>
 
               {/* Platinum Plan */}
               <div style={{ padding: "40px 32px" }} className="rounded-2xl border border-[#dfb15b]/15 bg-black/80 flex flex-col justify-between transition-all hover:translate-y-[-4px]">
                 <div>
-                  <h3 className="font-serif text-xl font-bold text-[#dfb15b] mb-1">Platinum / Galactic Plan</h3>
+                  <h3 className="font-serif text-xl font-bold text-[#dfb15b] mb-1">Platinum Plan ✨</h3>
                   <div className="inline-block px-3 py-1 rounded-full text-[10px] font-semibold bg-[#dfb15b]/10 text-[#dfb15b] mb-4">
-                    IPO &amp; Enterprise Brands
+                    Delivery: 7–10 Days
                   </div>
-                  <div className="font-mono text-3xl font-bold text-white mb-1">₹4,50,000</div>
-                  <div className="text-xs text-slate-500 mb-6">+ 18% GST</div>
-                  <div className="text-xs text-[#dfb15b] uppercase font-bold tracking-wider mb-3">Details:</div>
+                  <div className="font-mono text-3xl font-bold text-white mb-6">₹34,999</div>
+                  <div className="text-xs text-[#dfb15b] uppercase font-bold tracking-wider mb-3">Deliverables:</div>
                   <ul className="space-y-3 text-xs text-slate-400">
-                    <li className="flex items-center gap-2 text-white">✓ Everything in Cosmic Plan +</li>
-                    <li className="flex items-center gap-2">✓ In-Person Alignment Sessions</li>
-                    <li className="flex items-center gap-2">✓ Entire Corporate Audit Profile</li>
-                    <li className="flex items-center gap-2">✓ Executive Team Compatibility</li>
+                    <li className="flex items-center gap-2 text-slate-300">✓ Scientific Logo Design</li>
+                    <li className="flex items-center gap-2 text-slate-300">✓ Business Card Design</li>
+                    <li className="flex items-center gap-2 text-slate-300">✓ Invoice Design</li>
+                    <li className="flex items-center gap-2 text-slate-300">✓ Letterhead Design</li>
+                    <li className="flex items-center gap-2 text-slate-300">✓ Sign Board Design</li>
+                    <li className="flex items-center gap-2 text-slate-300">✓ Telephonic or Online Session</li>
+                    <li className="flex items-center gap-2 text-slate-300">✓ Offline Session (Physical meet)</li>
                   </ul>
                 </div>
                 <a href="https://wa.me/919979992804" target="_blank" rel="noopener noreferrer" className="mt-8 block text-center py-3 rounded-full border border-[#dfb15b]/30 text-[#dfb15b] font-bold text-sm transition-all hover:bg-[#dfb15b]/10">
-                  Select Galactic Plan
+                  Select Platinum Plan
                 </a>
               </div>
 
+            </div>
+
+            {/* Footnote disclaimer */}
+            <div className="mt-12 text-center">
+              <p className="inline-block px-6 py-3 rounded-xl border border-[#dfb15b]/20 bg-black/60 text-[#dfb15b] font-semibold text-sm">
+                ✨ Note: Logo &amp; Remedies are delivered after 100% payment confirmation.
+              </p>
             </div>
           </div>
         </section>
@@ -553,6 +960,77 @@ export default function ScientificLogoPage() {
                   </div>
                 </div>
               ))}
+            </div>
+          </div>
+        </section>
+
+
+        {/* ============ HORIZONTAL CONTACT/CONSULTATION FORM ============ */}
+        <section
+          id="audit-form"
+          style={{ width: "100%", paddingTop: "60px", paddingBottom: "80px" }}
+          className="border-b border-[#dfb15b]/10 bg-slate-950/20"
+        >
+          <div className="site-wrap px-8 md:px-12">
+            <div className="max-w-4xl mx-auto rounded-2xl border border-[#dfb15b]/20 bg-black/85 p-8 md:p-10 shadow-[0_0_50px_rgba(0,0,0,0.8)] backdrop-blur-md">
+              <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+
+                {/* Text Side */}
+                <div className="lg:max-w-md">
+                  <h2 className="font-serif text-2xl md:text-3xl font-extrabold text-white leading-tight">
+                    Ready to align your brand?
+                  </h2>
+                  <p className="text-sm text-slate-400 mt-2">
+                    Submit your details for a free consultation or to request a custom astrological logo audit.
+                  </p>
+                </div>
+
+                {/* Form Side - Horizontal Inline Layout */}
+                <div className="flex-1 w-full">
+                  {submitSuccess ? (
+                    <div className="flex items-center gap-3 p-4 rounded-xl bg-[#dfb15b]/10 border border-[#dfb15b]/30 text-[#dfb15b]">
+                      <Sparkles className="w-5 h-5 shrink-0 animate-pulse" />
+                      <div className="text-sm font-semibold">Thank you! Our consultation team will contact you shortly.</div>
+                    </div>
+                  ) : (
+                    <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 w-full">
+                      {/* Name Input */}
+                      <div className="flex-1">
+                        <input
+                          type="text"
+                          required
+                          value={formData.name}
+                          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                          placeholder="Name"
+                          className="w-full h-12 bg-slate-950/60 border border-slate-800 rounded-xl px-4 text-sm text-white focus:border-[#dfb15b] focus:outline-none transition-colors placeholder-slate-500"
+                        />
+                      </div>
+
+                      {/* Email Input */}
+                      <div className="flex-1">
+                        <input
+                          type="email"
+                          required
+                          value={formData.email}
+                          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                          placeholder="Email"
+                          className="w-full h-12 bg-slate-950/60 border border-slate-800 rounded-xl px-4 text-sm text-white focus:border-[#dfb15b] focus:outline-none transition-colors placeholder-slate-500"
+                        />
+                      </div>
+
+                      {/* Submit Button */}
+                      <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className="h-12 px-8 bg-gradient-to-r from-[#dfb15b] to-[#7c3aed] text-white font-extrabold text-sm rounded-xl shadow-[0_0_15px_rgba(223,177,91,0.2)] transition-all hover:brightness-110 disabled:opacity-50 whitespace-nowrap"
+                      >
+                        {isSubmitting ? "Submitting..." : "Get Consultation"}
+                      </button>
+                    </form>
+                  )}
+                </div>
+
+              </div>
             </div>
           </div>
         </section>
@@ -615,7 +1093,7 @@ export default function ScientificLogoPage() {
                 href="https://wa.me/919979992804"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center px-12 py-5 bg-gradient-to-r from-[#dfb15b] to-[#7c3aed] text-white font-extrabold text-lg rounded-full shadow-[0_0_30px_rgba(223,177,91,0.3)] transition-all hover:scale-105"
+                className="inline-flex items-center justify-center px-12 py-5 bg-gradient-to-r from-[#dfb15b] via-[#0046ad] to-[#e31e24] text-white font-extrabold text-lg rounded-full shadow-[0_0_30px_rgba(0,70,173,0.3)] transition-all hover:scale-105 hover:shadow-[0_0_40px_rgba(0,70,173,0.5)]"
               >
                 Book 1:1 Cosmic Session Now
                 <ArrowRight className="ml-2 w-5 h-5" />
