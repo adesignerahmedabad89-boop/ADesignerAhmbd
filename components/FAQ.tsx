@@ -10,7 +10,7 @@ const faqs = [
     a: "Work on your project starts soon after we get your logo request along with the advance payment.",
   },
   {
-    q: "How many concepts do you offer?",
+    q: "How many concepts do you offer? ",
     a: "We offer you with 3 or 6 initial design concepts depending on the package that you choose.",
   },
   {
