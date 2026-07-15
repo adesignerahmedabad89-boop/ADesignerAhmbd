@@ -19,9 +19,9 @@ const SocialYoutube = () => (
 );
 
 const socialLinks = [
-  { Icon: SocialFacebook, href: "https://www.facebook.com/brandingo.logomaker" },
+  { Icon: SocialFacebook, href: "https://www.facebook.com/Logodesigner0001" },
   { Icon: SocialLinkedin, href: "https://www.linkedin.com/company/brandingoindia/" },
-  { Icon: SocialInstagram, href: "https://www.instagram.com/logoworld.brandingo" },
+  { Icon: SocialInstagram, href: "https://www.instagram.com/adesigner_ahmedabad/" },
   { Icon: SocialYoutube, href: "https://www.youtube.com/@BRANDINGO-Designer" }
 ];
 
@@ -125,8 +125,8 @@ export default function Footer() {
                   </div>
                 </li>
                 <li>
-                  <a href="tel:+91 99799 92804" style={{ display: "flex", alignItems: "center", gap: "10px", color: "rgba(255,255,255,0.4)", fontSize: "13px", transition: "color 0.2s" }} className="hover:text-[#f58220]">
-                    <Phone size={14} style={{ color: "#f58220" }} /> +91 99799 92804
+                  <a href="tel:+916353117403" style={{ display: "flex", alignItems: "center", gap: "10px", color: "rgba(255,255,255,0.4)", fontSize: "13px", transition: "color 0.2s" }} className="hover:text-[#f58220]">
+                    <Phone size={14} style={{ color: "#f58220" }} /> +91 63531 17403
                   </a>
                 </li>
                 <li>

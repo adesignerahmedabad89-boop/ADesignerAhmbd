@@ -184,7 +184,7 @@ export default function PrivacyPolicyPage() {
               <span>607, Iconic Shyamal, Shyamal Cross Roads, 132 Feet Ring Rd, Shyamal,</span>
               <span>Ahmedabad, Gujarat 380015, India.</span>
               <span>Email: <a href="mailto:sales@brandingo.in" style={{ color: A, fontWeight: 600, textDecoration: "none" }}>sales@brandingo.in</a></span>
-              <span>Phone: <a href="tel:+919875084098" style={{ color: A, fontWeight: 600, textDecoration: "none" }}>+91 99799 92804</a></span>
+              <span>Phone: <a href="tel:+916353117403" style={{ color: A, fontWeight: 600, textDecoration: "none" }}>+91 63531 17403</a></span>
             </div>
           </div>
         </div>

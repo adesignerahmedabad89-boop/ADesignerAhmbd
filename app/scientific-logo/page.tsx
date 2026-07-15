@@ -322,7 +322,7 @@ export default function ScientificLogoPage() {
             {/* CTA Button */}
             <div className="mb-10">
               <a
-                href="https://wa.me/919979992804"
+                href="https://wa.me/916353117403"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center px-12 py-5 bg-gradient-to-r from-[#dfb15b] via-[#0046ad] to-[#e31e24] text-white font-extrabold text-lg rounded-full shadow-[0_0_30px_rgba(0,70,173,0.3)] transition-all hover:scale-105 hover:shadow-[0_0_40px_rgba(0,70,173,0.5)]"
@@ -441,7 +441,7 @@ export default function ScientificLogoPage() {
                 </p>
                 <div>
                   <a
-                    href="https://wa.me/919979992804"
+                    href="https://wa.me/916353117403"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center justify-center px-8 py-3.5 border border-[#dfb15b]/40 text-[#dfb15b] font-bold text-sm rounded-full transition-all hover:bg-[#dfb15b]/10 hover:border-[#dfb15b]"
@@ -662,7 +662,7 @@ export default function ScientificLogoPage() {
 
                     <div>
                       <a
-                        href="https://wa.me/919979992804"
+                        href="https://wa.me/916353117403"
                         target="_blank"
                         rel="noopener noreferrer"
                         style={{ backgroundColor: "#ffffff", color: "#000000", padding: "12px 32px" }}
@@ -840,7 +840,7 @@ export default function ScientificLogoPage() {
                     <li className="flex items-center gap-2 text-slate-500 opacity-60">✗ Offline Session (Physical meet)</li>
                   </ul>
                 </div>
-                <a href="https://wa.me/919979992804" target="_blank" rel="noopener noreferrer" className="mt-8 block text-center py-3 rounded-full border border-[#dfb15b]/30 text-[#dfb15b] font-bold text-sm transition-all hover:bg-[#dfb15b]/10">
+                <a href="https://wa.me/916353117403" target="_blank" rel="noopener noreferrer" className="mt-8 block text-center py-3 rounded-full border border-[#dfb15b]/30 text-[#dfb15b] font-bold text-sm transition-all hover:bg-[#dfb15b]/10">
                   Select Silver Plan
                 </a>
               </div>
@@ -867,7 +867,7 @@ export default function ScientificLogoPage() {
                     <li className="flex items-center gap-2 text-slate-500 opacity-60">✗ Offline Session (Physical meet)</li>
                   </ul>
                 </div>
-                <a href="https://wa.me/919979992804" target="_blank" rel="noopener noreferrer" className="mt-8 block text-center py-3 rounded-full bg-gradient-to-r from-[#dfb15b] via-[#0046ad] to-[#e31e24] text-white font-extrabold text-sm transition-all hover:brightness-110">
+                <a href="https://wa.me/916353117403" target="_blank" rel="noopener noreferrer" className="mt-8 block text-center py-3 rounded-full bg-gradient-to-r from-[#dfb15b] via-[#0046ad] to-[#e31e24] text-white font-extrabold text-sm transition-all hover:brightness-110">
                   Select Gold Plan
                 </a>
               </div>
@@ -891,7 +891,7 @@ export default function ScientificLogoPage() {
                     <li className="flex items-center gap-2 text-slate-500 opacity-60">✗ Offline Session (Physical meet)</li>
                   </ul>
                 </div>
-                <a href="https://wa.me/919979992804" target="_blank" rel="noopener noreferrer" className="mt-8 block text-center py-3 rounded-full border border-[#dfb15b]/30 text-[#dfb15b] font-bold text-sm transition-all hover:bg-[#dfb15b]/10">
+                <a href="https://wa.me/916353117403" target="_blank" rel="noopener noreferrer" className="mt-8 block text-center py-3 rounded-full border border-[#dfb15b]/30 text-[#dfb15b] font-bold text-sm transition-all hover:bg-[#dfb15b]/10">
                   Select Diamond Plan
                 </a>
               </div>
@@ -915,7 +915,7 @@ export default function ScientificLogoPage() {
                     <li className="flex items-center gap-2 text-slate-300">✓ Offline Session (Physical meet)</li>
                   </ul>
                 </div>
-                <a href="https://wa.me/919979992804" target="_blank" rel="noopener noreferrer" className="mt-8 block text-center py-3 rounded-full border border-[#dfb15b]/30 text-[#dfb15b] font-bold text-sm transition-all hover:bg-[#dfb15b]/10">
+                <a href="https://wa.me/916353117403" target="_blank" rel="noopener noreferrer" className="mt-8 block text-center py-3 rounded-full border border-[#dfb15b]/30 text-[#dfb15b] font-bold text-sm transition-all hover:bg-[#dfb15b]/10">
                   Select Platinum Plan
                 </a>
               </div>
@@ -1090,7 +1090,7 @@ export default function ScientificLogoPage() {
                 Remove the planetary barriers in your brand visual identity and attract corporate growth.
               </p>
               <a
-                href="https://wa.me/919979992804"
+                href="https://wa.me/916353117403"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center px-12 py-5 bg-gradient-to-r from-[#dfb15b] via-[#0046ad] to-[#e31e24] text-white font-extrabold text-lg rounded-full shadow-[0_0_30px_rgba(0,70,173,0.3)] transition-all hover:scale-105 hover:shadow-[0_0_40px_rgba(0,70,173,0.5)]"

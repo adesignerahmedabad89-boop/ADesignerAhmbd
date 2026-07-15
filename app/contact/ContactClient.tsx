@@ -7,7 +7,7 @@ import PageHero from "@/components/PageHero";
 import { MapPin, Phone, Mail, Send, ChevronRight } from "lucide-react";
 
 const branches = [
-  { label: "Head Office", city: "Ahmedabad", address: "607, Iconic Shyamal, Shyamal Cross Roads, 132 Feet Ring Rd, Shyamal, Ahmedabad, Gujarat 380015", phone: "+91 99799 92804", mapUrl: "https://maps.app.goo.gl/QHnofgohkDA459Hj9" },
+  { label: "Head Office", city: "Ahmedabad", address: "607, Iconic Shyamal, Shyamal Cross Roads, 132 Feet Ring Rd, Shyamal, Ahmedabad, Gujarat 380015", phone: "+91 63531 17403", mapUrl: "https://maps.app.goo.gl/QHnofgohkDA459Hj9" },
   { label: "Banglore Branch", city: "Bengaluru", address: "Shanti Apartments, Behind Indian Bike Showroom, Bhaskaran Rd,  Bengaluru, Karnataka 560042", mapUrl: "https://maps.google.com/?q=Shanti+Apartments,+Behind+Indian+Bike+Showroom,+Bhaskaran+Rd,++Bengaluru,+Karnataka+560042" },
 ];
 
@@ -17,9 +17,9 @@ const SocialInstagram = () => <svg viewBox="0 0 24 24" fill="none" stroke="curre
 const SocialYoutube = () => <svg viewBox="0 0 24 24" fill="currentColor" width="17" height="17"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.54C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z" /><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="white" /></svg>;
 
 const socialLinks = [
-  { Icon: SocialFacebook, href: "https://www.facebook.com/brandingo.logomaker" },
+  { Icon: SocialFacebook, href: "https://www.facebook.com/Logodesigner0001" },
   { Icon: SocialLinkedin, href: "https://www.linkedin.com/company/brandingoindia/" },
-  { Icon: SocialInstagram, href: "https://www.instagram.com/logoworld.brandingo" },
+  { Icon: SocialInstagram, href: "https://www.instagram.com/adesigner_ahmedabad/" },
   { Icon: SocialYoutube, href: "https://www.youtube.com/@BRANDINGO-Designer" }
 ];
 
@@ -125,7 +125,7 @@ export default function ContactClient() {
       <section style={{ background: "#f8f9fb", padding: "72px 0" }}>
         <div className="site-wrap">
           <div style={{ display: "grid", gap: "20px", marginBottom: "20px" }} className="sm:grid-cols-2">
-            {[{ icon: Phone, label: "Phone", value: "+91 99799 92804", href: "tel:+919979992804" }, { icon: Mail, label: "Email", value: "sales@brandingo.in", href: "mailto:Sales@brandingo.in" }].map(({ icon: Icon, label, value, href }) => (
+            {[{ icon: Phone, label: "Phone", value: "+91 63531 17403", href: "tel:+916353117403" }, { icon: Mail, label: "Email", value: "sales@brandingo.in", href: "mailto:Sales@brandingo.in" }].map(({ icon: Icon, label, value, href }) => (
               <a key={label} href={href} style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "10px", padding: "36px 24px", background: "#fff", border: "1px solid rgba(0,0,0,0.07)", textDecoration: "none", transition: "border-color 0.2s", textAlign: "center" }} className="hover:border-[#f58220]/50 card-hover">
                 <div style={{ width: "52px", height: "52px", borderRadius: "50%", background: "#fff5eb", display: "flex", alignItems: "center", justifyContent: "center" }}><Icon size={22} style={{ color: "#f58220" }} /></div>
                 <div>
