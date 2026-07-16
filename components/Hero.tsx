@@ -54,10 +54,10 @@ export default function Hero() {
     ];
     const generatedIcons = Array.from({ length: 8 }).map((_, i) => {
       const isLeftSide = i % 2 === 0;
-      const leftVal = isLeftSide 
+      const leftVal = isLeftSide
         ? Math.random() * 30 + 5    // 5% to 35%
         : Math.random() * 30 + 65;  // 65% to 95%
-      
+
       return {
         id: i,
         top: `${Math.random() * 70 + 10}%`,
@@ -116,7 +116,8 @@ export default function Hero() {
       }}
     >
       {/* Inject premium CSS keyframe animations */}
-      <style dangerouslySetInnerHTML={{ __html: `
+      <style dangerouslySetInnerHTML={{
+        __html: `
         @keyframes spin-cw {
           0% { transform: rotate(0deg); }
           100% { transform: rotate(360deg); }
@@ -218,11 +219,57 @@ export default function Hero() {
           0%, 100% { transform: scale(1) rotate(0deg); }
           50% { transform: scale(1.08) rotate(2deg); }
         }
+
+        .bg-astrolabe-video {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          pointer-events: none;
+          z-index: 1;
+          opacity: 1.0;
+          overflow: hidden;
+        }
+        .bg-astrolabe-video video {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: 72% center;
+        }
+        .bg-astrolabe-overlay {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(to right, rgba(2, 8, 15, 0.98) 0%, rgba(2, 8, 15, 0.5) 45%, rgba(2, 8, 15, 0) 75%);
+          pointer-events: none;
+          z-index: 2;
+        }
+        @media (max-width: 1024px) {
+          .bg-astrolabe-video {
+            opacity: 0.35;
+          }
+          .bg-astrolabe-video video {
+            object-position: center center;
+          }
+          .bg-astrolabe-overlay {
+            background: rgba(2, 8, 15, 0.78);
+          }
+        }
       `}} />
 
       {/* Shooting Stars */}
       <div className="shooting-star shooting-star-1" style={{ top: "35%", left: "20%" }} />
       <div className="shooting-star shooting-star-2" style={{ top: "60%", left: "40%" }} />
+
+      {/* Full-section celestial astrolabe background video with dark overlay */}
+      <div className="bg-astrolabe-video">
+        <video autoPlay loop muted playsInline>
+          {/* Local downloaded video source */}
+          <source src="/watermarked_preview.mp4" type="video/mp4" />
+          {/* Fallback CDN link */}
+          <source src="https://video-previews.elements.envatousercontent.com/cac16edd-c76e-414a-96f5-a534966bcabb/watermarked_preview/watermarked_preview.mp4" type="video/mp4" />
+        </video>
+        <div className="bg-astrolabe-overlay" />
+      </div>
 
       {/* Nebula glowing aura behind the chakra */}
       <div
@@ -262,11 +309,11 @@ export default function Hero() {
       />
 
       {/* Floating Constellation Stars (Parallax Outer + Orbit Inner) */}
-      <div 
-        style={{ 
-          position: "absolute", 
-          inset: "-60px", 
-          zIndex: 2, 
+      <div
+        style={{
+          position: "absolute",
+          inset: "-60px",
+          zIndex: 2,
           pointerEvents: "none",
           transform: `translate(${mousePos.x * -25}px, ${mousePos.y * -25}px)`,
           transition: "transform 0.2s cubic-bezier(0.15, 0.85, 0.3, 1)",
@@ -297,12 +344,12 @@ export default function Hero() {
       </div>
 
       {/* Floating Design Icons (Parallax Outer + Drift Inner) */}
-      <div 
-        style={{ 
-          position: "absolute", 
-          inset: "-80px", 
-          zIndex: 2, 
-          pointerEvents: "none", 
+      <div
+        style={{
+          position: "absolute",
+          inset: "-80px",
+          zIndex: 2,
+          pointerEvents: "none",
           overflow: "hidden",
           transform: `translate(${mousePos.x * -42}px, ${mousePos.y * -42}px)`,
           transition: "transform 0.18s cubic-bezier(0.15, 0.85, 0.3, 1)",
@@ -360,7 +407,7 @@ export default function Hero() {
       >
         <div className="site-wrap">
           <div style={{ display: "grid", alignItems: "center", gap: "40px" }} className="lg:grid-cols-12">
-            
+
             {/* Left side: Copy content */}
             <div className="lg:col-span-7" style={{ position: "relative", zIndex: 12 }}>
               <h1
@@ -436,195 +483,8 @@ export default function Hero() {
               </div>
             </div>
 
-            {/* Right side: Rotating Sacred Astrology-style Design Chakra */}
-            <div 
-              className="lg:col-span-5 flex justify-center items-center chakra-container" 
-              style={{ 
-                position: "relative",
-                zIndex: 10,
-                cursor: "pointer",
-              }}
-            >
-              <div 
-                className="chakra-float"
-                style={{
-                  position: "relative",
-                  width: "100%",
-                  maxWidth: "430px",
-                  aspectRatio: "1",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                {/* SVG Astrology/Design Mandala Chakra */}
-                <svg 
-                  viewBox="0 0 500 500" 
-                  fill="none" 
-                  style={{ 
-                    width: "100%", 
-                    height: "100%", 
-                    overflow: "visible",
-                    filter: "drop-shadow(0 0 25px rgba(245,130,32,0.22))"
-                  }}
-                >
-                  {/* LAYER 1: Outer Rotating Ring with Degree Marks (Dashed, slowly clockwise) */}
-                  <g className="spin-clockwise-slow" style={{ transformOrigin: "250px 250px" }}>
-                    <circle cx="250" cy="250" r="230" stroke="#f58220" strokeWidth="1.5" strokeDasharray="5 7" opacity="0.3" />
-                    <circle cx="250" cy="250" r="238" stroke="#154e73" strokeWidth="1" strokeDasharray="30 20" opacity="0.5" />
-                    
-                    {/* Degree Ticks (astrological markings) */}
-                    {Array.from({ length: 24 }).map((_, i) => {
-                      const angle = (i * 15 * Math.PI) / 180;
-                      const x1 = roundVal(250 + 230 * Math.cos(angle));
-                      const y1 = roundVal(250 + 230 * Math.sin(angle));
-                      const x2 = roundVal(250 + 238 * Math.cos(angle));
-                      const y2 = roundVal(250 + 238 * Math.sin(angle));
-                      return (
-                        <line
-                           key={i}
-                           x1={x1}
-                           y1={y1}
-                           x2={x2}
-                           y2={y2}
-                           stroke="#f58220"
-                           strokeWidth="1"
-                           opacity="0.6"
-                        />
-                      );
-                    })}
-
-                    {/* Orbit stars */}
-                    {Array.from({ length: 8 }).map((_, i) => {
-                      const angle = (i * Math.PI) / 4;
-                      return (
-                        <circle 
-                          key={i} 
-                          cx={roundVal(250 + 230 * Math.cos(angle))} 
-                          cy={roundVal(250 + 230 * Math.sin(angle))} 
-                          r="3" 
-                          fill="#f58220" 
-                          opacity="0.8" 
-                        />
-                      );
-                    })}
-                  </g>
-
-                  {/* LAYER 2: Constellation Wheel Middle Ring (Counter-Clockwise) */}
-                  <g className="spin-counter-clockwise" style={{ transformOrigin: "250px 250px" }}>
-                    <circle cx="250" cy="250" r="190" stroke="#154e73" strokeWidth="1.5" opacity="0.8" />
-                    <circle cx="250" cy="250" r="175" stroke="#f58220" strokeWidth="0.8" strokeDasharray="3 3" opacity="0.5" />
-                    
-                    {/* Geometric connecting constellation lines */}
-                    {Array.from({ length: 12 }).map((_, i) => {
-                      const angle1 = (i * 30 * Math.PI) / 180;
-                      const angle2 = (((i + 5) % 12) * 30 * Math.PI) / 180;
-                      return (
-                        <line
-                          key={i}
-                          x1={roundVal(250 + 190 * Math.cos(angle1))}
-                          y1={roundVal(250 + 190 * Math.sin(angle1))}
-                          x2={roundVal(250 + 190 * Math.cos(angle2))}
-                          y2={roundVal(250 + 190 * Math.sin(angle2))}
-                          stroke="rgba(245, 130, 32, 0.2)"
-                          strokeWidth="1.2"
-                        />
-                      );
-                    })}
-                    
-                    {/* Constellation Nodes */}
-                    {Array.from({ length: 12 }).map((_, i) => {
-                      const angle = (i * 30 * Math.PI) / 180;
-                      const x = roundVal(250 + 190 * Math.cos(angle));
-                      const y = roundVal(250 + 190 * Math.sin(angle));
-                      return (
-                        <g key={i}>
-                          <circle cx={x} cy={y} r="5" fill="#f58220" opacity="0.8" />
-                          <circle cx={x} cy={y} r="9" stroke="#ffffff" strokeWidth="1" opacity="0.3" />
-                        </g>
-                      );
-                    })}
-                  </g>
-
-                  {/* LAYER 3: Sacred Geometry Rays & Flower Pattern (Clockwise) */}
-                  <g className="spin-clockwise-fast" style={{ transformOrigin: "250px 250px" }}>
-                    <circle cx="250" cy="250" r="135" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
-                    
-                    {/* Sacred circles */}
-                    {Array.from({ length: 12 }).map((_, i) => {
-                      const angle = (i * 30 * Math.PI) / 180;
-                      return (
-                        <circle
-                          key={i}
-                          cx={roundVal(250 + 65 * Math.cos(angle))}
-                          cy={roundVal(250 + 65 * Math.sin(angle))}
-                          r="65"
-                          stroke="rgba(245,130,32,0.18)"
-                          strokeWidth="1"
-                        />
-                      );
-                    })}
-                    {/* Central spokes */}
-                    {Array.from({ length: 24 }).map((_, i) => {
-                      const angle = (i * 360) / 24;
-                      return (
-                        <line
-                          key={i}
-                          x1="250"
-                          y1="250"
-                          x2="250"
-                          y2="115"
-                          transform={`rotate(${angle} 250 250)`}
-                          stroke="#154e73"
-                          strokeWidth="1"
-                          opacity="0.6"
-                        />
-                      );
-                    })}
-                  </g>
-
-                  {/* LAYER 4: Inner Coordinates & Degree Text */}
-                  <g className="spin-counter-clockwise" style={{ transformOrigin: "250px 250px" }}>
-                    <circle cx="250" cy="250" r="85" stroke="#f58220" strokeWidth="1" strokeDasharray="4 4" opacity="0.4" />
-                    {Array.from({ length: 4 }).map((_, i) => {
-                      const angle = i * 90;
-                      const textMap = ["0°", "90°", "180°", "270°"];
-                      return (
-                        <g key={i} transform={`rotate(${angle} 250 250)`}>
-                          <text 
-                            x="250" 
-                            y="180" 
-                            fill="rgba(255,255,255,0.65)" 
-                            fontSize="8" 
-                            fontWeight="bold" 
-                            textAnchor="middle"
-                            style={{ userSelect: "none" }}
-                          >
-                            {textMap[i]}
-                          </text>
-                        </g>
-                      );
-                    })}
-                  </g>
-
-                  {/* LAYER 5: Creative Emblem Core (Complex multi-point star with glow) */}
-                  <g className="spin-counter-clockwise chakra-core-glow" style={{ transformOrigin: "250px 250px", transition: "all 0.5s ease" }}>
-                    <circle cx="250" cy="250" r="45" fill="rgba(5, 24, 41, 0.75)" stroke="#f58220" strokeWidth="2" />
-                    
-                    {/* Multi-point mystical star */}
-                    <polygon 
-                      points="250,210 255,235 275,235 258,248 268,272 250,256 232,272 242,248 225,235 245,235"
-                      fill="#ffffff"
-                      style={{ filter: "drop-shadow(0 0 6px #f58220)" }}
-                    />
-                    
-                    {/* Micro concentric rings */}
-                    <circle cx="250" cy="250" r="18" stroke="rgba(245,130,32,0.4)" strokeWidth="0.8" />
-                    <circle cx="250" cy="250" r="5" fill="#f58220" />
-                  </g>
-                </svg>
-              </div>
-            </div>
+            {/* Right side spacer to let the background astrolabe video float */}
+            <div className="lg:col-span-5 hidden lg:block" style={{ height: "450px" }} />
 
           </div>
         </div>
