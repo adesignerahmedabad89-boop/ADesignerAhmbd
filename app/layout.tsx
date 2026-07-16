@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import ImageProtection from "@/components/ImageProtection";
+import AosInit from "@/components/AosInit";
 import "./globals.css";
 import Script from "next/script";
 
@@ -27,6 +28,7 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Geist:wght@100..900&display=swap" rel="stylesheet" />
       </head>
       <body suppressHydrationWarning>
+        <AosInit />
         <ImageProtection />
         <Script id="meta-pixel" strategy="afterInteractive">
           {`

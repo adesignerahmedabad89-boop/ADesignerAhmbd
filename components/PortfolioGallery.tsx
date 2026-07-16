@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useInView } from "react-intersection-observer";
 import { ChevronRight, ArrowUpRight, X, ZoomIn, ArrowUp } from "lucide-react";
+import AOS from "aos";
 
 import { portfolioItems, portfolioCategories } from "@/lib/portfolio-data";
 
@@ -17,16 +18,16 @@ function PortfolioHero() {
       <div style={{ position: "absolute", inset: 0, background: `linear-gradient(135deg, rgba(11,60,93,0.96) 0%, rgba(245,130,32,0.85) 100%)` }} />
       <div style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(rgba(255,255,255,0.1) 1px, transparent 1px)", backgroundSize: "28px 28px" }} />
       <div className="site-wrap" style={{ position: "relative", zIndex: 10, textAlign: "center" }}>
-        <div style={{ display: "inline-block", padding: "5px 14px", background: "rgba(255,255,255,0.15)", border: "1px solid rgba(255,255,255,0.3)", borderRadius: "999px", color: "#fff", fontSize: "12px", fontWeight: 600, marginBottom: "16px" }}>
+        <div data-aos="fade-down" style={{ display: "inline-block", padding: "5px 14px", background: "rgba(255,255,255,0.15)", border: "1px solid rgba(255,255,255,0.3)", borderRadius: "999px", color: "#fff", fontSize: "12px", fontWeight: 600, marginBottom: "16px" }}>
           Our Portfolio
         </div>
-        <h1 style={{ fontSize: "clamp(2rem, 5vw, 3.4rem)", fontWeight: 900, color: "#fff", lineHeight: 1.1, marginBottom: "14px" }}>
+        <h1 data-aos="fade-up" style={{ fontSize: "clamp(2rem, 5vw, 3.4rem)", fontWeight: 900, color: "#fff", lineHeight: 1.1, marginBottom: "14px" }}>
           Work That Makes Brands Say <span style={{ color: "#fff", textDecoration: "underline", textDecorationColor: "rgba(255,255,255,0.4)", textUnderlineOffset: "6px" }}>WoW</span>
         </h1>
-        <p style={{ color: "rgba(255,255,255,0.82)", fontSize: "1.05rem", maxWidth: "600px", margin: "0 auto 18px", lineHeight: 1.65 }}>
+        <p data-aos="fade-up" data-aos-delay="100" style={{ color: "rgba(255,255,255,0.82)", fontSize: "1.05rem", maxWidth: "600px", margin: "0 auto 18px", lineHeight: 1.65 }}>
           A showcase of logos, packaging, print and social creatives we&apos;ve designed for businesses across India.
         </p>
-        <nav style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "6px" }}>
+        <nav data-aos="fade-up" data-aos-delay="200" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "6px" }}>
           <Link href="/" style={{ color: "rgba(255,255,255,0.65)", fontSize: "13px" }} className="hover:text-white">Home</Link>
           <ChevronRight size={12} style={{ color: "rgba(255,255,255,0.45)" }} />
           <span style={{ color: "#fff", fontSize: "13px", fontWeight: 600 }}>Portfolio</span>
@@ -38,10 +39,9 @@ function PortfolioHero() {
 
 /* ── Brandingo story band ─────────────────────────────────────── */
 function BrandStory() {
-  const { ref, inView } = useInView({ threshold: 0.2, triggerOnce: true });
   return (
-    <section ref={ref} style={{ background: "#fff", padding: "72px 0 8px" }}>
-      <div className="site-wrap" style={{ maxWidth: "880px", textAlign: "center", opacity: inView ? 1 : 0, transform: inView ? "translateY(0)" : "translateY(24px)", transition: "opacity 0.7s ease, transform 0.7s ease" }}>
+    <section style={{ background: "#fff", padding: "72px 0 8px" }}>
+      <div data-aos="fade-up" className="site-wrap" style={{ maxWidth: "880px", textAlign: "center" }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "10px", marginBottom: "16px" }}>
           <div style={{ width: "32px", height: "2px", background: A }} />
           <span style={{ color: A, fontSize: "12px", fontWeight: 700, letterSpacing: "3px", textTransform: "uppercase" }}>Est. 2016</span>
@@ -72,6 +72,11 @@ export default function PortfolioGallery() {
   const { ref, inView } = useInView({ threshold: 0.02, triggerOnce: true });
   const filtered = active === "All" ? portfolioItems : portfolioItems.filter(p => p.category === active);
   const shown = filtered.slice(0, visible);
+
+  // Refresh AOS when selected category or shown items change
+  useEffect(() => {
+    AOS.refresh();
+  }, [active, shown.length]);
 
   // Reset the visible window whenever the category filter changes.
   const selectCategory = (cat: string) => {
@@ -104,10 +109,10 @@ export default function PortfolioGallery() {
       <PortfolioHero />
       <BrandStory />
 
-      <section ref={ref} style={{ padding: "48px 0 100px", background: "#ffffff" }}>
+      <section style={{ padding: "48px 0 100px", background: "#ffffff" }}>
         <div className="site-wrap">
           {/* Filter tabs */}
-          <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "10px", marginBottom: "44px" }}>
+          <div data-aos="fade-up" style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "10px", marginBottom: "44px" }}>
             {portfolioCategories.map(cat => (
               <button
                 key={cat}
@@ -133,8 +138,6 @@ export default function PortfolioGallery() {
           <div
             style={{
               columnGap: "18px",
-              opacity: inView ? 1 : 0,
-              transition: "opacity 0.6s ease",
             }}
             className="columns-1 sm:columns-2 lg:columns-3"
           >
@@ -143,10 +146,8 @@ export default function PortfolioGallery() {
                 key={item.id}
                 onClick={() => setLightbox(item.image)}
                 className="portfolio-card group"
-                style={{
-                  transform: inView ? "translateY(0)" : "translateY(24px)",
-                  transitionDelay: `${(i % 9) * 0.04}s`,
-                }}
+                data-aos="fade-up"
+                data-aos-delay={(i % 6) * 100}
                 aria-label={`View ${item.category} design`}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -266,11 +267,32 @@ export default function PortfolioGallery() {
           cursor: zoom-in;
           break-inside: avoid;
           box-shadow: 0 4px 15px rgba(0, 0, 0, 0.015);
-          transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s;
+          transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s;
+        }
+        .portfolio-card::after {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: -150%;
+          width: 50%;
+          height: 100%;
+          background: linear-gradient(
+            to right,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255, 255, 255, 0.35) 50%,
+            rgba(255, 255, 255, 0) 100%
+          );
+          transform: skewX(-25deg);
+          transition: left 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+          z-index: 15;
+          pointer-events: none;
+        }
+        .portfolio-card:hover::after {
+          left: 150%;
         }
         .portfolio-card:hover {
-          transform: translateY(-6px);
-          box-shadow: 0 16px 36px rgba(0, 0, 0, 0.06);
+          transform: translateY(-8px) scale(1.01);
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
           border-color: rgba(245, 130, 32, 0.25);
         }
         .portfolio-card img {

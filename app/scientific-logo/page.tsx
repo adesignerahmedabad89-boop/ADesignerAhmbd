@@ -181,10 +181,21 @@ export default function ScientificLogoPage() {
       });
     }
 
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let currentX = mouseX;
+    let currentY = mouseY;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+
     const draw = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Deep space gradient backdrop
+      // Deep space gradient backdrop (anchored to center)
       const bgGrad = ctx.createRadialGradient(
         canvas.width / 2,
         canvas.height / 2,
@@ -199,8 +210,17 @@ export default function ScientificLogoPage() {
       ctx.fillStyle = bgGrad;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      const cx = canvas.width / 2;
-      const cy = canvas.height / 2;
+      // Shift core center smoothly toward mouse coords (parallax drift)
+      const maxShiftX = canvas.width * 0.07;
+      const maxShiftY = canvas.height * 0.07;
+      const targetCx = canvas.width / 2 + ((mouseX - canvas.width / 2) / (canvas.width / 2)) * maxShiftX;
+      const targetCy = canvas.height / 2 + ((mouseY - canvas.height / 2) / (canvas.height / 2)) * maxShiftY;
+
+      currentX += (targetCx - currentX) * 0.04;
+      currentY += (targetCy - currentY) * 0.04;
+
+      const cx = currentX;
+      const cy = currentY;
 
       // Draw glowing central cosmic core
       ctx.save();
@@ -220,7 +240,7 @@ export default function ScientificLogoPage() {
       stars.forEach((star) => {
         const currentAngle = star.angle + angleOffset;
 
-        // Calculate coordinates relative to center
+        // Calculate coordinates relative to drifted center
         const x = cx + Math.cos(currentAngle) * star.r;
         const y = cy + Math.sin(currentAngle) * star.r;
 
@@ -246,6 +266,7 @@ export default function ScientificLogoPage() {
 
     return () => {
       window.removeEventListener("resize", resizeCanvas);
+      window.removeEventListener("mousemove", handleMouseMove);
       cancelAnimationFrame(animationFrameId);
     };
   }, []);
@@ -271,13 +292,13 @@ export default function ScientificLogoPage() {
           <div className="site-wrap text-center flex flex-col items-center">
 
             {/* Celestial Badge */}
-            <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-[#dfb15b]/30 bg-black/60 shadow-[0_0_15px_rgba(223,177,91,0.15)] text-xs font-semibold text-[#dfb15b] mb-8 animate-pulse">
+            <div data-aos="fade-down" className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-[#dfb15b]/30 bg-black/60 shadow-[0_0_15px_rgba(223,177,91,0.15)] text-xs font-semibold text-[#dfb15b] mb-8 animate-pulse">
               <Moon className="w-4 h-4 text-[#dfb15b] fill-current" />
               Cosmic Alignment &amp; Astrological Logo Optimization
             </div>
 
             {/* Astrology Headline */}
-            <h1 className="font-serif text-4xl md:text-6xl lg:text-7xl font-black leading-tight text-white mb-6 tracking-tight">
+            <h1 data-aos="fade-up" className="font-serif text-4xl md:text-6xl lg:text-7xl font-black leading-tight text-white mb-6 tracking-tight">
               Align Your Brand With the <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#dfb15b] via-[#fcd34d] to-[#7c3aed] filter drop-shadow-[0_0_20px_rgba(223,177,91,0.2)]">
                 Frequencies of the Universe
@@ -285,7 +306,7 @@ export default function ScientificLogoPage() {
             </h1>
 
             {/* Sub-headline */}
-            <p className="text-base md:text-lg lg:text-xl text-slate-300 max-w-3xl mx-auto mb-12 leading-relaxed">
+            <p data-aos="fade-up" data-aos-delay="100" className="text-base md:text-lg lg:text-xl text-slate-300 max-w-3xl mx-auto mb-12 leading-relaxed">
               Every design element possesses an energetic wavelength. We align your corporate logo, signature pattern, and name vibrations to match your zodiac ruler, planetary elements, and cosmic wealth frequencies.
             </p>
 
@@ -308,7 +329,7 @@ export default function ScientificLogoPage() {
                   desc: "Balancing vertical, horizontal, and radial curves to channel cosmological energies, clearing cash-flow bottlenecks."
                 }
               ].map((item, idx) => (
-                <div key={idx} style={{ padding: "40px 32px" }} className="relative rounded-2xl bg-black/75 border border-[#dfb15b]/20 shadow-[0_0_30px_rgba(0,0,0,0.8)] hover:border-[#dfb15b]/50 hover:shadow-[0_0_20px_rgba(223,177,91,0.08)] transition-all">
+                <div key={idx} data-aos="fade-up" data-aos-delay={idx * 150} style={{ padding: "40px 32px" }} className="relative rounded-2xl bg-black/75 border border-[#dfb15b]/20 shadow-[0_0_30px_rgba(0,0,0,0.8)] hover:border-[#dfb15b]/50 hover:shadow-[0_0_20px_rgba(223,177,91,0.08)] transition-all">
                   <div className="absolute top-0 right-0 p-3 text-[10px] font-mono text-[#dfb15b]/30">Arm #{idx + 1}</div>
                   <div className="w-12 h-12 rounded-full bg-slate-900 border border-[#dfb15b]/20 flex items-center justify-center mb-6">
                     {item.icon}
@@ -320,7 +341,7 @@ export default function ScientificLogoPage() {
             </div>
 
             {/* CTA Button */}
-            <div className="mb-10">
+            <div data-aos="zoom-in" className="mb-10">
               <a
                 href="https://wa.me/916353117403"
                 target="_blank"
@@ -333,7 +354,7 @@ export default function ScientificLogoPage() {
             </div>
 
             {/* Astrological Trust Indicators */}
-            <div className="flex flex-wrap justify-center gap-3 md:gap-4 w-full">
+            <div data-aos="fade-up" data-aos-delay="200" className="flex flex-wrap justify-center gap-3 md:gap-4 w-full">
               {["🪐 Planetary Grid Audits", "✨ 15,000+ Astrological Profiles", "🔮 Zodiac Element Synthesis", "🌌 100% Cosmic Correction"].map((badge, idx) => (
                 <span key={idx} className="px-5 py-2 rounded-full border border-[#dfb15b]/20 bg-black/60 text-xs text-slate-300">
                   {badge}
@@ -350,7 +371,7 @@ export default function ScientificLogoPage() {
           className="px-6 bg-black/45 border-b border-[#dfb15b]/10"
         >
           <div className="site-wrap flex justify-center">
-            <div className="max-w-4xl w-full rounded-2xl border border-red-500/20 bg-[#0f0714] p-8 md:p-10 text-center backdrop-blur-md">
+            <div data-aos="zoom-in" className="max-w-4xl w-full rounded-2xl border border-red-500/20 bg-[#0f0714] p-8 md:p-10 text-center backdrop-blur-md">
               <ShieldAlert className="mx-auto w-12 h-12 text-[#dfb15b] mb-4" />
               <p className="text-lg md:text-xl text-slate-200 leading-relaxed font-medium font-serif">
                 &ldquo;When a logo violates Vastu rules or contains colors that conflict with the founder&apos;s birth chart, it creates cosmic static — leading to unstable sales, friction, and expansion resistance.&rdquo;
@@ -369,7 +390,7 @@ export default function ScientificLogoPage() {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
 
               {/* Left Column: Rotating Cosmic SVG Structure */}
-              <div className="lg:col-span-5 flex justify-center items-center relative min-h-[300px]">
+              <div data-aos="fade-right" className="lg:col-span-5 flex justify-center items-center relative min-h-[300px]">
                 {/* Outer Glow Effect */}
                 <div className="absolute w-[280px] h-[280px] bg-gradient-to-r from-[#dfb15b]/10 to-[#7c3aed]/10 rounded-full blur-2xl filter opacity-40"></div>
 
@@ -429,7 +450,7 @@ export default function ScientificLogoPage() {
               </div>
 
               {/* Right Column: Content Section */}
-              <div className="lg:col-span-7 flex flex-col justify-center text-left">
+              <div data-aos="fade-left" className="lg:col-span-7 flex flex-col justify-center text-left">
                 <span className="text-xs uppercase tracking-widest text-[#dfb15b] font-bold block mb-3">
                   Predict Future
                 </span>
@@ -468,7 +489,7 @@ export default function ScientificLogoPage() {
           <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet" />
 
           <div className="site-wrap mx-auto px-8 md:px-12 flex flex-col items-center">
-            <div className="text-center" style={{ marginBottom: "50px" }}>
+            <div data-aos="fade-up" className="text-center" style={{ marginBottom: "50px" }}>
               <span className="text-xs uppercase tracking-widest text-[#dfb15b] font-bold block mb-3">Astrological Tool</span>
               <h2 style={{ fontFamily: "'Cinzel', serif" }} className="text-3xl md:text-5xl font-extrabold text-white leading-tight text-center">
                 Zodiac Brand Alignment Calculator
@@ -479,7 +500,7 @@ export default function ScientificLogoPage() {
             </div>
 
             {/* Zodiac Selection Grid */}
-            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4 mb-10 max-w-5xl mx-auto w-full">
+            <div data-aos="fade-up" className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4 mb-10 max-w-5xl mx-auto w-full">
               {[
                 { name: "Aries", hindi: "Mesh", symbol: "♈\uFE0E" },
                 { name: "Taurus", hindi: "Vrishabha", symbol: "♉\uFE0E" },
@@ -516,6 +537,7 @@ export default function ScientificLogoPage() {
             {/* Dynamically Rendered Result Card */}
             {selectedZodiac && (
               <div 
+                data-aos="zoom-in"
                 style={{ padding: "40px" }}
                 className="max-w-5xl mx-auto w-full rounded-3xl border border-[#dfb15b]/20 bg-gradient-to-br from-black/90 to-slate-950/90 shadow-[0_0_50px_rgba(0,0,0,0.8)] backdrop-blur-md relative overflow-hidden"
               >
@@ -603,7 +625,7 @@ export default function ScientificLogoPage() {
           className="border-b border-[#dfb15b]/10"
         >
           <div className="site-wrap px-8 md:px-12">
-            <div className="text-center" style={{ marginBottom: "60px" }}>
+            <div data-aos="fade-up" className="text-center" style={{ marginBottom: "60px" }}>
               <span className="text-xs uppercase tracking-widest text-[#dfb15b] font-bold block mb-3">About</span>
               <h2 className="font-serif text-3xl md:text-5xl font-extrabold text-white leading-tight">
                 Our Services
@@ -628,7 +650,7 @@ export default function ScientificLogoPage() {
                   desc: "Full logo suites for biotech, pharma, and tech startups in the science sector."
                 }
               ].map((card, idx) => (
-                <div key={idx} className="group relative rounded-3xl border border-[#dfb15b]/10 bg-black/85 overflow-hidden flex flex-col justify-between shadow-[0_0_30px_rgba(0,0,0,0.5)] transition-all hover:border-[#dfb15b]/30 hover:translate-y-[-4px]">
+                <div key={idx} data-aos="fade-up" data-aos-delay={idx * 150} className="group relative rounded-3xl border border-[#dfb15b]/10 bg-black/85 overflow-hidden flex flex-col justify-between shadow-[0_0_30px_rgba(0,0,0,0.5)] transition-all hover:border-[#dfb15b]/30 hover:translate-y-[-4px]">
 
                   {/* Card Image Wrapper with soft backdrop glow */}
                   <div className="w-full h-56 bg-[#0c0617] flex items-center justify-center relative border-b border-[#dfb15b]/5 overflow-hidden">
@@ -687,7 +709,7 @@ export default function ScientificLogoPage() {
           className="bg-black/40 border-b border-[#dfb15b]/10"
         >
           <div className="site-wrap px-8 md:px-12">
-            <div className="text-center" style={{ marginBottom: "60px" }}>
+            <div data-aos="fade-up" className="text-center" style={{ marginBottom: "60px" }}>
               <span className="text-xs uppercase tracking-widest text-[#dfb15b] font-bold block mb-3">Energetic Blocks</span>
               <h2 className="font-serif text-3xl md:text-4xl font-extrabold text-white leading-tight">
                 Signs of Planetary Conflict in Branding
@@ -703,7 +725,7 @@ export default function ScientificLogoPage() {
                 { emoji: "🌙", title: "Venus Barrier: Poor Retention", desc: "Clients don&apos;t experience positive aesthetic association, leading to zero brand loyalty or repeat transactions." },
                 { emoji: "🔮", title: "Solar Block: Lack of Brand Name", desc: "Founder does not get recognition. Brand is easily forgotten and fails to build an industry name." }
               ].map((card, idx) => (
-                <div key={idx} style={{ padding: "40px 32px" }} className="rounded-2xl border border-[#dfb15b]/5 bg-black/60 transition-all hover:border-[#dfb15b]/25">
+                <div key={idx} data-aos="fade-up" data-aos-delay={idx * 100} style={{ padding: "40px 32px" }} className="rounded-2xl border border-[#dfb15b]/5 bg-black/60 transition-all hover:border-[#dfb15b]/25">
                   <span className="text-3xl mb-4 block">{card.emoji}</span>
                   <h3 className="text-lg font-bold text-[#dfb15b] mb-2">{card.title}</h3>
                   <p className="text-sm text-slate-400 leading-relaxed">{card.desc}</p>
@@ -723,7 +745,7 @@ export default function ScientificLogoPage() {
           <div className="site-wrap px-8 md:px-12">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center w-full">
               {/* Info */}
-              <div className="lg:col-span-7">
+              <div data-aos="fade-right" className="lg:col-span-7">
                 <span className="text-xs uppercase tracking-widest text-[#dfb15b] font-bold block mb-3">Our Credentials</span>
                 <h2 className="font-serif text-3xl md:text-5xl font-extrabold text-white leading-tight mb-4">
                   A Designer Ahmedabad
@@ -752,7 +774,7 @@ export default function ScientificLogoPage() {
               </div>
 
               {/* Visual Astrology Elements */}
-              <div className="lg:col-span-5 space-y-6 w-full">
+              <div data-aos="fade-left" className="lg:col-span-5 space-y-6 w-full">
                 <div style={{ padding: "36px 30px" }} className="rounded-2xl bg-black/80 border border-[#dfb15b]/15 shadow-lg">
                   <Globe className="w-8 h-8 text-[#dfb15b] mb-3 animate-spin duration-10000" />
                   <h3 className="text-base font-bold text-white mb-2">Macro Cosmic Alignment</h3>
@@ -777,7 +799,7 @@ export default function ScientificLogoPage() {
         >
           <div className="site-wrap px-8 md:px-12 flex flex-col items-center">
             <div className="max-w-3xl w-full">
-              <div className="text-center" style={{ marginBottom: "60px" }}>
+              <div data-aos="fade-up" className="text-center" style={{ marginBottom: "60px" }}>
                 <span className="text-xs uppercase tracking-widest text-[#dfb15b] font-bold block mb-3">Workflow</span>
                 <h2 className="font-serif text-3xl font-extrabold text-white">6-Phase Brand Alignment Protocol</h2>
               </div>
@@ -791,7 +813,7 @@ export default function ScientificLogoPage() {
                   { step: "5", title: "Diagnostic Remediation Plan", desc: "Drafting the modifications and layout guidelines to upgrade visual identity variables." },
                   { step: "6", title: "Strategic Design Hand-off", desc: "Delivering aligned logo formats, font families, stationery configurations, and execution blueprints." }
                 ].map((item, idx) => (
-                  <div key={idx} style={{ padding: "30px 24px" }} className="rounded-xl border border-[#dfb15b]/10 bg-slate-950/50 flex gap-4 items-start">
+                  <div key={idx} data-aos="fade-up" data-aos-delay={idx * 100} style={{ padding: "30px 24px" }} className="rounded-xl border border-[#dfb15b]/10 bg-slate-950/50 flex gap-4 items-start">
                     <div className="w-8 h-8 rounded-full border border-[#dfb15b] flex items-center justify-center font-mono font-bold text-[#dfb15b] shrink-0 text-sm">
                       {item.step}
                     </div>
@@ -814,7 +836,7 @@ export default function ScientificLogoPage() {
           className="bg-black/45 border-b border-[#dfb15b]/10"
         >
           <div className="site-wrap px-8 md:px-12">
-            <div className="text-center" style={{ marginBottom: "60px" }}>
+            <div data-aos="fade-up" className="text-center" style={{ marginBottom: "60px" }}>
               <span className="text-xs uppercase tracking-widest text-[#dfb15b] font-bold block mb-3">Plans</span>
               <h2 className="font-serif text-3xl md:text-5xl font-extrabold text-white">Select Your Alignment Plan</h2>
             </div>
@@ -822,7 +844,7 @@ export default function ScientificLogoPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch w-full">
 
               {/* Silver Plan */}
-              <div style={{ padding: "40px 32px" }} className="rounded-2xl border border-[#dfb15b]/15 bg-black/80 flex flex-col justify-between transition-all hover:translate-y-[-4px]">
+              <div data-aos="fade-up" data-aos-delay="0" style={{ padding: "40px 32px" }} className="rounded-2xl border border-[#dfb15b]/15 bg-black/80 flex flex-col justify-between transition-all hover:translate-y-[-4px]">
                 <div>
                   <h3 className="font-serif text-xl font-bold text-[#dfb15b] mb-1">Silver Plan ✨</h3>
                   <div className="inline-block px-3 py-1 rounded-full text-[10px] font-semibold bg-[#dfb15b]/10 text-[#dfb15b] mb-4">
@@ -846,7 +868,7 @@ export default function ScientificLogoPage() {
               </div>
 
               {/* Gold Plan */}
-              <div style={{ padding: "40px 32px" }} className="relative rounded-2xl border border-[#dfb15b] bg-black/90 flex flex-col justify-between shadow-[0_0_40px_rgba(0,70,173,0.25)] transition-all hover:translate-y-[-4px]">
+              <div data-aos="fade-up" data-aos-delay="150" style={{ padding: "40px 32px" }} className="relative rounded-2xl border border-[#dfb15b] bg-black/90 flex flex-col justify-between shadow-[0_0_40px_rgba(0,70,173,0.25)] transition-all hover:translate-y-[-4px]">
                 <div className="absolute top-0 left-1/2 translate-x-[-50%] translate-y-[-50%] px-4 py-1 rounded-full bg-gradient-to-r from-[#dfb15b] to-[#0046ad] text-white text-[9px] font-black uppercase tracking-widest whitespace-nowrap">
                   Most Popular
                 </div>
@@ -873,7 +895,7 @@ export default function ScientificLogoPage() {
               </div>
 
               {/* Diamond Plan */}
-              <div style={{ padding: "40px 32px" }} className="rounded-2xl border border-[#dfb15b]/15 bg-black/80 flex flex-col justify-between transition-all hover:translate-y-[-4px]">
+              <div data-aos="fade-up" data-aos-delay="300" style={{ padding: "40px 32px" }} className="rounded-2xl border border-[#dfb15b]/15 bg-black/80 flex flex-col justify-between transition-all hover:translate-y-[-4px]">
                 <div>
                   <h3 className="font-serif text-xl font-bold text-[#dfb15b] mb-1">Diamond Plan ✨</h3>
                   <div className="inline-block px-3 py-1 rounded-full text-[10px] font-semibold bg-[#dfb15b]/10 text-[#dfb15b] mb-4">
@@ -897,7 +919,7 @@ export default function ScientificLogoPage() {
               </div>
 
               {/* Platinum Plan */}
-              <div style={{ padding: "40px 32px" }} className="rounded-2xl border border-[#dfb15b]/15 bg-black/80 flex flex-col justify-between transition-all hover:translate-y-[-4px]">
+              <div data-aos="fade-up" data-aos-delay="450" style={{ padding: "40px 32px" }} className="rounded-2xl border border-[#dfb15b]/15 bg-black/80 flex flex-col justify-between transition-all hover:translate-y-[-4px]">
                 <div>
                   <h3 className="font-serif text-xl font-bold text-[#dfb15b] mb-1">Platinum Plan ✨</h3>
                   <div className="inline-block px-3 py-1 rounded-full text-[10px] font-semibold bg-[#dfb15b]/10 text-[#dfb15b] mb-4">
@@ -938,7 +960,7 @@ export default function ScientificLogoPage() {
           className="border-b border-[#dfb15b]/10"
         >
           <div className="site-wrap">
-            <div className="text-center" style={{ marginBottom: "60px" }}>
+            <div data-aos="fade-up" className="text-center" style={{ marginBottom: "60px" }}>
               <span className="text-xs uppercase tracking-widest text-[#dfb15b] font-bold block mb-3">Testimonials</span>
               <h2 className="font-serif text-3xl md:text-5xl font-extrabold text-white font-black">Founder Experiences</h2>
             </div>
@@ -949,7 +971,7 @@ export default function ScientificLogoPage() {
                 { author: "Priya Chawla", role: "Founder, Lotus Organics", text: "The planetary color coding suggestions from A Designer Ahmedabad were outstanding. Our marketing conversions increased and referral retention metrics feel incredibly aligned." },
                 { author: "Amit Trivedi", role: "CEO, Starline Logistics", text: "Excellent cosmic diagnostic. Synthesizing sacred shapes with logo numerology eliminated saturn friction and stabilized our cash flows." }
               ].map((t, idx) => (
-                <div key={idx} style={{ padding: "40px 32px" }} className="rounded-2xl bg-black/80 border border-[#dfb15b]/15 shadow-xl">
+                <div key={idx} data-aos="fade-up" data-aos-delay={idx * 150} style={{ padding: "40px 32px" }} className="rounded-2xl bg-black/80 border border-[#dfb15b]/15 shadow-xl">
                   <div className="flex gap-1 text-[#dfb15b] mb-4">
                     {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-current" />)}
                   </div>
@@ -972,7 +994,7 @@ export default function ScientificLogoPage() {
           className="border-b border-[#dfb15b]/10 bg-slate-950/20"
         >
           <div className="site-wrap px-8 md:px-12">
-            <div className="max-w-4xl mx-auto rounded-2xl border border-[#dfb15b]/20 bg-black/85 p-8 md:p-10 shadow-[0_0_50px_rgba(0,0,0,0.8)] backdrop-blur-md">
+            <div data-aos="zoom-in" className="max-w-4xl mx-auto rounded-2xl border border-[#dfb15b]/20 bg-black/85 p-8 md:p-10 shadow-[0_0_50px_rgba(0,0,0,0.8)] backdrop-blur-md">
               <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
 
                 {/* Text Side */}
@@ -1044,7 +1066,7 @@ export default function ScientificLogoPage() {
         >
           <div className="site-wrap px-8 md:px-12 flex flex-col items-center">
             <div className="max-w-3xl w-full">
-              <div className="text-center" style={{ marginBottom: "60px" }}>
+              <div data-aos="fade-up" className="text-center" style={{ marginBottom: "60px" }}>
                 <span className="text-xs uppercase tracking-widest text-[#dfb15b] font-bold block mb-3">FAQ</span>
                 <h2 className="font-serif text-3xl font-extrabold text-white">Frequently Asked Questions</h2>
               </div>
@@ -1057,7 +1079,7 @@ export default function ScientificLogoPage() {
                   { q: "How long does it take to implement changes?", a: "Our team delivers the corrected design guidelines and files within 7 to 10 working days after compiling your astrological elements." },
                   { q: "Is the consultation call confidential?", a: "Absolutely. All astrological charts, founder details, signatures, and business data are kept 100% confidential." }
                 ].map((faq, idx) => (
-                  <div key={idx} className="rounded-xl border border-[#dfb15b]/15 bg-black/60 overflow-hidden">
+                  <div key={idx} data-aos="fade-up" data-aos-delay={idx * 50} className="rounded-xl border border-[#dfb15b]/15 bg-black/60 overflow-hidden">
                     <button
                       onClick={() => setActiveFaq(activeFaq === idx ? null : idx)}
                       className="w-full px-6 py-5 flex items-center justify-between text-left font-bold text-white hover:text-[#dfb15b] transition-colors"
@@ -1080,7 +1102,7 @@ export default function ScientificLogoPage() {
 
         {/* ============ FINAL CTA ============ */}
         <section style={{ width: "100%", paddingTop: "60px", paddingBottom: "60px" }} className="text-center">
-          <div className="site-wrap flex flex-col items-center justify-center">
+          <div data-aos="zoom-in" className="site-wrap flex flex-col items-center justify-center">
             <div className="max-w-3xl w-full">
               <span className="text-xs uppercase tracking-widest text-[#dfb15b] font-bold block mb-3">Cosmic Alignment</span>
               <h2 className="font-serif text-3xl md:text-5xl font-black text-white mb-6">
