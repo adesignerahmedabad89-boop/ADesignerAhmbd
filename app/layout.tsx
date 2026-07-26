@@ -1,8 +1,27 @@
 import type { Metadata, Viewport } from "next";
+import { Zen_Kaku_Gothic_New, Marck_Script } from "next/font/google";
 import ImageProtection from "@/components/ImageProtection";
 import AosInit from "@/components/AosInit";
 import "./globals.css";
 import Script from "next/script";
+
+// Showreel typefaces (home page). Exposed as CSS variables only — the site-wide
+// `--font-sans` stays Geist; `.showreel-root` re-points it to `--font-zen` for
+// the Showreel subtree. See `showreel/showreel.css`.
+const zenKaku = Zen_Kaku_Gothic_New({
+  variable: "--font-zen",
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["400", "500", "700"],
+});
+
+// Handwritten accent face — the italic "Works" in the portfolio title.
+const marckScript = Marck_Script({
+  variable: "--font-marck",
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["400"],
+});
 
 export const metadata: Metadata = {
   title: "A Designer Ahmedabad | Build Your Brand's Journey",
@@ -21,7 +40,10 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className="font-sans">
+    <html
+      lang="en"
+      className={`font-sans ${zenKaku.variable} ${marckScript.variable}`}
+    >
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

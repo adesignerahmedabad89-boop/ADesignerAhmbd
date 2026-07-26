@@ -1,4 +1,9 @@
 @import "tailwindcss";
+@import "../showreel/showreel.css";
+
+/* The Showreel view lives outside `app/`, so make sure Tailwind scans it for
+   class names (belt-and-braces on top of automatic source detection). */
+@source "../showreel";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -12,7 +17,14 @@
   --font-sans: 'Geist', 'Plus Jakarta Sans', 'Segoe UI', system-ui, sans-serif;
 }
 
-* {
+/* These resets are UNLAYERED, so they outrank every Tailwind utility (which
+   live in `@layer utilities`). That is invisible on the rest of the site — it
+   styles with inline styles — but it would silently null out the Showreel's
+   `p-[4vmin]` / `mt-auto` / `gap-*` classes. Tailwind's own preflight already
+   applies exactly these three declarations to `*` (in `@layer base`, where
+   utilities can beat them), so excluding the Showreel subtree here loses
+   nothing and leaves every other route byte-identical. */
+*:not(.showreel-root):not(.showreel-root *) {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
@@ -30,7 +42,10 @@ body {
   overflow-x: hidden;
 }
 
-a {
+/* Same story as the `*` reset above: unlayered, so it would beat the Showreel's
+   `text-ink` / `text-paper` link colours. Preflight's own `a { color: inherit }`
+   still covers the subtree. */
+a:not(.showreel-root a) {
   color: inherit;
   text-decoration: none;
 }
@@ -412,4 +427,4 @@ div[style*="background: linear-gradient"], div[style*="background:linear-gradien
 }
 [style*="border-color: #0b3c5d"], [style*="border-color:#0b3c5d"] {
   border-color: var(--color-brand-teal, #0046ad) !important;
-}
+}

@@ -62,7 +62,9 @@ export default function Footer() {
         <div className="site-wrap" style={{ padding: "64px 24px" }}>
           <div style={{ display: "grid", gap: "40px" }} className="md:grid-cols-2 lg:grid-cols-4">
             <div>
-              <Image src="/A designer 2.png" alt="A Designer Ahmedabad" width={180} height={45} style={{ height: "40px", width: "auto", objectFit: "contain", marginBottom: "16px", filter: "brightness(0) invert(1)" }} />
+              {/* 256×183 = the PNG's real intrinsic ratio; the rendered size is
+                  still 40px tall / auto width via `style`. See Navbar.tsx. */}
+              <Image src="/A designer 2.png" alt="A Designer Ahmedabad" width={256} height={183} style={{ height: "40px", width: "auto", objectFit: "contain", marginBottom: "16px", filter: "brightness(0) invert(1)" }} />
               <p style={{ color: "rgba(255,255,255,0.4)", fontSize: "13px", lineHeight: 1.75, marginBottom: "20px" }}>
                 A Designer Ahmedabad - 10+ years of expertise in branding, designing, and marketing. Making every customer feel WoW.
               </p>

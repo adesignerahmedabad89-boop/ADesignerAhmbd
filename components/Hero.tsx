@@ -467,6 +467,48 @@ export default function Hero() {
                 >
                   Discover More <ArrowRight size={17} />
                 </Link>
+                <Link
+                  href="/laocoon/index.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "8px",
+                    padding: "14px 32px",
+                    color: "#fff",
+                    fontWeight: 700,
+                    borderRadius: "999px",
+                    fontSize: "15px",
+                    border: "1px solid rgba(255,255,255,0.35)",
+                    background: "rgba(255,255,255,0.04)",
+                    transition: "all 0.3s ease",
+                  }}
+                  className="hover:shadow-[0_0_20px_rgba(255,255,255,0.15)]"
+                >
+                  Bronze Horse Experience <ArrowRight size={17} />
+                </Link>
+                <Link
+                  href="/superconscious/index.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "8px",
+                    padding: "14px 32px",
+                    color: "#fff",
+                    fontWeight: 700,
+                    borderRadius: "999px",
+                    fontSize: "15px",
+                    border: "1px solid rgba(255,255,255,0.35)",
+                    background: "rgba(255,255,255,0.04)",
+                    transition: "all 0.3s ease",
+                  }}
+                  className="hover:shadow-[0_0_20px_rgba(255,255,255,0.15)]"
+                >
+                  Superconscious Showreel <ArrowRight size={17} />
+                </Link>
               </div>
 
               {/* Stats row */}

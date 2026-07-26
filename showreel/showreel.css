@@ -1,0 +1,271 @@
+/* ──────────────────────────────────────────────────────────────────────────
+   Showreel design tokens — ported 1:1 from promptcode `src/app/globals.css`.
+
+   Difference from the source project: promptcode owns the whole document, so
+   its tokens live on `:root` and its resets on `html`/`body`. Here the Showreel
+   is ONE route inside an existing multi-page site, so the same declarations are
+   scoped:
+
+     • `.showreel-root`   — the wrapper around the Showreel view. Carries every
+                            colour/typography token, so the other 12 routes keep
+                            their own `--background` / `--foreground` / fonts.
+     • `html:has(.showreel-root)` — matches only while the Showreel route is on
+                            screen. Carries the document-level rules that cannot
+                            be scoped to a subtree: the adaptive root font-size,
+                            the black page backdrop, scrollbar hiding, and the
+                            overflow reset that `position: sticky` depends on.
+                            `:has()` is used instead of a class toggled by JS so
+                            the rules apply to the server-rendered markup at
+                            first paint (no script, no hydration mismatch) and
+                            stop applying the moment the route unmounts.
+     • `:root`            — ONLY the `--sr-*` geometry defaults, because
+                            `useShowreelLayout` overwrites them live on
+                            `document.documentElement`; declaring them lower in
+                            the tree would shadow those runtime writes.
+
+   Values are unchanged from promptcode. Never hardcode a hex/rgba in a
+   className — add a token here first.
+   ────────────────────────────────────────────────────────────────────────── */
+
+.showreel-root {
+  --background: #000000; /* page backdrop behind the fixed flame shader */
+  --foreground: #f5f1ec; /* default off-white ink */
+
+  /* Surfaces */
+  --ink: #07031a; /* target-block deep navy-black */
+  --pf-card: #14110e; /* portfolio card surface */
+  --cc-search: #161310; /* catalist light-card search bar */
+  --paper: #f5f1ec; /* off-white card/UI text */
+  --paper-alt: #f3f1ec; /* portfolio section ink */
+  --nav-ink: #1a1a1a; /* nav-pill links (on light pill) */
+  --cc-dark-ink: #f5f1ec; /* catalist dark-card ink */
+  --cc-light-ink: #1a1714; /* catalist light-card ink */
+  --cc-light-muted: #9a948d; /* catalist light-card secondary copy */
+
+  /* Header — opaque segmented bar. Base shows through the 1px gaps between
+     containers (reads as hairlines); items are the lightest, the logo container
+     a touch darker, the CTA black. */
+  --nav-surface: #e3e3e3; /* header base / 1px gap colour (neutral grey) */
+  --nav-item: #ffffff; /* link container fill (white) */
+  --nav-logo: #dadada; /* logo container — slightly darker than the items */
+  --nav-cta: #0d0d0d; /* black CTA */
+  --nav-cta-ink: #f4f4f4; /* CTA label */
+  --nav-border: rgba(255, 255, 255, 0.6);
+  --nav-shadow: rgba(0, 0, 0, 0.12);
+  --glass-dark: rgba(40, 36, 33, 0.55); /* catalist dark pill */
+  --glass-border: rgba(255, 255, 255, 0.12);
+  --glass-border-soft: rgba(255, 255, 255, 0.14);
+  --hairline: rgba(255, 255, 255, 0.28); /* "See All" pill border */
+  --watermark: rgba(255, 255, 255, 0.85); /* portfolio card watermark */
+
+  /* Sphere (slot-4) card face — soft violet mesh gradient */
+  --card-violet: radial-gradient(95% 80% at 50% 28%, #ddd6fe 0%, #9a73f0 38%, #6d28d9 68%, #34146e 100%);
+  /* Intro-loader chrome-star halo — the violet core stop of `--card-violet`. */
+  --loader-glow: rgba(154, 115, 240, 0.55);
+
+  /* Showreel typography — Zen Kaku Gothic New, loaded by the root layout.
+     Re-points the site-wide `--font-sans` (Geist) for this subtree only, so the
+     `font-sans` utility resolves to the Showreel face inside the stage while
+     every other route — and the A Designer navbar — keeps the brand font. */
+  --font-sans: var(--font-zen);
+
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}
+
+:root {
+  /* Showreel responsive geometry — DESKTOP defaults (SSR / no-JS fallback).
+     `useShowreelLayout` overrides these on `document.documentElement` for
+     portrait phones/tablets. Single source of truth:
+     `showreel/utils/showreel/geometry.ts` (keep the numbers here in sync with
+     its `DESKTOP` set). The timeline's pure-string builders and the JSX
+     card/sphere sizes read these so the spring selectors stay stable while the
+     values swap live.
+
+     These MUST stay on `:root`: the hook writes them to
+     `document.documentElement.style`, and a re-declaration further down the
+     tree would shadow the runtime value. */
+  --sr-card-w: 42vmin; /* side-card width (hero card height) */
+  --sr-card-h: 62vmin; /* side-card height (hero card width) */
+  --sr-carousel-r: 27vmin; /* carousel radius (card translateZ) */
+  --sr-flyback: 40vmin; /* carousel fly-back depth */
+  --sr-hero-pad: 8vmin; /* hero full-screen inset (2× stage padding) */
+  --sr-heading-1: 18vmin; /* sphere top heading */
+  --sr-heading-2: 24vmin; /* sphere bottom heading */
+  --sr-sphere-body-w: 52vmin; /* sphere supporting-copy max-width */
+  --sr-sphere-body-text: 2.4vmin; /* sphere supporting-copy text size */
+}
+
+@theme inline {
+  --color-ink: var(--ink);
+  --color-pf-card: var(--pf-card);
+  --color-cc-search: var(--cc-search);
+  --color-paper: var(--paper);
+  --color-paper-alt: var(--paper-alt);
+  --color-nav-ink: var(--nav-ink);
+  --color-cc-dark-ink: var(--cc-dark-ink);
+  --color-cc-light-ink: var(--cc-light-ink);
+  --color-cc-light-muted: var(--cc-light-muted);
+
+  --color-nav-surface: var(--nav-surface);
+  --color-nav-item: var(--nav-item);
+  --color-nav-logo: var(--nav-logo);
+  --color-nav-cta: var(--nav-cta);
+  --color-nav-cta-ink: var(--nav-cta-ink);
+  --color-nav-border: var(--nav-border);
+  --color-glass-dark: var(--glass-dark);
+  --color-glass-border: var(--glass-border);
+  --color-glass-border-soft: var(--glass-border-soft);
+  --color-hairline: var(--hairline);
+  --color-watermark: var(--watermark);
+
+  /* Marck Script (handwritten accent). `--font-sans` is NOT re-bound here — the
+     host site already owns that utility; the Showreel re-points the underlying
+     variable on `.showreel-root` instead (see above). */
+  --font-script: var(--font-marck);
+
+  /* Radii — viewport-proportional, matching the original card geometry. */
+  --radius-btn: 8px; /* buttons + header (fixed 8px, per design request) */
+  --radius-card: 3vmin; /* hero / carousel cards */
+  --radius-pf: 2.5vmin; /* portfolio cards */
+  --radius-slider: 1.6vmin; /* hero image slider */
+  --radius-grid: 12px; /* parallax grid items */
+  --radius-target: 30px; /* target block (pre-flythrough) */
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Document-level rules — active only while the Showreel route is on screen.
+   Keyed off `:has(.showreel-root)`, the wrapper the view server-renders, so
+   they are live at first paint and self-tear-down on navigation.
+   ────────────────────────────────────────────────────────────────────────── */
+
+html:has(.showreel-root) {
+  /* The site sets `overflow-x: hidden` on BOTH <html> and <body>. That makes
+     <body> its own scroll container, which kills `position: sticky` — and the
+     entire showreel stage is pinned with `sticky top-0`. Releasing <html> lets
+     the body's overflow propagate to the viewport again (exactly how promptcode
+     is laid out), so the stage pins correctly. */
+  overflow-x: visible;
+  /* Lenis drives the scroll; native smooth-scroll fights it. */
+  scroll-behavior: auto;
+  scrollbar-width: none;
+}
+
+html:has(.showreel-root) body {
+  background: #000000;
+  color: #f5f1ec;
+  min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
+  scrollbar-width: none;
+}
+
+/* The Showreel hides scrollbars (it is a scroll-driven canvas) — overrides the
+   site's 5px red scrollbar for this route only. */
+html:has(.showreel-root)::-webkit-scrollbar,
+html:has(.showreel-root) body::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+/* Adaptive scaling grid — scales the root font-size with the viewport. The
+   Showreel layout itself is vmin/vw/vh based, so it stays proportional
+   independently; this only affects rem-based UI. Above 1920px the AdaptiveGrid
+   component takes over with an inline font-size. Keep in sync with
+   `showreel/components/common/grid/grid.config.ts`. */
+html:has(.showreel-root) {
+  font-size: 16px;
+}
+
+@media (max-width: 1920px) {
+  html:has(.showreel-root) {
+    font-size: 0.833333vw; /* 16 * 100 / 1920 */
+  }
+}
+
+@media (max-width: 1440px) {
+  html:has(.showreel-root) {
+    font-size: 1.111111vw; /* 16 * 100 / 1440 */
+  }
+}
+
+@media (max-width: 1024px) {
+  html:has(.showreel-root) {
+    font-size: 1.5625vw; /* 16 * 100 / 1024 */
+  }
+}
+
+@media (max-width: 640px) {
+  html:has(.showreel-root) {
+    font-size: 4.444444vw; /* 16 * 100 / 360 */
+  }
+}
+
+/* The site navbar is rendered outside `.showreel-root`, so it keeps the brand
+   font automatically — but it still lives under the rescaled root font-size.
+   Pinning it to 16px keeps its rem-based spacing identical to every other
+   route (and keeps its height a constant 73px — the figure `--sr-nav-h` below
+   depends on). */
+.adz-navbar {
+  font-size: 16px;
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Hero headline clearance — the one layout consequence of the navbar swap.
+
+   promptcode's header is a floating 42px pill centred over the hero, so its
+   headline sits at the card's own `p-[40px]` (`p-5` on phones) inset. The A
+   Designer navbar is an opaque, full-width 73px band instead, and at that inset
+   the first headline line rendered *behind* it: the hero card's top edge is only
+   `4vmin` from the viewport top (the stage's `p-[4vmin]`), so on a 390px phone
+   the text started at 4vmin + 1.25rem ≈ 37px — 36px up inside an opaque bar.
+
+   `max()` raises only the floor, so this never shrinks the original padding:
+     • needed  = nav height + breathing room − the stage's own 4vmin inset
+     • phones (390×844):   85 − 15.6 ≈ 69px  (was ~22px — the fix)
+     • tablet (820×1180):  85 − 32.8 ≈ 52px  (was 40px — was 1px from touching)
+     • 1440×900:           85 − 36   ≈ 49px  (was 40px — was 3px from touching)
+     • 1920×1080:          85 − 43.2 ≈ 42px  (was 40px)
+   The floor only stops binding once the *shorter* viewport side passes ~1125px
+   (4vmin > 45px), where the padding returns to promptcode's exact 40px — by
+   then the 73px bar is nowhere near the headline anyway. Net effect: the
+   headline sits a constant 12px below the bar at every size.
+   Only the headline block's top inset moves. The card, its shader, the letter
+   springs and every value in `utils/showreel/timeline.ts` are untouched. */
+.showreel-root .sr-hero-copy {
+  --sr-nav-h: 73px; /* .adz-navbar, pinned to 16px above → constant height */
+  --sr-nav-gap: 12px; /* breathing room under the bar */
+  padding-top: max(40px, calc(var(--sr-nav-h) + var(--sr-nav-gap) - 4vmin));
+}
+
+@layer utilities {
+  .scrollbar-none {
+    scrollbar-width: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Lenis smooth scrolling required styles (inert until Lenis adds `.lenis`). */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}

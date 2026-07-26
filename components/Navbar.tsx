@@ -5,6 +5,25 @@ import { usePathname } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
+import { animated, easings, useSpring } from "@react-spring/web";
+import { useLoaderStore } from "@/showreel/hooks/use-loader";
+
+export interface NavbarProps {
+  /**
+   * Home page (Showreel) only. Holds the bar hidden until the intro loader has
+   * fully lifted, then fades + slides it in — the entrance the promptcode
+   * `SiteHeader` plays, kept identical here so the A Designer navbar drops into
+   * the imported hero without changing its choreography.
+   *
+   * The fade lives on the fixed `<header>` itself, NOT on a wrapper around it:
+   * animating opacity on a wrapper of a `position: fixed` child gets composited
+   * separately and snaps instead of animating.
+   *
+   * Off by default, so every other route renders the bar immediately (those
+   * pages never mount the loader, so `revealed` would stay false forever).
+   */
+  revealAfterLoader?: boolean;
+}
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -18,26 +37,42 @@ const navLinks = [
   { label: "Contact", href: "/contact" },
 ];
 
-export default function Navbar() {
+export default function Navbar({ revealAfterLoader = false }: NavbarProps) {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  const revealed = useLoaderStore((s) => s.revealed);
+  const shown = revealAfterLoader ? revealed : true;
+  const reveal = useSpring({
+    opacity: shown ? 1 : 0,
+    y: shown ? 0 : -10,
+    // `immediate` on the routes that don't gate on the loader — they must paint
+    // the bar on the first frame, with no entrance spring at all.
+    immediate: !revealAfterLoader,
+    config: { duration: 700, easing: easings.easeInOutCubic },
+  });
 
   const textColor = "#333";
   const phoneColor = "#555";
   const logoFilter = "none";
 
   return (
-    <header
+    <animated.header
+      className="adz-navbar"
       style={{
         position: "fixed",
         top: 0,
         left: 0,
         right: 0,
-        zIndex: 50,
+        // Above the Showreel's fixed portfolio section (z-40) and stage, below
+        // its intro loader (z-200) so the loader still covers the bar.
+        zIndex: 100,
         background: "#ffffff",
         boxShadow: "0 2px 20px rgba(0,0,0,0.08)",
         borderBottom: "1px solid rgba(0,0,0,0.06)",
         transition: "background 0.3s ease, box-shadow 0.3s ease",
+        opacity: reveal.opacity,
+        transform: reveal.y.to((y) => `translateY(${y}px)`),
       }}
     >
       <div className="site-wrap">
@@ -46,13 +81,21 @@ export default function Navbar() {
             <Image
               src="/A designer 2.png"
               alt="A Designer Ahmedabad"
-              width={180}
-              height={40}
+              // Must match the file's real intrinsic ratio (the PNG is
+              // 256×183). These only declare the aspect ratio — the rendered
+              // size stays 40px tall / auto width via the style below. A
+              // mismatched ratio here is what made Next warn that the width was
+              // modified without the height.
+              width={256}
+              height={183}
               style={{ height: "40px", width: "auto", objectFit: "contain", filter: logoFilter, transition: "filter 0.3s ease" }}
             />
           </Link>
 
-          <nav className="hidden lg:flex items-center gap-8">
+          {/* Gaps are px, not `gap-8`/`gap-4`: the Showreel route rescales the
+              root font-size (adaptive grid), which would otherwise resize every
+              rem-based gap in the bar. */}
+          <nav className="hidden lg:flex items-center" style={{ gap: "32px" }}>
             {navLinks.map((link) => {
               const isActive = link.href === "/" ? pathname === "/" : pathname.startsWith(link.href);
               return (
@@ -88,7 +131,7 @@ export default function Navbar() {
             })}
           </nav>
 
-          <div className="hidden lg:flex items-center gap-4">
+          <div className="hidden lg:flex items-center" style={{ gap: "16px" }}>
             <a
               href="https://wa.me/916353117403"
               target="_blank"
@@ -164,6 +207,6 @@ export default function Navbar() {
           </Link>
         </div>
       </div>
-    </header>
+    </animated.header>
   );
 }

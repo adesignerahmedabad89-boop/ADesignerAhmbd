@@ -1,35 +1,15 @@
-import Navbar from "@/components/Navbar";
-import Hero from "@/components/Hero";
-import ClientLogos from "@/components/ClientLogos";
-import Stats from "@/components/Stats";
-import About from "@/components/About";
-import Services from "@/components/Services";
-import WhyChooseUs from "@/components/WhyChooseUs";
-import HomeCTA from "@/components/HomeCTA";
-import Pricing from "@/components/Pricing";
-import Testimonials from "@/components/Testimonials";
-import FAQ from "@/components/FAQ";
-import Contact from "@/components/Contact";
-import Footer from "@/components/Footer";
-import EnquiryModal from "@/components/EnquiryModal";
+/**
+ * Home route — the promptcode Showreel, ported 1:1 (see `showreel/views/home`).
+ *
+ * The previous marketing stack (Hero / ClientLogos / Stats / About / Services /
+ * WhyChooseUs / HomeCTA / Pricing / Testimonials / FAQ / Contact / Footer /
+ * EnquiryModal) has been replaced here, per the brief that the home page should
+ * look and behave exactly like the promptcode home page. Every one of those
+ * components is untouched and still used by the other routes — restoring the
+ * old composition is a copy of this file from git (`6243bcf:app/page.tsx`).
+ */
+import { HomeView } from "@/showreel/views/home";
 
 export default function Home() {
-  return (
-    <main>
-      <EnquiryModal />
-      <Navbar />
-      <Hero />
-      <ClientLogos />
-      <Stats />
-      <About showValues={false} />
-      <Services />
-      <WhyChooseUs />
-      <HomeCTA />
-      <Pricing />
-      <Testimonials />
-      <FAQ />
-      <Contact />
-      <Footer />
-    </main>
-  );
+  return <HomeView />;
 }
