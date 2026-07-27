@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import { CosmicLayout } from "@/components/cosmic/CosmicLayout";
+import { CosmicHero } from "@/components/cosmic/CosmicHero";
+import { IconSacredGeometry } from "@/components/cosmic/CosmicIcons";
 import AllServices from "@/components/AllServices";
-import PageHero from "@/components/PageHero";
 
 export const metadata: Metadata = {
   title: "Our Services | A Designer Ahmedabad",
@@ -15,11 +15,15 @@ export const metadata: Metadata = {
 
 export default function ServicesPage() {
   return (
-    <main>
-      <Navbar />
-      <PageHero bgImage="https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=2000&q=80" />
+    <CosmicLayout>
+      <CosmicHero
+        badge="Full-spectrum brand craft"
+        badgeIcon={<IconSacredGeometry className="h-4 w-4" />}
+        title="Solutions Aligned With"
+        titleAccent="Universal Energy"
+        sub="From the first mark to the final print run — every discipline calibrated to move your brand into its right orbit."
+      />
       <AllServices />
-      <Footer />
-    </main>
+    </CosmicLayout>
   );
 }

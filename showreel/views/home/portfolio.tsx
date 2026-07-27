@@ -89,7 +89,10 @@ export const Portfolio = memo(({ p, items, active }: PortfolioProps) => {
   return (
     <animated.section
       className="fixed inset-0 z-40 flex flex-col overflow-hidden pb-[8vmin] pt-[9vmin] text-paper-alt will-change-transform"
-      style={{ transform: sectionTransform }}
+      style={{ 
+        transform: sectionTransform,
+        pointerEvents: active ? "auto" : "none"
+      }}
     >
       {/* No own background: the section sits on the shared pinned aurora behind
           the sticky stage (ADR-0018). No header — just the horizontally

@@ -1,9 +1,7 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
-import { useInView } from "react-intersection-observer";
-import { ArrowRight } from "lucide-react";
+import { CosmicSection, SectionHeading } from "@/components/cosmic/CosmicUI";
+import { cosmicIconFor } from "@/components/cosmic/CosmicIcons";
 
 const services = [
   { img: "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=640&q=70", title: "Website Development", href: "/services/website-development", desc: "Fast, responsive and SEO-ready websites — from business sites and landing pages to full e-commerce stores — built to turn visitors into customers." },
@@ -20,75 +18,78 @@ const services = [
   { img: "/Stationary Design/Bag Design/8b2908ab-45cc-4945-aa89-3eca9f541d5e.jpg", title: "Bag Design", href: "/services/bag-design", desc: "Custom-designed bags that carry your brand wherever your customers go — a walking billboard that keeps your identity visible long after the sale." },
 ];
 
+/**
+ * The full service grid, in the Scientific Astrology theme.
+ *
+ * Now a **Server Component**: the old version was `"use client"` purely to run
+ * `useInView` for a fade-up, which AOS (already initialised site-wide) does
+ * declaratively. That drops the whole grid — and its twelve-entry data table —
+ * out of the client bundle.
+ *
+ * Each card carries a cosmic glyph from the shared cycle, so the twelve tiles
+ * read as a constellation of disciplines rather than twelve identical boxes.
+ */
 export default function AllServices() {
-  const { ref, inView } = useInView({ threshold: 0.04, triggerOnce: true });
-
   return (
-    <section ref={ref} style={{ padding: "100px 0", background: "#08090c", position: "relative", overflow: "hidden" }}>
-      <div className="site-wrap">
-        {/* Header */}
-        <div style={{ textAlign: "center", marginBottom: "64px", opacity: inView ? 1 : 0, transform: inView ? "translateY(0)" : "translateY(24px)", transition: "opacity 0.6s ease, transform 0.6s ease" }}>
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "10px", marginBottom: "14px" }}>
-            <div style={{ width: "32px", height: "2px", background: "#f58220" }} />
-            <span style={{ color: "#f58220", fontSize: "12px", fontWeight: 700, letterSpacing: "3px", textTransform: "uppercase" }}>What We Do</span>
-            <div style={{ width: "32px", height: "2px", background: "#f58220" }} />
-          </div>
-          <h2 style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)", fontWeight: 800, color: "#ffffff", marginBottom: "14px" }}>
-            Our <span style={{ color: "#f58220" }}>Services</span>
-          </h2>
-          <p style={{ color: "#94a3b8", maxWidth: "560px", margin: "0 auto", lineHeight: 1.75 }}>
-            Comprehensive branding, web and marketing solutions tailored to bring your brand to life — pick what your business needs.
-          </p>
-        </div>
+    <CosmicSection>
+      <SectionHeading
+        eyebrow="What we do"
+        title="Our"
+        titleAccent="Services"
+        sub="Comprehensive branding, web and marketing solutions tailored to bring your brand to life — pick what your business needs."
+      />
 
-        {/* Grid */}
-        <div style={{ display: "grid", gap: "20px" }} className="sm:grid-cols-2 lg:grid-cols-3">
-          {services.map((s, i) => (
-            <div
+      <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {services.map((s, i) => {
+          const Glyph = cosmicIconFor(i);
+          return (
+            <Link
               key={s.title}
-              style={{
-                background: "#111216",
-                border: "1px solid rgba(255,255,255,0.06)",
-                overflow: "hidden",
-                display: "flex",
-                flexDirection: "column",
-                opacity: inView ? 1 : 0,
-                transform: inView ? "translateY(0)" : "translateY(28px)",
-                transition: `opacity 0.6s ease ${(i % 3) * 0.08 + Math.floor(i / 3) * 0.06}s, transform 0.6s ease ${(i % 3) * 0.08 + Math.floor(i / 3) * 0.06}s`,
-              }}
-              className="card-hover group"
+              href={s.href}
+              data-aos="fade-up"
+              data-aos-delay={(i % 3) * 110}
+              className="cosmic-card cosmic-shimmer group flex flex-col overflow-hidden"
             >
-              <div style={{ position: "relative", width: "100%", height: "190px", overflow: "hidden" }}>
-                <Image src={s.img} alt={s.title} fill sizes="(max-width: 640px) 100vw, 380px" style={{ objectFit: "cover", transition: "transform 0.5s ease" }} className="group-hover:scale-110" />
-              </div>
-              <div style={{ padding: "24px 26px 28px", display: "flex", flexDirection: "column", flex: 1 }}>
-                <h3 style={{ fontWeight: 700, color: "#ffffff", fontSize: "16px", marginBottom: "8px" }} className="group-hover:text-[#f58220]">{s.title}</h3>
-                <p style={{ color: "#94a3b8", fontSize: "13.5px", lineHeight: 1.7, flex: 1, marginBottom: "18px" }}>{s.desc}</p>
-                <Link
-                  href={s.href}
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "6px",
-                    padding: "9px 20px",
-                    background: "#f58220",
-                    color: "#fff",
-                    fontWeight: 700,
-                    fontSize: "13px",
-                    borderRadius: "999px",
-                    transition: "background 0.2s",
-                    alignSelf: "flex-start",
-                    textDecoration: "none",
-                  }}
-                  className="hover:bg-[#ff933c]"
+              <div className="relative h-48 w-full overflow-hidden">
+                <Image
+                  src={s.img}
+                  alt={s.title}
+                  fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                  className="object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+                {/* Grades the photo into the card so there is no hard seam. */}
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent"
+                />
+                <span
+                  aria-hidden="true"
+                  className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full border border-[#dfb15b]/30 bg-black/70 text-[#dfb15b] backdrop-blur-sm transition-transform duration-300 group-hover:scale-110"
                 >
-                  Explore <ArrowRight size={13} />
-                </Link>
+                  <Glyph className="h-5 w-5" />
+                </span>
               </div>
-            </div>
-          ))}
-        </div>
+
+              <div className="flex flex-1 flex-col p-6">
+                <h3 className="font-display text-lg font-bold text-white transition-colors group-hover:text-[#dfb15b]">
+                  {s.title}
+                </h3>
+                <p className="mt-2 flex-1 text-[13.5px] text-slate-400">{s.desc}</p>
+                <span className="mt-5 inline-flex items-center gap-2 self-start text-sm font-bold text-[#dfb15b]">
+                  Explore
+                  <span
+                    aria-hidden="true"
+                    className="transition-transform duration-300 group-hover:translate-x-1"
+                  >
+                    →
+                  </span>
+                </span>
+              </div>
+            </Link>
+          );
+        })}
       </div>
-    </section>
+    </CosmicSection>
   );
 }

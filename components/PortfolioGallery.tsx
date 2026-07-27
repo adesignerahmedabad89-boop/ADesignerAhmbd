@@ -1,90 +1,81 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
-import { useInView } from "react-intersection-observer";
-import { ChevronRight, ArrowUpRight, X, ZoomIn, ArrowUp } from "lucide-react";
+import { X, ZoomIn, ArrowUp, ArrowUpRight } from "lucide-react";
 import AOS from "aos";
 
 import { portfolioItems, portfolioCategories } from "@/lib/portfolio-data";
+import { CosmicSection, SectionHeading, SectionDivider } from "@/components/cosmic/CosmicUI";
 
-const A = "#f58220"; // accent orange
-const NAVY = "#0b3c5d"; // brand navy
-
-/* ── Hero band ────────────────────────────────────────────────── */
-function PortfolioHero() {
-  return (
-    <section style={{ position: "relative", padding: "120px 0 72px", overflow: "hidden", background: NAVY }}>
-      <div style={{ position: "absolute", inset: 0, background: `linear-gradient(135deg, rgba(11,60,93,0.96) 0%, rgba(245,130,32,0.85) 100%)` }} />
-      <div style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(rgba(255,255,255,0.1) 1px, transparent 1px)", backgroundSize: "28px 28px" }} />
-      <div className="site-wrap" style={{ position: "relative", zIndex: 10, textAlign: "center" }}>
-        <div data-aos="fade-down" style={{ display: "inline-block", padding: "5px 14px", background: "rgba(255,255,255,0.15)", border: "1px solid rgba(255,255,255,0.3)", borderRadius: "999px", color: "#fff", fontSize: "12px", fontWeight: 600, marginBottom: "16px" }}>
-          Our Portfolio
-        </div>
-        <h1 data-aos="fade-up" style={{ fontSize: "clamp(2rem, 5vw, 3.4rem)", fontWeight: 900, color: "#fff", lineHeight: 1.1, marginBottom: "14px" }}>
-          Work That Makes Brands Say <span style={{ color: "#fff", textDecoration: "underline", textDecorationColor: "rgba(255,255,255,0.4)", textUnderlineOffset: "6px" }}>WoW</span>
-        </h1>
-        <p data-aos="fade-up" data-aos-delay="100" style={{ color: "rgba(255,255,255,0.82)", fontSize: "1.05rem", maxWidth: "600px", margin: "0 auto 18px", lineHeight: 1.65 }}>
-          A showcase of logos, packaging, print and social creatives we&apos;ve designed for businesses across India.
-        </p>
-        <nav data-aos="fade-up" data-aos-delay="200" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "6px" }}>
-          <Link href="/" style={{ color: "rgba(255,255,255,0.65)", fontSize: "13px" }} className="hover:text-white">Home</Link>
-          <ChevronRight size={12} style={{ color: "rgba(255,255,255,0.45)" }} />
-          <span style={{ color: "#fff", fontSize: "13px", fontWeight: 600 }}>Portfolio</span>
-        </nav>
-      </div>
-    </section>
-  );
-}
-
-/* ── Brandingo story band ─────────────────────────────────────── */
+/* ── Studio story band ────────────────────────────────────────── */
 function BrandStory() {
   return (
-    <section style={{ background: "#fff", padding: "72px 0 8px" }}>
-      <div data-aos="fade-up" className="site-wrap" style={{ maxWidth: "880px", textAlign: "center" }}>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "10px", marginBottom: "16px" }}>
-          <div style={{ width: "32px", height: "2px", background: A }} />
-          <span style={{ color: A, fontSize: "12px", fontWeight: 700, letterSpacing: "3px", textTransform: "uppercase" }}>Est. 2016</span>
-          <div style={{ width: "32px", height: "2px", background: A }} />
-        </div>
-        <h2 style={{ fontSize: "clamp(1.5rem, 3vw, 2.2rem)", fontWeight: 800, color: "#1a1a1a", marginBottom: "18px", lineHeight: 1.3 }}>
-          A decade of turning emerging businesses into <span style={{ color: A }}>unforgettable brands</span>
+    <CosmicSection rule={false} rhythm="pt-8 pb-10 md:pt-10 md:pb-12">
+      <div data-aos="fade-up" className="mx-auto max-w-[880px] text-center">
+        <span className="cosmic-eyebrow mb-4">Est. 2016</span>
+        <h2 className="font-display text-2xl font-extrabold leading-snug text-white md:text-4xl">
+          A decade of turning emerging businesses into{" "}
+          <span className="cosmic-gradient-text">unforgettable brands</span>
         </h2>
-        <p style={{ color: "#666", lineHeight: 1.85, marginBottom: "16px", fontSize: "15.5px" }}>
-          Established in 2016, A Designer Ahmedabad was built on a foundation of over a decade of expertise in Designing, Printing and Brand Development. Founded by the Patel &amp; Sharma brothers, we bring a unique blend of global vision and local expertise to help transform emerging businesses into unforgettable brands.
+        <p className="mt-5 text-[15.5px] text-slate-400">
+          Established in 2016, A Designer Ahmedabad was built on a foundation of over a
+          decade of expertise in Designing, Printing and Brand Development. Founded by the
+          Patel &amp; Sharma brothers, we bring a unique blend of global vision and local
+          expertise to help transform emerging businesses into unforgettable brands.
         </p>
-        <p style={{ color: "#666", lineHeight: 1.85, fontSize: "15.5px" }}>
-          Our objective is simple yet powerful: to make every customer feel <strong style={{ color: "#1a1a1a" }}>&ldquo;WoW.&rdquo;</strong> By blending strategic thinking with flawless creative execution, we deliver result-driven branding solutions that truly resonate with your audience and elevate your market presence.
+        <p className="mt-4 text-[15.5px] text-slate-400">
+          Our objective is simple yet powerful: to make every customer feel{" "}
+          <strong className="text-white">&ldquo;WoW.&rdquo;</strong> By blending strategic
+          thinking with flawless creative execution, we deliver result-driven branding
+          solutions that truly resonate with your audience and elevate your market presence.
         </p>
       </div>
-    </section>
+    </CosmicSection>
   );
 }
 
 /* ── Gallery ──────────────────────────────────────────────────── */
 const PAGE_SIZE = 24; // images rendered per batch — keeps the masonry grid fast
 
+/**
+ * Portfolio masonry gallery in the Scientific Astrology theme.
+ *
+ * The component's own navy/orange `PortfolioHero` was removed: the route now
+ * opens with the shared `CosmicHero`, and keeping both would stack two heroes
+ * (and two `<h1>`s) on the page. Its copy lives on in `BrandStory`.
+ *
+ * The batching, the Escape-to-close lightbox, the scroll lock and the
+ * back-to-top button are all preserved as they were — only the surface is
+ * restyled, plus the card frame moved from an injected `<style>` tag into
+ * Tailwind utilities so the markup carries its own styling.
+ */
 export default function PortfolioGallery() {
   const [active, setActive] = useState("All");
   const [lightbox, setLightbox] = useState<string | null>(null);
   const [showTop, setShowTop] = useState(false);
   const [visible, setVisible] = useState(PAGE_SIZE);
-  const { ref, inView } = useInView({ threshold: 0.02, triggerOnce: true });
-  const filtered = active === "All" ? portfolioItems : portfolioItems.filter(p => p.category === active);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const filtered =
+    active === "All" ? portfolioItems : portfolioItems.filter((p) => p.category === active);
   const shown = filtered.slice(0, visible);
 
-  // Refresh AOS when selected category or shown items change
+  // Refresh AOS when the selected category or the batch size changes.
   useEffect(() => {
     AOS.refresh();
   }, [active, shown.length]);
 
-  // Reset the visible window whenever the category filter changes.
   const selectCategory = (cat: string) => {
     setActive(cat);
     setVisible(PAGE_SIZE);
   };
 
-  // Show the scroll-to-top button once the user has scrolled down a bit.
   useEffect(() => {
     const onScroll = () => setShowTop(window.scrollY > 600);
     onScroll();
@@ -92,10 +83,12 @@ export default function PortfolioGallery() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Close the lightbox on Escape + lock body scroll while it's open.
+  // Close the lightbox on Escape + lock body scroll while it is open.
   useEffect(() => {
     if (!lightbox) return;
-    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setLightbox(null); };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setLightbox(null);
+    };
     window.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
     return () => {
@@ -106,261 +99,148 @@ export default function PortfolioGallery() {
 
   return (
     <>
-      <PortfolioHero />
       <BrandStory />
+      <SectionDivider variant="constellation" />
 
-      <section style={{ padding: "48px 0 100px", background: "#ffffff" }}>
-        <div className="site-wrap">
-          {/* Filter tabs */}
-          <div data-aos="fade-up" style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "10px", marginBottom: "44px" }}>
-            {portfolioCategories.map(cat => (
-              <button
-                key={cat}
-                onClick={() => selectCategory(cat)}
-                style={{
-                  padding: "9px 20px",
-                  fontSize: "13px",
-                  fontWeight: 600,
-                  border: active === cat ? "none" : "1.5px solid #e5e7eb",
-                  background: active === cat ? A : "#fff",
-                  color: active === cat ? "#fff" : "#555",
-                  cursor: "pointer",
-                  borderRadius: "999px",
-                  transition: "all 0.2s",
-                }}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
+      <CosmicSection rule={false} rhythm="pt-8 pb-16 md:pt-10 md:pb-20">
+        <SectionHeading
+          eyebrow="The archive"
+          title="Explore The"
+          titleAccent="Constellation"
+          sub="Filter by discipline to see the marks, packages and print work we've set into orbit."
+        />
 
-          {/* Masonry grid */}
-          <div
-            style={{
-              columnGap: "18px",
-            }}
-            className="columns-1 sm:columns-2 lg:columns-3"
-          >
-            {shown.map((item, i) => (
-              <button
-                key={item.id}
-                onClick={() => setLightbox(item.image)}
-                className="portfolio-card group"
-                data-aos="fade-up"
-                data-aos-delay={(i % 6) * 100}
-                aria-label={`View ${item.category} design`}
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={item.image}
-                  alt={`${item.category} design by A Designer Ahmedabad`}
-                  loading="lazy"
-                />
-                {/* Hover overlay */}
-                <div className="portfolio-overlay" />
-                
-                {/* Accent Action Circle */}
-                <div className="portfolio-zoom-icon">
-                  <ZoomIn size={18} style={{ color: "#fff" }} />
-                </div>
-                
-                {/* Floating Tag */}
-                <div className="portfolio-tag">
-                  <span>{item.category}</span>
-                </div>
-              </button>
-            ))}
-          </div>
-
-          {/* Load more */}
-          {visible < filtered.length && (
-            <div style={{ textAlign: "center", marginTop: "40px" }}>
-              <button
-                onClick={() => setVisible(v => v + PAGE_SIZE)}
-                style={{ padding: "13px 32px", background: "#fff", color: NAVY, fontWeight: 700, fontSize: "14px", border: `1.5px solid ${NAVY}`, borderRadius: "999px", cursor: "pointer", transition: "all 0.2s" }}
-              >
-                Load More ({filtered.length - visible} more)
-              </button>
-            </div>
-          )}
-
-          {/* Bottom CTA */}
-          <div style={{ textAlign: "center", marginTop: "64px" }}>
-            <p style={{ color: "#777", fontSize: "15px", marginBottom: "20px" }}>
-              Like what you see? Let&apos;s create something remarkable for your brand.
-            </p>
-            <Link
-              href="/contact"
-              style={{ display: "inline-flex", alignItems: "center", gap: "8px", padding: "14px 34px", background: A, color: "#fff", fontWeight: 700, borderRadius: "999px", fontSize: "14px", transition: "background 0.2s" }}
-              className="hover:bg-[#ff933c]"
+        {/* Filter tabs */}
+        <div
+          data-aos="fade-up"
+          className="mb-11 mt-10 flex flex-wrap justify-center gap-2.5"
+        >
+          {portfolioCategories.map((cat) => (
+            <button
+              key={cat}
+              type="button"
+              onClick={() => selectCategory(cat)}
+              aria-pressed={active === cat}
+              className={`cursor-pointer rounded-full px-5 py-2.5 text-[13px] font-semibold transition-all duration-300 ${
+                active === cat
+                  ? "border border-transparent bg-gradient-to-r from-[#dfb15b] to-[#7c3aed] text-white shadow-[0_0_18px_rgba(223,177,91,0.35)]"
+                  : "border border-white/15 bg-white/[0.03] text-slate-300 hover:border-[#dfb15b]/50 hover:text-[#dfb15b]"
+              }`}
             >
-              Start Your Project <ArrowUpRight size={16} />
-            </Link>
-          </div>
+              {cat}
+            </button>
+          ))}
         </div>
-      </section>
+
+        {/* Masonry grid */}
+        <div className="columns-1 gap-[18px] sm:columns-2 lg:columns-3">
+          {shown.map((item, i) => (
+            <button
+              key={item.id}
+              type="button"
+              onClick={() => setLightbox(item.image)}
+              data-aos="fade-up"
+              data-aos-delay={(i % 6) * 100}
+              aria-label={`View ${item.category} design`}
+              className="group relative mb-5 block w-full cursor-zoom-in break-inside-avoid overflow-hidden rounded-2xl border border-[#dfb15b]/15 bg-black/50 p-0 shadow-[0_4px_24px_rgba(0,0,0,0.5)] transition-all duration-500 hover:-translate-y-1.5 hover:border-[#dfb15b]/55 hover:shadow-[0_0_34px_rgba(223,177,91,0.2)]"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={item.image}
+                alt={`${item.category} design by A Designer Ahmedabad`}
+                loading="lazy"
+                className="block w-full transition-transform duration-700 group-hover:scale-[1.06]"
+              />
+
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+              />
+
+              <span
+                aria-hidden="true"
+                className="absolute right-3.5 top-3.5 flex h-10 w-10 scale-75 items-center justify-center rounded-full border border-[#dfb15b]/45 bg-black/70 text-white opacity-0 backdrop-blur-sm transition-all duration-400 group-hover:scale-100 group-hover:opacity-100"
+              >
+                <ZoomIn size={18} />
+              </span>
+
+              <span className="absolute bottom-3.5 left-3.5 translate-y-2 rounded-full border border-[#dfb15b]/35 bg-black/75 px-3.5 py-1.5 text-[11px] font-semibold text-[#dfb15b] opacity-0 backdrop-blur-sm transition-all duration-400 group-hover:translate-y-0 group-hover:opacity-100">
+                {item.category}
+              </span>
+            </button>
+          ))}
+        </div>
+
+        {/* Load more */}
+        {visible < filtered.length && (
+          <div className="mt-10 text-center">
+            <button
+              type="button"
+              onClick={() => setVisible((v) => v + PAGE_SIZE)}
+              className="cosmic-btn cosmic-btn-ghost px-8 py-3.5 text-sm"
+            >
+              Load More ({filtered.length - visible} more)
+            </button>
+          </div>
+        )}
+
+        {/* Bottom CTA */}
+        <div className="mt-16 text-center">
+          <p className="mb-5 text-[15px] text-slate-400">
+            Like what you see? Let&apos;s create something remarkable for your brand.
+          </p>
+          <Link href="/contact" className="cosmic-btn cosmic-btn-primary px-9 py-3.5 text-sm">
+            Start Your Project <ArrowUpRight size={16} />
+          </Link>
+        </div>
+      </CosmicSection>
 
       {/* Lightbox */}
-      {lightbox && (
+      {mounted && lightbox && createPortal(
         <div
           onClick={() => setLightbox(null)}
-          style={{ position: "fixed", inset: 0, zIndex: 100, background: "rgba(8,20,30,0.92)", backdropFilter: "blur(4px)", display: "flex", alignItems: "center", justifyContent: "center", padding: "32px", cursor: "zoom-out", animation: "fadeIn 0.2s ease" }}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Portfolio image"
+          className="fixed inset-0 z-[99999] flex cursor-zoom-out items-center justify-center bg-[#05030f]/80 p-8 backdrop-blur-md"
         >
-          <button
-            onClick={() => setLightbox(null)}
-            aria-label="Close"
-            style={{ position: "absolute", top: "24px", right: "24px", width: "44px", height: "44px", borderRadius: "50%", background: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.25)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer" }}
-          >
-            <X size={22} />
-          </button>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={lightbox}
-            alt="A Designer Ahmedabad portfolio work"
+          <div 
+            className="relative max-h-[88vh] max-w-full"
             onClick={(e) => e.stopPropagation()}
-            style={{ maxWidth: "100%", maxHeight: "88vh", objectFit: "contain", boxShadow: "0 20px 60px rgba(0,0,0,0.5)", cursor: "default" }}
-          />
-        </div>
+          >
+            <button
+              type="button"
+              onClick={() => setLightbox(null)}
+              aria-label="Close"
+              className="absolute -right-4 -top-4 z-10 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-[#dfb15b]/45 bg-[#05030f] text-white transition-colors hover:border-[#dfb15b] hover:text-[#dfb15b] shadow-[0_4px_12px_rgba(0,0,0,0.5)]"
+            >
+              <X size={20} />
+            </button>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={lightbox}
+              alt="A Designer Ahmedabad portfolio work"
+              className="max-h-[88vh] max-w-full cursor-default object-contain shadow-[0_20px_70px_rgba(0,0,0,0.7)] rounded-xl border border-white/10"
+            />
+          </div>
+        </div>,
+        document.body
       )}
 
       {/* Scroll to top */}
       <button
+        type="button"
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         aria-label="Back to top"
+        className="fixed bottom-6 right-6 z-[60] flex h-12 w-12 cursor-pointer items-center justify-center rounded-full border border-[#dfb15b]/40 bg-gradient-to-br from-[#dfb15b] to-[#7c3aed] text-white shadow-[0_8px_28px_rgba(223,177,91,0.45)] transition-all duration-300 hover:scale-110"
         style={{
-          position: "fixed",
-          right: "24px",
-          bottom: "24px",
-          zIndex: 60,
-          width: "48px",
-          height: "48px",
-          borderRadius: "50%",
-          background: A,
-          color: "#fff",
-          border: "none",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          cursor: "pointer",
-          boxShadow: "0 8px 24px rgba(245,130,32,0.4)",
           opacity: showTop ? 1 : 0,
           transform: showTop ? "translateY(0)" : "translateY(16px)",
           pointerEvents: showTop ? "auto" : "none",
-          transition: "opacity 0.3s ease, transform 0.3s ease, background 0.2s ease",
         }}
-        className="hover:bg-[#ff933c]"
       >
         <ArrowUp size={22} />
       </button>
-
-      <style dangerouslySetInnerHTML={{__html: `
-        .portfolio-card {
-          display: block;
-          width: 100%;
-          margin-bottom: 20px;
-          position: relative;
-          overflow: hidden;
-          background: #ffffff;
-          border: 1px solid rgba(0, 0, 0, 0.04);
-          border-radius: 16px;
-          padding: 0;
-          cursor: zoom-in;
-          break-inside: avoid;
-          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.015);
-          transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s;
-        }
-        .portfolio-card::after {
-          content: "";
-          position: absolute;
-          top: 0;
-          left: -150%;
-          width: 50%;
-          height: 100%;
-          background: linear-gradient(
-            to right,
-            rgba(255, 255, 255, 0) 0%,
-            rgba(255, 255, 255, 0.35) 50%,
-            rgba(255, 255, 255, 0) 100%
-          );
-          transform: skewX(-25deg);
-          transition: left 0.85s cubic-bezier(0.16, 1, 0.3, 1);
-          z-index: 15;
-          pointer-events: none;
-        }
-        .portfolio-card:hover::after {
-          left: 150%;
-        }
-        .portfolio-card:hover {
-          transform: translateY(-8px) scale(1.01);
-          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
-          border-color: rgba(245, 130, 32, 0.25);
-        }
-        .portfolio-card img {
-          width: 100%;
-          height: auto;
-          display: block;
-          transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .portfolio-card:hover img {
-          transform: scale(1.04);
-        }
-        .portfolio-overlay {
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(to bottom, rgba(11, 60, 93, 0) 30%, rgba(11, 60, 93, 0.75) 100%);
-          opacity: 0;
-          transition: opacity 0.3s ease;
-          z-index: 10;
-        }
-        .portfolio-card:hover .portfolio-overlay {
-          opacity: 1;
-        }
-        .portfolio-zoom-icon {
-          position: absolute;
-          top: 16px;
-          right: 16px;
-          width: 40px;
-          height: 40px;
-          border-radius: 50%;
-          background: #f58220;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          opacity: 0;
-          transform: scale(0.6);
-          transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-          z-index: 20;
-          box-shadow: 0 4px 10px rgba(245, 130, 32, 0.3);
-        }
-        .portfolio-card:hover .portfolio-zoom-icon {
-          opacity: 1;
-          transform: scale(1);
-        }
-        .portfolio-tag {
-          position: absolute;
-          left: 18px;
-          bottom: 18px;
-          opacity: 0;
-          transform: translateY(8px);
-          transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-          z-index: 20;
-        }
-        .portfolio-card:hover .portfolio-tag {
-          opacity: 1;
-          transform: translateY(0);
-        }
-        .portfolio-tag span {
-          display: inline-block;
-          padding: 6px 14px;
-          background: #f58220;
-          color: #fff;
-          font-size: 11px;
-          font-weight: 700;
-          border-radius: 999px;
-          letter-spacing: 0.5px;
-          box-shadow: 0 4px 10px rgba(245, 130, 32, 0.25);
-        }
-      `}} />
     </>
   );
 }

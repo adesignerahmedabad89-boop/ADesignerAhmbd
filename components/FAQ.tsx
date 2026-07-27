@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { useInView } from "react-intersection-observer";
-import { Plus } from "lucide-react";
+import { CosmicSection, SectionHeading } from "@/components/cosmic/CosmicUI";
+import { IconSparkle } from "@/components/cosmic/CosmicIcons";
 
 const faqs = [
   {
@@ -10,107 +10,131 @@ const faqs = [
     a: "Work on your project starts soon after we get your logo request along with the advance payment.",
   },
   {
-    q: "How many concepts do you offer? ",
-    a: "We offer you with 3 or 6 initial design concepts depending on the package that you choose.",
+    q: "How many concepts do you offer?",
+    a: "We offer you 3 or 6 initial design concepts depending on the package that you choose.",
   },
   {
     q: "What file formats are supplied by you?",
-    a: "For your convenience, we provide the designs in the following file formats: PNG JPG PDF AI or CDR.",
+    a: "For your convenience, we provide the designs in the following file formats: PNG, JPG, PDF, AI or CDR.",
   },
   {
-    q: "Do you provide a vector format for logo?",
-    a: "Yes, we do provide EPS / .AI/.CDR files which are all vector files.",
+    q: "Do you provide a vector format for the logo?",
+    a: "Yes, we do provide EPS / .AI / .CDR files which are all vector files.",
   },
   {
     q: "How do you deliver logo design files to your client?",
-    a: "We communicate via mail. We will send you the files via mail or send you a link to download the files if the file size is too big. We also use Drop box or wetransfer.com in such cases to send heavy files.",
+    a: "We communicate via mail. We will send you the files via mail, or send you a link to download them if the file size is too big. We also use Dropbox or wetransfer.com in such cases to send heavy files.",
   },
   {
-    q: "Do you provide money back guarantee?",
-    a: "No. Our services are not available with a money guarantee. However, we always assure that the needs and expectations of our clients are always fulfilled. We tirelessly work on your designing till the time you are satisfied with the results.",
+    q: "Do you provide a money back guarantee?",
+    a: "No. Our services are not available with a money-back guarantee. However, we always ensure the needs and expectations of our clients are fulfilled. We tirelessly work on your design until you are satisfied with the results.",
   },
   {
     q: "What are the other design services that you offer?",
-    a: "We have vast experience in designing different types of stationery which include brochures, business cards, flyers, banners, posters, signage, billboard and more. Our designers first understand the goals and objectives of your business then produce designs that perfectly meet your business requirements.",
+    a: "We have vast experience in designing different types of stationery which include brochures, business cards, flyers, banners, posters, signage, billboards and more. Our designers first understand the goals and objectives of your business, then produce designs that perfectly meet your requirements.",
   },
   {
     q: "Do you provide printing services?",
-    a: "No. We provide the print ready files which can be printed by any local printers.",
-  },
-  {
-    q: "I have some more questions which I cannot find here. How do I get those answers?",
-    a: "You can ask your question anytime by filling in the “Your requirement” field in the form in ‘’Contact Us‘’ page. We will get back to you with our answers.",
+    a: "No. We provide print-ready files which can be printed by any local printer.",
   },
   {
     q: "Can I speak directly with the designers?",
-    a: "Absolutely, we completely understand that you want to convey opinions, & vision behind the logo. We are top logo design agency which follows a transparent process, which makes it easy for you to directly connect with our logo designers & get what you want.",
+    a: "Absolutely. We completely understand that you want to convey your opinions and the vision behind the logo. We follow a transparent process, which makes it easy for you to connect directly with our logo designers and get what you want.",
   },
   {
-    q: "How many logo revisions do you make?",
-    a: 'Brand purpose is related to what the brand is selling or providing. While Both mission and vision statements are combined into one comprehensive "mission statement" to define the organization\'s reason for existing. (Note: It looks like whoever built their website accidentally pasted the wrong answer for this specific question!)',
+    q: "Do you provide support once the logo design process is complete?",
+    a: "Absolutely. We value your opinions and provide you with service even after the logo design process is complete.",
   },
   {
-    q: "Do you provide support once the logo design process is complete.",
-    a: "Absolutely, we pride ourselves as a leading logo design agency. We value your opinions & provide you the service even after the logo design process is complete.",
+    q: "I have a question I cannot find here. How do I get an answer?",
+    a: "You can ask your question any time using the “Your requirement” field on the Contact page. We will get back to you with our answer.",
   },
 ];
 
+/**
+ * FAQ accordion in the Scientific Astrology theme.
+ *
+ * Single-open, matching the Scientific Logo page's own accordion down to its
+ * gold `+` affordance. Two upgrades on that original: the panel is height-
+ * animated with `grid-template-rows` (rather than mounting/unmounting, which
+ * snapped), so a long answer can never be clipped, and the trigger is a real
+ * `<button aria-expanded>` inside the heading for a correct outline.
+ */
 export default function FAQ() {
-  const { ref, inView } = useInView({ threshold: 0.1, triggerOnce: true });
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section id="faq" ref={ref} style={{ padding: "100px 0", background: "#f9fafb", position: "relative", overflow: "hidden", scrollMarginTop: "90px" }}>
-      <div className="site-wrap">
-        {/* Header */}
-        <div style={{ textAlign: "center", marginBottom: "56px", opacity: inView ? 1 : 0, transform: inView ? "translateY(0)" : "translateY(24px)", transition: "opacity 0.6s ease, transform 0.6s ease" }}>
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "10px", marginBottom: "14px" }}>
-            <div style={{ width: "32px", height: "2px", background: "#f58220" }} />
-            <span style={{ color: "#f58220", fontSize: "12px", fontWeight: 700, letterSpacing: "3px", textTransform: "uppercase" }}>FAQ</span>
-            <div style={{ width: "32px", height: "2px", background: "#f58220" }} />
-          </div>
-          <h2 style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)", fontWeight: 800, color: "#1a1a1a", marginBottom: "14px" }}>
-            Frequently Asked <span style={{ color: "#f58220" }}>Questions</span>
-          </h2>
-          <p style={{ color: "#777", maxWidth: "520px", margin: "0 auto", lineHeight: 1.75 }}>
-            Everything you need to know before starting your brand&apos;s journey with us.
-          </p>
-        </div>
+    <CosmicSection id="faq" tint="deep" className="scroll-mt-24">
+      <SectionHeading
+        eyebrow="FAQ"
+        title="Frequently Asked"
+        titleAccent="Questions"
+        sub="Everything you need to know before charting your brand's journey with us."
+      />
 
-        {/* Accordion */}
-        <div style={{ maxWidth: "780px", margin: "0 auto", display: "flex", flexDirection: "column", gap: "14px" }}>
-          {faqs.map((item, i) => {
-            const isOpen = open === i;
-            return (
+      <div className="mx-auto mt-14 flex max-w-3xl flex-col gap-4">
+        {faqs.map((item, i) => {
+          const isOpen = open === i;
+          return (
+            <div
+              key={item.q}
+              data-aos="fade-up"
+              data-aos-delay={Math.min(i, 6) * 50}
+            >
               <div
-                key={item.q}
-                style={{
-                  border: isOpen ? "1px solid rgba(245,130,32,0.45)" : "1px solid rgba(0,0,0,0.08)",
-                  background: "#fff",
-                  opacity: inView ? 1 : 0,
-                  transform: inView ? "translateY(0)" : "translateY(20px)",
-                  transition: `opacity 0.5s ease ${i * 0.08}s, transform 0.5s ease ${i * 0.08}s, border-color 0.25s ease`,
-                }}
+                className={`overflow-hidden rounded-xl border bg-black/60 backdrop-blur-md transition-colors duration-300 ${
+                  isOpen
+                    ? "border-[#dfb15b]/45 shadow-[0_0_26px_rgba(223,177,91,0.12)]"
+                    : "border-[#dfb15b]/15"
+                }`}
               >
-                <button
-                  suppressHydrationWarning
-                  onClick={() => setOpen(isOpen ? null : i)}
-                  style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "16px", padding: "20px 24px", background: "none", border: "none", cursor: "pointer", textAlign: "left" }}
+                <h3 className="m-0">
+                  <button
+                    type="button"
+                    onClick={() => setOpen(isOpen ? null : i)}
+                    aria-expanded={isOpen}
+                    className="flex w-full cursor-pointer items-center justify-between gap-4 px-5 py-5 text-left sm:px-6"
+                  >
+                    <span
+                      className={`font-display text-base font-bold transition-colors sm:text-lg ${
+                        isOpen ? "text-[#dfb15b]" : "text-white"
+                      }`}
+                    >
+                      {item.q}
+                    </span>
+                    <span
+                      aria-hidden="true"
+                      className="shrink-0 text-xl leading-none text-[#dfb15b] transition-transform duration-300"
+                      style={{ transform: isOpen ? "rotate(45deg)" : "none" }}
+                    >
+                      +
+                    </span>
+                  </button>
+                </h3>
+
+                <div
+                  className="grid transition-[grid-template-rows] duration-300 ease-out"
+                  style={{ gridTemplateRows: isOpen ? "1fr" : "0fr" }}
                 >
-                  <span style={{ fontSize: "15px", fontWeight: 700, color: isOpen ? "#f58220" : "#1a1a1a", lineHeight: 1.4 }}>{item.q}</span>
-                  <Plus
-                    size={20}
-                    style={{ color: isOpen ? "#f58220" : "#999", flexShrink: 0, transform: isOpen ? "rotate(45deg)" : "rotate(0deg)", transition: "transform 0.3s ease, color 0.2s ease" }}
-                  />
-                </button>
-                <div style={{ maxHeight: isOpen ? "260px" : "0", overflow: "hidden", transition: "max-height 0.35s ease" }}>
-                  <p style={{ padding: "0 24px 22px", color: "#666", fontSize: "14px", lineHeight: 1.75 }}>{item.a}</p>
+                  <div className="overflow-hidden">
+                    <p className="border-t border-white/5 px-5 pb-5 pt-4 text-sm text-slate-400 sm:px-6">
+                      {item.a}
+                    </p>
+                  </div>
                 </div>
               </div>
-            );
-          })}
-        </div>
+            </div>
+          );
+        })}
       </div>
-    </section>
+
+      <p
+        data-aos="fade-up"
+        className="mt-12 flex items-center justify-center gap-2 text-center text-sm text-slate-500"
+      >
+        <IconSparkle className="h-4 w-4 text-[#dfb15b]" />
+        Still curious? Reach out and we&apos;ll chart the answer for you.
+      </p>
+    </CosmicSection>
   );
 }

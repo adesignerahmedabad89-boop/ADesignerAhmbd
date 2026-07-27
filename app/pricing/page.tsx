@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import { CosmicLayout } from "@/components/cosmic/CosmicLayout";
+import { CosmicHero } from "@/components/cosmic/CosmicHero";
+import { IconOrbit } from "@/components/cosmic/CosmicIcons";
 import Pricing from "@/components/Pricing";
-import PageHero from "@/components/PageHero";
 
 export const metadata: Metadata = {
   title: "Pricing | A Designer Ahmedabad",
@@ -15,11 +15,15 @@ export const metadata: Metadata = {
 
 export default function PricingPage() {
   return (
-    <main>
-      <Navbar />
-      <PageHero bgImage="https://images.unsplash.com/photo-1553729459-efe14ef6055d?auto=format&fit=crop&w=2000&q=80" />
+    <CosmicLayout>
+      <CosmicHero
+        badge="Transparent packages"
+        badgeIcon={<IconOrbit className="h-4 w-4" />}
+        title="Plans Crafted For"
+        titleAccent="Every Growth Orbit"
+        sub="Clear deliverables, unhurried revisions and premium creative support — whichever trajectory your brand is on."
+      />
       <Pricing />
-      <Footer />
-    </main>
+    </CosmicLayout>
   );
 }

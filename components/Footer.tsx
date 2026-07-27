@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useInView } from "react-intersection-observer";
 import { Phone, Mail, MapPin, ArrowRight } from "lucide-react";
+import { CosmicFooterTop } from "@/components/cosmic/CosmicFooterTop";
 
 const SocialFacebook = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" width="15" height="15"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" /></svg>
@@ -32,6 +32,7 @@ const quickLinks = [
   { label: "Pricing", href: "/pricing" },
   { label: "Career", href: "/career" },
   { label: "Contact", href: "/contact" }, { label: "Privacy Policy", href: "/privacy" },
+  { label: "Terms of Service", href: "/terms" },
 ];
 
 const serviceLinks = [
@@ -45,20 +46,33 @@ const serviceLinks = [
   { label: "Brochure Design", href: "/services" },
 ];
 
-export default function Footer() {
-  const { ref: ctaRef, inView: ctaInView } = useInView({ threshold: 0.3, triggerOnce: false });
-  const wordIn = (i: number): React.CSSProperties => ({
-    display: "inline-block",
-    marginRight: "0.28em",
-    opacity: ctaInView ? 1 : 0,
-    transform: ctaInView ? "translateX(0)" : "translateX(-40px)",
-    transition: `opacity 0.6s cubic-bezier(0.16,1,0.3,1) ${i * 0.07}s, transform 0.7s cubic-bezier(0.16,1,0.3,1) ${i * 0.07}s`,
-  });
-  return (
-    <footer style={{ background: "#fff" }}>
-      {/* The CTA section has been removed as per user request */}
+export interface FooterProps {
+  /**
+   * Inner pages (the Scientific Astrology theme). Swaps the flat `#1a1a1a` slab
+   * for the cosmic treatment: a galaxy band with drifting nebulae and twinkling
+   * stars, a golden divider, and the glassmorphism newsletter card.
+   *
+   * A prop rather than a CSS-only override because the newsletter card and the
+   * starfield are *markup*, not styling. Off by default, so the home page
+   * footer is byte-for-byte what it was.
+   */
+  cosmic?: boolean;
+}
 
-      <div style={{ background: "#1a1a1a" }}>
+export default function Footer({ cosmic = false }: FooterProps) {
+  return (
+    <footer className="adz-footer" style={{ background: cosmic ? "transparent" : "#fff" }}>
+      {cosmic && <CosmicFooterTop />}
+
+      {/* `position` is only set in the cosmic case — the default branch stays
+          exactly the markup the home page has always rendered. */}
+      <div
+        style={
+          cosmic
+            ? { background: "transparent", position: "relative" }
+            : { background: "#1a1a1a" }
+        }
+      >
         <div className="site-wrap" style={{ padding: "64px 24px" }}>
           <div style={{ display: "grid", gap: "40px" }} className="md:grid-cols-2 lg:grid-cols-4">
             <div>
@@ -132,8 +146,8 @@ export default function Footer() {
                   </a>
                 </li>
                 <li>
-                  <a href="mailto:sales@brandingo.in" style={{ display: "flex", alignItems: "center", gap: "10px", color: "rgba(255,255,255,0.4)", fontSize: "13px", transition: "color 0.2s" }} className="hover:text-[#f58220]">
-                    <Mail size={14} style={{ color: "#f58220" }} /> sales@brandingo.in
+                  <a href="mailto:sales@adesignerahmedabad.com" style={{ display: "flex", alignItems: "center", gap: "10px", color: "rgba(255,255,255,0.4)", fontSize: "13px", transition: "color 0.2s" }} className="hover:text-[#f58220]">
+                    <Mail size={14} style={{ color: "#f58220" }} /> sales@adesignerahmedabad.com
                   </a>
                 </li>
               </ul>

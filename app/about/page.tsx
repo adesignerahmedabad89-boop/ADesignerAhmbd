@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import { CosmicLayout } from "@/components/cosmic/CosmicLayout";
+import { CosmicHero } from "@/components/cosmic/CosmicHero";
+import { SectionDivider } from "@/components/cosmic/CosmicUI";
+import { IconConstellation } from "@/components/cosmic/CosmicIcons";
 import About from "@/components/About";
-import PageHero from "@/components/PageHero";
 import ClientLogos from "@/components/ClientLogos";
 import Testimonials from "@/components/Testimonials";
 
@@ -17,14 +18,18 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <main>
-      <Navbar />
-      <PageHero bgImage="https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&w=2000&q=80" />
+    <CosmicLayout>
+      <CosmicHero
+        badge="Est. 2016 · Ahmedabad"
+        badgeIcon={<IconConstellation className="h-4 w-4" />}
+        title="Our Journey Across"
+        titleAccent="Creative Constellations"
+        sub="A decade of designing, printing and brand development — charting emerging businesses onto trajectories they could not have plotted alone."
+      />
       <About />
+      <SectionDivider variant="wave" />
       <Testimonials />
       <ClientLogos />
-      <Footer />
-    </main>
+    </CosmicLayout>
   );
 }
-

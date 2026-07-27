@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import PageHero from "@/components/PageHero";
+import { CosmicLayout } from "@/components/cosmic/CosmicLayout";
+import { CosmicHero } from "@/components/cosmic/CosmicHero";
+import { CosmicSection, IconOrb } from "@/components/cosmic/CosmicUI";
+import { IconConstellation, cosmicIconFor } from "@/components/cosmic/CosmicIcons";
 
 export const metadata: Metadata = {
   title: "Careers | A Designer Ahmedabad",
@@ -14,100 +14,66 @@ export const metadata: Metadata = {
   },
 };
 
+const disciplines = [
+  { title: "Design", body: "Identity, packaging, print and everything that carries a mark into the world." },
+  { title: "Digital Marketing", body: "Search, social and content — the orbit that keeps a brand visible." },
+  { title: "Web Development", body: "Fast, accessible builds that turn a brand system into a working product." },
+];
+
 export default function CareerPage() {
   return (
-    <main>
-      <Navbar />
-      <PageHero bgImage="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=2000&q=80" />
-      <div
-        style={{
-          paddingTop: "80px",
-          paddingBottom: "100px",
-          minHeight: "40vh",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          background: "#f9fafb",
-        }}
-      >
-        <div className="site-wrap" style={{ textAlign: "center", maxWidth: "800px" }}>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: "10px",
-              marginBottom: "16px",
-            }}
-          >
-            <div style={{ width: "32px", height: "2px", background: "#f58220" }} />
-            <span
-              style={{
-                color: "#f58220",
-                fontSize: "12px",
-                fontWeight: 700,
-                letterSpacing: "3px",
-                textTransform: "uppercase",
-              }}
-            >
-              Join Our Team
-            </span>
-            <div style={{ width: "32px", height: "2px", background: "#f58220" }} />
-          </div>
-          <h1
-            style={{
-              fontSize: "clamp(2rem, 4vw, 3rem)",
-              fontWeight: 800,
-              color: "#1a1a1a",
-              marginBottom: "24px",
-            }}
-          >
-            Shape the Future of <span style={{ color: "#f58220" }}>Branding</span>
-          </h1>
-          <p style={{ color: "#555", fontSize: "1.1rem", lineHeight: 1.8, marginBottom: "40px" }}>
-            We are always looking for passionate, creative, and driven individuals to join our
-            growing team. If you live and breathe design, digital marketing, or web development,
-            we would love to hear from you.
-          </p>
-          <div
-            style={{
-              padding: "40px",
-              background: "#fff",
-              borderRadius: "12px",
-              border: "1px solid rgba(0,0,0,0.07)",
-              boxShadow: "0 10px 30px rgba(0,0,0,0.02)",
-            }}
-          >
-            <h3 style={{ fontSize: "1.5rem", fontWeight: 700, marginBottom: "16px" }}>
-              Currently No Open Positions
-            </h3>
-            <p style={{ color: "#777", marginBottom: "24px" }}>
-              However, we are always open to meeting talented people. Feel free to send your resume
-              and portfolio to us.
-            </p>
-            <Link
-              href="sales@brandingo.in"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "8px",
-                padding: "14px 32px",
-                background: "#f58220",
-                color: "#fff",
-                fontWeight: 700,
-                borderRadius: "999px",
-                fontSize: "14px",
-                transition: "background 0.2s",
-              }}
-              className="hover:bg-[#ff933c]"
-            >
-              Email Your Resume <ArrowRight size={16} />
-            </Link>
-          </div>
+    <CosmicLayout>
+      <CosmicHero
+        badge="Join our team"
+        badgeIcon={<IconConstellation className="h-4 w-4" />}
+        title="Chart Your Course"
+        titleAccent="Among The Stars"
+        sub="We're always looking for passionate, creative and driven people. If you live and breathe design, marketing or development, we'd love to hear from you."
+      />
+
+      <CosmicSection>
+        <div className="grid gap-6 md:grid-cols-3">
+          {disciplines.map((d, i) => {
+            const Glyph = cosmicIconFor(i + 2);
+            return (
+              <div
+                key={d.title}
+                data-aos="fade-up"
+                data-aos-delay={i * 120}
+                className="cosmic-card cosmic-shimmer flex flex-col items-center p-9 text-center"
+              >
+                <IconOrb>
+                  <Glyph className="h-7 w-7" />
+                </IconOrb>
+                <h2 className="mt-6 font-display text-xl font-extrabold text-white">
+                  {d.title}
+                </h2>
+                <p className="mt-3 text-[15px] text-slate-400">{d.body}</p>
+              </div>
+            );
+          })}
         </div>
-      </div>
-      <Footer />
-    </main>
+
+        <div
+          data-aos="zoom-in"
+          className="cosmic-panel mx-auto mt-14 max-w-3xl p-10 text-center md:p-12"
+        >
+          <h2 className="font-display text-2xl font-extrabold text-white md:text-3xl">
+            Currently No Open Positions
+          </h2>
+          <p className="mx-auto mt-4 max-w-xl text-slate-400">
+            However, we&apos;re always open to meeting talented people. Send us your resume
+            and portfolio and we&apos;ll keep you on our radar.
+          </p>
+          {/* mailto link — opens mail client directly */}
+          <a
+            href="mailto:sales@adesignerahmedabad.com?subject=Portfolio%20%26%20Resume"
+            className="cosmic-btn cosmic-btn-primary mt-8 px-9 py-3.5 text-sm"
+          >
+            Email Your Resume <ArrowRight size={16} />
+          </a>
+        </div>
+      </CosmicSection>
+    </CosmicLayout>
   );
 }

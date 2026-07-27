@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "../showreel/showreel.css";
+@import "./cosmic.css";
 
 /* The Showreel view lives outside `app/`, so make sure Tailwind scans it for
    class names (belt-and-braces on top of automatic source detection). */
@@ -23,8 +24,19 @@
    `p-[4vmin]` / `mt-auto` / `gap-*` classes. Tailwind's own preflight already
    applies exactly these three declarations to `*` (in `@layer base`, where
    utilities can beat them), so excluding the Showreel subtree here loses
-   nothing and leaves every other route byte-identical. */
-*:not(.showreel-root):not(.showreel-root *) {
+   nothing and leaves every other route byte-identical.
+
+   The Scientific Astrology subtree (`.cosmic-root`) is excluded for exactly the
+   same reason, and it matters even more there because that theme is built
+   entirely from utilities rather than inline styles. While it was still caught
+   by this rule, EVERY spacing utility on every inner page collapsed to zero:
+   `<main>`'s `pt-[72px]` (so each hero slid up under the fixed navbar),
+   `CosmicSection`'s `px-5 py-16` (so sections ran edge-to-edge), and
+   `.cosmic-panel`'s `p-8` (so form fields touched their own border).
+   Note the selector also beat plain single-class rules — `*:not(a):not(b)`
+   scores (0,2,0) against `.cosmic-input`'s (0,1,0) — so even the padding
+   declared in `cosmic.css` was being overridden. */
+*:not(.showreel-root):not(.showreel-root *):not(.cosmic-root):not(.cosmic-root *) {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
@@ -43,9 +55,9 @@ body {
 }
 
 /* Same story as the `*` reset above: unlayered, so it would beat the Showreel's
-   `text-ink` / `text-paper` link colours. Preflight's own `a { color: inherit }`
-   still covers the subtree. */
-a:not(.showreel-root a) {
+   `text-ink` / `text-paper` and the cosmic theme's gold link colours.
+   Preflight's own `a { color: inherit }` still covers both subtrees. */
+a:not(.showreel-root a):not(.cosmic-root a) {
   color: inherit;
   text-decoration: none;
 }

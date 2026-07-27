@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import { CosmicLayout } from "@/components/cosmic/CosmicLayout";
+import { CosmicHero } from "@/components/cosmic/CosmicHero";
+import { IconTelescope } from "@/components/cosmic/CosmicIcons";
 import PortfolioGallery from "@/components/PortfolioGallery";
-import PageHero from "@/components/PageHero";
 
 export const metadata: Metadata = {
   title: "Our Portfolio | A Designer Ahmedabad",
@@ -15,11 +15,15 @@ export const metadata: Metadata = {
 
 export default function PortfolioPage() {
   return (
-    <main>
-      <Navbar />
-      <PageHero bgImage="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?auto=format&fit=crop&w=2000&q=80" />
+    <CosmicLayout>
+      <CosmicHero
+        badge="Selected work"
+        badgeIcon={<IconTelescope className="h-4 w-4" />}
+        title="Projects Designed With"
+        titleAccent="Cosmic Precision"
+        sub="Thousands of marks, packages and identities — each one measured, aligned and set into motion for the brand it belongs to."
+      />
       <PortfolioGallery />
-      <Footer />
-    </main>
+    </CosmicLayout>
   );
 }

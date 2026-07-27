@@ -1,9 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import { Check, X, ShieldAlert, Sparkles, Trophy, Star, ArrowRight, Eye, Sun, Moon, Compass, Globe } from "lucide-react";
+import { useState } from "react";
+import { CosmicLayout } from "@/components/cosmic/CosmicLayout";
+import { ShieldAlert, Sparkles, Star, ArrowRight, Sun, Moon, Compass, Globe } from "lucide-react";
 
 const getZodiacIcon = (name: string) => {
   const props = {
@@ -100,189 +99,87 @@ const getZodiacIcon = (name: string) => {
   }
 };
 
+/**
+ * Scientific Logo — the page this whole theme was derived from.
+ *
+ * Its bespoke spiral-galaxy canvas has moved to
+ * `components/cosmic/CosmicBackground.tsx`, which every inner page now mounts
+ * through `CosmicLayout`. That deleted ~150 lines of rAF/canvas code from this
+ * file, gave this page the same glass navbar and cosmic footer as its
+ * siblings, and means the starfield gains the reduced-motion, hidden-tab and
+ * mobile star-budget safeguards added there.
+ *
+ * Everything below the layout — the zodiac selector, the audit cards, the
+ * comparison tables, the FAQ — is unchanged.
+ */
 export default function ScientificLogoPage() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
 
   // Form states & submission handler
   const [formData, setFormData] = useState({
-    name: "",
-    email: ""
+    companyName: "",
+    ownerFullName: "",
+    dateOfBirth: "",
+    placeOfBirth: "",
   });
+  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState("");
   const [selectedZodiac, setSelectedZodiac] = useState<string>("Aries");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const validateForm = () => {
+    const errors: Record<string, string> = {};
+    if (!formData.companyName.trim()) errors.companyName = "Company name is required.";
+    if (!formData.ownerFullName.trim()) errors.ownerFullName = "Owner\u2019s full name is required.";
+    if (!formData.dateOfBirth) errors.dateOfBirth = "Date of birth is required.";
+    if (!formData.placeOfBirth.trim()) errors.placeOfBirth = "Place of birth is required.";
+    return errors;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSubmitError("");
+    const errors = validateForm();
+    if (Object.keys(errors).length > 0) {
+      setFormErrors(errors);
+      return;
+    }
+    setFormErrors({});
     setIsSubmitting(true);
-    setTimeout(() => {
-      setIsSubmitting(false);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.ownerFullName,
+          email: "noreply@placeholder.com",
+          message: [
+            `Company: ${formData.companyName}`,
+            `Owner: ${formData.ownerFullName}`,
+            `Date of Birth: ${formData.dateOfBirth}`,
+            `Place of Birth: ${formData.placeOfBirth}`,
+          ].join("\n"),
+        }),
+      });
+      const data: { ok?: boolean; error?: string } = await res.json();
+      if (!res.ok || !data.ok) throw new Error(data.error || "Something went wrong.");
       setSubmitSuccess(true);
-    }, 1500);
+      setFormData({ companyName: "", ownerFullName: "", dateOfBirth: "", placeOfBirth: "" });
+    } catch (err) {
+      setSubmitError(err instanceof Error ? err.message : "Could not send your message. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
 
-  useEffect(() => {
-    // Dynamic Spiral Galaxy Simulator on Canvas
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    let animationFrameId: number;
-    let angleOffset = 0;
-
-    const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-    resizeCanvas();
-    window.addEventListener("resize", resizeCanvas);
-
-    // Generate stars in spiral arms
-    const stars: {
-      r: number; // distance from center
-      angle: number; // base angle
-      size: number;
-      color: string;
-      speed: number;
-    }[] = [];
-
-    const numStars = 600;
-    const numArms = 3;
-    const armWidth = 0.4; // dispersion
-
-    for (let i = 0; i < numStars; i++) {
-      // Distance from center
-      const r = Math.pow(Math.random(), 2.5) * Math.max(canvas.width, canvas.height) * 0.75;
-
-      // Determine which arm this star belongs to
-      const armIndex = i % numArms;
-      const armAngle = (armIndex / numArms) * Math.PI * 2;
-
-      // Spiral curvature factor
-      const spiralFactor = r * 0.005;
-
-      // Random angle dispersion in the arm
-      const dispersion = (Math.random() - 0.5) * armWidth;
-      const angle = armAngle + spiralFactor + dispersion;
-
-      // Color scheme (mystical gold, brand blue, brand orange/red, soft white)
-      const colors = ["#dfb15b", "#0046ad", "#e31e24", "#fcd34d", "#ffffff", "#38bdf8"];
-      const color = colors[Math.floor(Math.random() * colors.length)];
-
-      stars.push({
-        r,
-        angle,
-        size: Math.random() * 1.8 + 0.3,
-        color,
-        speed: (Math.random() * 0.002 + 0.001) * (1 / (1 + r * 0.01)), // outer stars rotate slower
-      });
-    }
-
-    let mouseX = window.innerWidth / 2;
-    let mouseY = window.innerHeight / 2;
-    let currentX = mouseX;
-    let currentY = mouseY;
-
-    const handleMouseMove = (e: MouseEvent) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-    };
-    window.addEventListener("mousemove", handleMouseMove);
-
-    const draw = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      // Deep space gradient backdrop (anchored to center)
-      const bgGrad = ctx.createRadialGradient(
-        canvas.width / 2,
-        canvas.height / 2,
-        0,
-        canvas.width / 2,
-        canvas.height / 2,
-        Math.max(canvas.width, canvas.height) * 0.8
-      );
-      bgGrad.addColorStop(0, "#070414");
-      bgGrad.addColorStop(0.5, "#020108");
-      bgGrad.addColorStop(1, "#000000");
-      ctx.fillStyle = bgGrad;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      // Shift core center smoothly toward mouse coords (parallax drift)
-      const maxShiftX = canvas.width * 0.07;
-      const maxShiftY = canvas.height * 0.07;
-      const targetCx = canvas.width / 2 + ((mouseX - canvas.width / 2) / (canvas.width / 2)) * maxShiftX;
-      const targetCy = canvas.height / 2 + ((mouseY - canvas.height / 2) / (canvas.height / 2)) * maxShiftY;
-
-      currentX += (targetCx - currentX) * 0.04;
-      currentY += (targetCy - currentY) * 0.04;
-
-      const cx = currentX;
-      const cy = currentY;
-
-      // Draw glowing central cosmic core
-      ctx.save();
-      const coreGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, 120);
-      coreGrad.addColorStop(0, "rgba(223, 177, 91, 0.25)");
-      coreGrad.addColorStop(0.4, "rgba(124, 58, 237, 0.12)");
-      coreGrad.addColorStop(1, "rgba(0,0,0,0)");
-      ctx.fillStyle = coreGrad;
-      ctx.beginPath();
-      ctx.arc(cx, cy, 120, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.restore();
-
-      // Render rotating spiral galaxy
-      angleOffset += 0.003; // Increased rotation rate for visible motion
-
-      stars.forEach((star) => {
-        const currentAngle = star.angle + angleOffset;
-
-        // Calculate coordinates relative to drifted center
-        const x = cx + Math.cos(currentAngle) * star.r;
-        const y = cy + Math.sin(currentAngle) * star.r;
-
-        // Skip drawing if outside bounds
-        if (x < 0 || x > canvas.width || y < 0 || y > canvas.height) return;
-
-        // Draw star
-        ctx.beginPath();
-        ctx.arc(x, y, star.size, 0, Math.PI * 2);
-
-        // Twinkling effect
-        const twinkle = 0.6 + 0.4 * Math.sin(Date.now() * 0.003 + star.r);
-        ctx.fillStyle = star.color;
-        ctx.globalAlpha = twinkle;
-        ctx.fill();
-      });
-      ctx.globalAlpha = 1;
-
-      animationFrameId = requestAnimationFrame(draw);
-    };
-
-    draw();
-
-    return () => {
-      window.removeEventListener("resize", resizeCanvas);
-      window.removeEventListener("mousemove", handleMouseMove);
-      cancelAnimationFrame(animationFrameId);
-    };
-  }, []);
-
   return (
-    <>
-      <Navbar />
-
-      {/* Dynamic Spiral Galaxy Canvas Background */}
-      <canvas ref={canvasRef} className="fixed inset-0 z-0 pointer-events-none" />
-
-      {/* Cosmic Astrology UI Layout */}
-      <div className="relative z-10 text-white overflow-hidden bg-transparent font-sans">
-
-        {/* Fixed Header Spacer block to push content completely below the fixed Navbar */}
-        <div style={{ height: "60px", width: "100%" }} className="shrink-0"></div>
+    <CosmicLayout>
+      {/* Cosmic Astrology UI Layout. The starfield, glass navbar and cosmic
+          footer all come from `CosmicLayout`; the navbar clearance is its
+          `pt-[72px]`, so this page no longer needs its own spacer block. */}
+      <div className="relative text-white">
 
         {/* ============ CELESTIAL HERO SECTION ============ */}
         <section
@@ -994,65 +891,134 @@ export default function ScientificLogoPage() {
           className="border-b border-[#dfb15b]/10 bg-slate-950/20"
         >
           <div className="site-wrap px-8 md:px-12">
-            <div data-aos="zoom-in" className="max-w-4xl mx-auto rounded-2xl border border-[#dfb15b]/20 bg-black/85 p-8 md:p-10 shadow-[0_0_50px_rgba(0,0,0,0.8)] backdrop-blur-md">
-              <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+            <div data-aos="zoom-in" className="max-w-3xl mx-auto rounded-2xl border border-[#dfb15b]/20 bg-black/85 p-8 md:p-10 shadow-[0_0_50px_rgba(0,0,0,0.8)] backdrop-blur-md">
 
-                {/* Text Side */}
-                <div className="lg:max-w-md">
-                  <h2 className="font-serif text-2xl md:text-3xl font-extrabold text-white leading-tight">
-                    Ready to align your brand?
-                  </h2>
-                  <p className="text-sm text-slate-400 mt-2">
-                    Submit your details for a free consultation or to request a custom astrological logo audit.
-                  </p>
+              {/* Heading */}
+              <div className="text-center mb-8">
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#dfb15b]/30 bg-[#dfb15b]/5 text-xs font-semibold text-[#dfb15b] mb-4">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  Free Astrological Consultation
                 </div>
-
-                {/* Form Side - Horizontal Inline Layout */}
-                <div className="flex-1 w-full">
-                  {submitSuccess ? (
-                    <div className="flex items-center gap-3 p-4 rounded-xl bg-[#dfb15b]/10 border border-[#dfb15b]/30 text-[#dfb15b]">
-                      <Sparkles className="w-5 h-5 shrink-0 animate-pulse" />
-                      <div className="text-sm font-semibold">Thank you! Our consultation team will contact you shortly.</div>
-                    </div>
-                  ) : (
-                    <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 w-full">
-                      {/* Name Input */}
-                      <div className="flex-1">
-                        <input
-                          type="text"
-                          required
-                          value={formData.name}
-                          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                          placeholder="Name"
-                          className="w-full h-12 bg-slate-950/60 border border-slate-800 rounded-xl px-4 text-sm text-white focus:border-[#dfb15b] focus:outline-none transition-colors placeholder-slate-500"
-                        />
-                      </div>
-
-                      {/* Email Input */}
-                      <div className="flex-1">
-                        <input
-                          type="email"
-                          required
-                          value={formData.email}
-                          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                          placeholder="Email"
-                          className="w-full h-12 bg-slate-950/60 border border-slate-800 rounded-xl px-4 text-sm text-white focus:border-[#dfb15b] focus:outline-none transition-colors placeholder-slate-500"
-                        />
-                      </div>
-
-                      {/* Submit Button */}
-                      <button
-                        type="submit"
-                        disabled={isSubmitting}
-                        className="h-12 px-8 bg-gradient-to-r from-[#dfb15b] to-[#7c3aed] text-white font-extrabold text-sm rounded-xl shadow-[0_0_15px_rgba(223,177,91,0.2)] transition-all hover:brightness-110 disabled:opacity-50 whitespace-nowrap"
-                      >
-                        {isSubmitting ? "Submitting..." : "Get Consultation"}
-                      </button>
-                    </form>
-                  )}
-                </div>
-
+                <h2 className="font-serif text-2xl md:text-3xl font-extrabold text-white leading-tight">
+                  Ready to align your brand?
+                </h2>
+                <p className="text-sm text-slate-400 mt-2">
+                  Submit your details for a free consultation or to request a custom astrological logo audit.
+                </p>
               </div>
+
+              {submitSuccess ? (
+                <div className="flex flex-col items-center gap-4 py-10">
+                  <div className="w-16 h-16 rounded-full bg-[#dfb15b]/10 border border-[#dfb15b]/30 flex items-center justify-center">
+                    <Sparkles className="w-8 h-8 text-[#dfb15b] animate-pulse" />
+                  </div>
+                  <p className="text-lg font-bold text-white">Request Submitted!</p>
+                  <p className="text-sm text-slate-400 text-center max-w-sm">Thank you! Our consultation team will review your astrological details and contact you shortly.</p>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} noValidate className="space-y-5">
+
+                  {/* Row 1: Company Name + Owner's Full Name */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div>
+                      <label className="block text-xs font-semibold uppercase tracking-[0.15em] text-[#dfb15b]/70 mb-1.5" htmlFor="sl-company-name">
+                        Company Name <span className="text-red-400">*</span>
+                      </label>
+                      <input
+                        id="sl-company-name"
+                        type="text"
+                        value={formData.companyName}
+                        onChange={(e) => { setFormData({ ...formData, companyName: e.target.value }); setFormErrors({ ...formErrors, companyName: "" }); }}
+                        placeholder="Your company name"
+                        className={`w-full h-11 bg-slate-950/60 border rounded-xl px-4 text-sm text-white focus:outline-none transition-all placeholder-slate-500 ${
+                          formErrors.companyName ? "border-red-500/70 focus:border-red-400" : "border-slate-700 focus:border-[#dfb15b] focus:ring-1 focus:ring-[#dfb15b]/30"
+                        }`}
+                      />
+                      {formErrors.companyName && <p className="mt-1 text-xs text-red-400">{formErrors.companyName}</p>}
+                    </div>
+                    <div>
+                      <label className="block text-xs font-semibold uppercase tracking-[0.15em] text-[#dfb15b]/70 mb-1.5" htmlFor="sl-owner-name">
+                        Owner&apos;s Full Name <span className="text-red-400">*</span>
+                      </label>
+                      <input
+                        id="sl-owner-name"
+                        type="text"
+                        value={formData.ownerFullName}
+                        onChange={(e) => { setFormData({ ...formData, ownerFullName: e.target.value }); setFormErrors({ ...formErrors, ownerFullName: "" }); }}
+                        placeholder="Full legal name"
+                        className={`w-full h-11 bg-slate-950/60 border rounded-xl px-4 text-sm text-white focus:outline-none transition-all placeholder-slate-500 ${
+                          formErrors.ownerFullName ? "border-red-500/70 focus:border-red-400" : "border-slate-700 focus:border-[#dfb15b] focus:ring-1 focus:ring-[#dfb15b]/30"
+                        }`}
+                      />
+                      {formErrors.ownerFullName && <p className="mt-1 text-xs text-red-400">{formErrors.ownerFullName}</p>}
+                    </div>
+                  </div>
+
+                  {/* Row 2: Date of Birth + Place of Birth */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div>
+                      <label className="block text-xs font-semibold uppercase tracking-[0.15em] text-[#dfb15b]/70 mb-1.5" htmlFor="sl-dob">
+                        Date of Birth <span className="text-red-400">*</span>
+                      </label>
+                      <input
+                        id="sl-dob"
+                        type="date"
+                        max={new Date().toISOString().split("T")[0]}
+                        value={formData.dateOfBirth}
+                        onChange={(e) => { setFormData({ ...formData, dateOfBirth: e.target.value }); setFormErrors({ ...formErrors, dateOfBirth: "" }); }}
+                        className={`w-full h-11 bg-slate-950/60 border rounded-xl px-4 text-sm text-white focus:outline-none transition-all ${
+                          formErrors.dateOfBirth ? "border-red-500/70 focus:border-red-400" : "border-slate-700 focus:border-[#dfb15b] focus:ring-1 focus:ring-[#dfb15b]/30"
+                        } [color-scheme:dark]`}
+                      />
+                      {formErrors.dateOfBirth && <p className="mt-1 text-xs text-red-400">{formErrors.dateOfBirth}</p>}
+                    </div>
+                    <div>
+                      <label className="block text-xs font-semibold uppercase tracking-[0.15em] text-[#dfb15b]/70 mb-1.5" htmlFor="sl-place-birth">
+                        Place of Birth <span className="text-red-400">*</span>
+                      </label>
+                      <input
+                        id="sl-place-birth"
+                        type="text"
+                        value={formData.placeOfBirth}
+                        onChange={(e) => { setFormData({ ...formData, placeOfBirth: e.target.value }); setFormErrors({ ...formErrors, placeOfBirth: "" }); }}
+                        placeholder="City, State"
+                        className={`w-full h-11 bg-slate-950/60 border rounded-xl px-4 text-sm text-white focus:outline-none transition-all placeholder-slate-500 ${
+                          formErrors.placeOfBirth ? "border-red-500/70 focus:border-red-400" : "border-slate-700 focus:border-[#dfb15b] focus:ring-1 focus:ring-[#dfb15b]/30"
+                        }`}
+                      />
+                      {formErrors.placeOfBirth && <p className="mt-1 text-xs text-red-400">{formErrors.placeOfBirth}</p>}
+                    </div>
+                  </div>
+
+
+
+                  {/* Submit Error */}
+                  {submitError && (
+                    <p className="text-xs text-red-400 text-center">{submitError}</p>
+                  )}
+
+                  {/* Submit Button */}
+                  <div className="pt-2">
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="w-full h-12 bg-gradient-to-r from-[#dfb15b] to-[#7c3aed] text-white font-extrabold text-sm rounded-xl shadow-[0_0_20px_rgba(223,177,91,0.25)] transition-all hover:brightness-110 hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {isSubmitting ? (
+                        <span className="flex items-center justify-center gap-2">
+                          <svg className="animate-spin w-4 h-4" viewBox="0 0 24 24" fill="none">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+                          </svg>
+                          Submitting...
+                        </span>
+                      ) : "Get Free Consultation"}
+                    </button>
+                    <p className="text-center text-xs text-slate-500 mt-3">All details are kept 100% confidential.</p>
+                  </div>
+
+                </form>
+              )}
             </div>
           </div>
         </section>
@@ -1125,10 +1091,6 @@ export default function ScientificLogoPage() {
         </section>
 
       </div>
-
-      <div className="relative z-10">
-        <Footer />
-      </div>
-    </>
+    </CosmicLayout>
   );
 }

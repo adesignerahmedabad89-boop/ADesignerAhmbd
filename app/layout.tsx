@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Zen_Kaku_Gothic_New, Marck_Script } from "next/font/google";
+import { Zen_Kaku_Gothic_New, Marck_Script, Cormorant_Garamond } from "next/font/google";
 import ImageProtection from "@/components/ImageProtection";
 import AosInit from "@/components/AosInit";
 import "./globals.css";
@@ -23,6 +23,17 @@ const marckScript = Marck_Script({
   weight: ["400"],
 });
 
+// Premium serif display face for the Scientific Astrology inner pages. Exposed
+// as a CSS variable only: `app/cosmic.css` binds it to headings inside
+// `.cosmic-root`, so the Showreel home page never resolves it and its
+// typography is unaffected.
+const cormorant = Cormorant_Garamond({
+  variable: "--font-cormorant",
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["400", "600", "700"],
+});
+
 export const metadata: Metadata = {
   title: "A Designer Ahmedabad | Build Your Brand's Journey",
   description:
@@ -42,7 +53,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`font-sans ${zenKaku.variable} ${marckScript.variable}`}
+      className={`font-sans ${zenKaku.variable} ${marckScript.variable} ${cormorant.variable}`}
     >
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />

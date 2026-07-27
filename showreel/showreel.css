@@ -211,6 +211,16 @@ html:has(.showreel-root) {
   font-size: 16px;
 }
 
+/* Same story for the site footer, which the home page now renders below the
+   merged marketing sections. It is laid out in px and sits outside
+   `.showreel-root`, but it still inherits the rescaled root font-size, so any
+   rem-based utility inside it would shrink with the viewport. Pinning it to
+   16px keeps it identical to the other 12 routes. Scoped to this route so the
+   rule is a no-op everywhere else. */
+html:has(.showreel-root) .adz-footer {
+  font-size: 16px;
+}
+
 /* ──────────────────────────────────────────────────────────────────────────
    Hero headline clearance — the one layout consequence of the navbar swap.
 

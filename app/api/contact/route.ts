@@ -53,9 +53,12 @@ export async function POST(request: Request) {
     port: Number(SMTP_PORT ?? 465),
     secure: SMTP_SECURE ? SMTP_SECURE === "true" : Number(SMTP_PORT ?? 465) === 465,
     auth: { user: SMTP_USER, pass: SMTP_PASS },
+    tls: {
+      rejectUnauthorized: false,
+    },
   });
 
-  const to = CONTACT_TO || "sales@brandingo.in";
+  const to = CONTACT_TO || "sales@adesignerahmedabad.com";
   const from = CONTACT_FROM || SMTP_USER;
 
   const lines = [

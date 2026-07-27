@@ -3,36 +3,61 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import { CosmicLayout } from "@/components/cosmic/CosmicLayout";
+import { CosmicSection, SectionDivider } from "@/components/cosmic/CosmicUI";
 import type { ServiceMeta } from "@/lib/services-data";
 import { workImages } from "@/lib/work-images";
-
-const A = "#f58220"; // accent orange
 
 /* ── Shared hero ──────────────────────────────────────────────────── */
 function ServiceHero({ service }: { service: ServiceMeta }) {
   return (
-    <section style={{ position: "relative", height: "440px", display: "flex", alignItems: "flex-end", paddingBottom: "56px", overflow: "hidden" }}>
-      <Image src={service.heroImage} alt={service.title} fill style={{ objectFit: "cover", objectPosition: "center 30%" }} priority unoptimized />
-      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg, rgba(11,60,93,0.88) 0%, rgba(245,130,32,0.82) 100%)" }} />
-      <div style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(rgba(255,255,255,0.1) 1px, transparent 1px)", backgroundSize: "28px 28px" }} />
-      <div className="site-wrap" style={{ position: "relative", zIndex: 10 }}>
-        <div style={{ display: "inline-block", padding: "5px 14px", background: "rgba(245,130,32,0.25)", border: "1px solid rgba(245,130,32,0.5)", borderRadius: "999px", color: "#fff", fontSize: "12px", fontWeight: 600, marginBottom: "14px" }}>
+    <section className="cosmic-rule relative flex min-h-[420px] items-end overflow-hidden pb-14 pt-24">
+      {/* The service photograph sits far back behind a deep-space scrim, so it
+          sets mood without competing with the copy. */}
+      <Image
+        src={service.heroImage}
+        alt=""
+        aria-hidden="true"
+        fill
+        priority
+        unoptimized
+        className="object-cover object-[center_30%] opacity-30"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 bg-gradient-to-t from-black via-black/85 to-black/55"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 bg-gradient-to-br from-[#7c3aed]/25 via-transparent to-[#dfb15b]/15"
+      />
+
+      <div className="site-wrap relative z-10">
+        <span data-aos="fade-down" className="cosmic-chip mb-5">
           Our Services
-        </div>
-        <h1 style={{ fontSize: "clamp(2rem, 5vw, 3.4rem)", fontWeight: 900, color: "#fff", lineHeight: 1.1, marginBottom: "12px" }}>
+        </span>
+        <h1
+          data-aos="fade-up"
+          className="font-display text-3xl font-black leading-tight text-white md:text-5xl lg:text-6xl"
+        >
           {service.title}
         </h1>
-        <p style={{ color: "rgba(255,255,255,0.8)", fontSize: "1.1rem", maxWidth: "540px", lineHeight: 1.6, marginBottom: "18px" }}>
+        <p
+          data-aos="fade-up"
+          data-aos-delay="100"
+          className="mt-4 max-w-xl text-base text-slate-300 md:text-lg"
+        >
           {service.tagline}
         </p>
-        <nav style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-          <Link href="/" style={{ color: "rgba(255,255,255,0.6)", fontSize: "13px" }} className="hover:text-white">Home</Link>
-          <ChevronRight size={12} style={{ color: "rgba(255,255,255,0.4)" }} />
-          <Link href="/#services" style={{ color: "rgba(255,255,255,0.6)", fontSize: "13px" }} className="hover:text-white">Services</Link>
-          <ChevronRight size={12} style={{ color: "rgba(255,255,255,0.4)" }} />
-          <span style={{ color: "#fff", fontSize: "13px", fontWeight: 600 }}>{service.title}</span>
+        <nav
+          aria-label="Breadcrumb"
+          className="mt-6 flex items-center gap-1.5 text-[13px] text-slate-500"
+        >
+          <Link href="/" className="transition-colors hover:text-[#dfb15b]">Home</Link>
+          <ChevronRight size={12} aria-hidden="true" />
+          <Link href="/services" className="transition-colors hover:text-[#dfb15b]">Services</Link>
+          <ChevronRight size={12} aria-hidden="true" />
+          <span className="text-slate-300">{service.title}</span>
         </nav>
       </div>
     </section>
@@ -41,9 +66,37 @@ function ServiceHero({ service }: { service: ServiceMeta }) {
 
 /* ══════════════════════════════════════════════════════════════════
    1. GRAPHIC DESIGNING — grid cards + process timeline
+
+   Previously this rendered its own hand-written copy of the intro / offerings /
+   timeline markup that `StandardLayout` (below) already provides, so the two
+   had to be restyled — and would have to be maintained — in parallel. It now
+   supplies content to `StandardLayout` like every other service.
 ══════════════════════════════════════════════════════════════════ */
-function GraphicDesigning() {
-  const offerings = [
+const GRAPHIC_DESIGNING: StandardContent = {
+  eyebrow: "Creative Studio",
+  heading: (
+    <>
+      Design that drives <span className="cosmic-gradient-text">recognition</span> and
+      results
+    </>
+  ),
+  intro: [
+    "Great design is the foundation of every strong brand. Our team of senior graphic designers brings 10+ years of collective experience to every project — from brand-new identity systems to revitalising established brands.",
+    "We believe design should solve problems, not just look pretty. Every creative decision we make is intentional and aligned with your business objectives.",
+  ],
+  tags: ["Brand Identity", "Logo Design", "Print", "Packaging", "Stationery", "Branding"],
+  stats: [
+    { v: "500+", l: "Projects Delivered" },
+    { v: "10+", l: "Years of Expertise" },
+    { v: "100%", l: "Client Satisfaction" },
+    { v: "48h", l: "Avg First Draft" },
+  ],
+  offeringsTitle: (
+    <>
+      What We <span className="cosmic-gradient-text">Design</span>
+    </>
+  ),
+  offerings: [
     { img: "https://images.unsplash.com/photo-1626785774573-4b799315345d", title: "Logo Design", desc: "A professional, well-designed logo is the crucial first step in establishing your brand — it creates the first impression of your company and expresses its values all in one." },
     { img: "https://images.unsplash.com/photo-1606857521015-7f9fcf423740", title: "Stationery Design", desc: "Letterheads, envelopes, folders, business cards, invoices and more — well-executed stationery boosts your corporate identity and sets the tone from the very first touch." },
     { img: "https://images.unsplash.com/photo-1542038784456-1ea8e935640e", title: "Banner & Standee Design", desc: "One of the most popular ways to market today. Portable stands — fixed, X-style, expandable or retractable — work in any size for any placement and visibility." },
@@ -52,93 +105,15 @@ function GraphicDesigning() {
     { img: "https://images.unsplash.com/photo-1481277542470-605612bd2d61", title: "Invitation Card Design", desc: "Beautifully crafted invitation cards for weddings, events and celebrations — designed to set the tone and make a memorable first impression." },
     { img: "https://images.unsplash.com/photo-1452860606245-08befc0ff44b", title: "Tag Design", desc: "Custom tags that carry your brand — from price and care tags to gift and product tags — designed for clarity, character and a premium feel." },
     { img: "https://images.unsplash.com/photo-1542435503-956c469947f6", title: "Brochure Design", desc: "Brochures extend your customers' knowledge of your business — introducing your company and giving a snapshot of your products, services, features and contact information." },
-  ];
-  const steps = [
+  ],
+  steps: [
     { n: "01", title: "Discovery", desc: "We learn your brand, audience, and goals through an in-depth brief." },
     { n: "02", title: "Concept", desc: "Our designers develop 2–3 distinct creative directions for your review." },
     { n: "03", title: "Refinement", desc: "We refine the chosen concept based on your feedback — up to 3 revision rounds." },
     { n: "04", title: "Delivery", desc: "Final files delivered in all formats: print-ready, web, and social media sizes." },
-  ];
-  return (
-    <>
-      {/* Intro */}
-      <section style={{ padding: "80px 0", background: "#fff" }}>
-        <div className="site-wrap">
-          <div style={{ display: "grid", gap: "60px", alignItems: "center" }} className="lg:grid-cols-2">
-            <div>
-              <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "14px" }}>
-                <div style={{ width: "32px", height: "2px", background: A }} />
-                <span style={{ color: A, fontSize: "12px", fontWeight: 700, letterSpacing: "3px", textTransform: "uppercase" }}>Creative Studio</span>
-              </div>
-              <h2 style={{ fontSize: "clamp(1.6rem,3vw,2.5rem)", fontWeight: 800, color: "#1a1a1a", marginBottom: "16px", lineHeight: 1.25 }}>
-                Design that drives <span style={{ color: A }}>recognition</span> and results
-              </h2>
-              <p style={{ color: "#666", lineHeight: 1.8, marginBottom: "16px" }}>
-                Great design is the foundation of every strong brand. Our team of senior graphic designers brings 10+ years of collective experience to every project — from brand-new identity systems to revitalising established brands.
-              </p>
-              <p style={{ color: "#666", lineHeight: 1.8, marginBottom: "28px" }}>
-                We believe design should solve problems, not just look pretty. Every creative decision we make is intentional and aligned with your business objectives.
-              </p>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
-                {["Brand Identity", "Logo Design", "Print", "Packaging", "Stationery", "Branding"].map(t => (
-                  <span key={t} style={{ padding: "6px 14px", background: "#fff5eb", color: A, fontWeight: 600, fontSize: "12px", borderRadius: "999px", border: `1px solid ${A}33` }}>{t}</span>
-                ))}
-              </div>
-            </div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
-              {[{ v: "500+", l: "Projects Delivered" }, { v: "10+", l: "Years of Expertise" }, { v: "100%", l: "Client Satisfaction" }, { v: "48h", l: "Avg First Draft" }].map(s => (
-                <div key={s.l} style={{ padding: "28px 20px", border: "1px solid rgba(0,0,0,0.07)", textAlign: "center", background: "#fafafa" }}>
-                  <div style={{ fontSize: "2rem", fontWeight: 900, color: A }}>{s.v}</div>
-                  <div style={{ color: "#888", fontSize: "13px", marginTop: "4px" }}>{s.l}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+  ],
+};
 
-      {/* Offerings grid */}
-      <section style={{ padding: "80px 0", background: "#f8f9fb" }}>
-        <div className="site-wrap">
-          <h2 style={{ fontSize: "clamp(1.4rem,2.5vw,2rem)", fontWeight: 800, color: "#1a1a1a", textAlign: "center", marginBottom: "48px" }}>
-            What We <span style={{ color: A }}>Design</span>
-          </h2>
-          <div style={{ display: "grid", gap: "20px" }} className="sm:grid-cols-2 lg:grid-cols-3">
-            {offerings.map(o => (
-              <div key={o.title} style={{ background: "#fff", border: "1px solid rgba(0,0,0,0.07)", overflow: "hidden", display: "flex", flexDirection: "column", transition: "border-color 0.2s, transform 0.2s" }} className="card-hover group">
-                <div style={{ position: "relative", width: "100%", height: "190px", overflow: "hidden" }}>
-                  <Image src={`${o.img}?w=640&q=70`} alt={o.title} fill unoptimized sizes="(max-width: 640px) 100vw, 380px" style={{ objectFit: "cover", transition: "transform 0.5s ease" }} className="group-hover:scale-110" />
-                </div>
-                <div style={{ padding: "24px 26px 28px" }}>
-                  <h3 style={{ fontWeight: 700, color: "#1a1a1a", fontSize: "16px", marginBottom: "8px" }} className="group-hover:text-[#f58220]">{o.title}</h3>
-                  <p style={{ color: "#888", fontSize: "13.5px", lineHeight: 1.7 }}>{o.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Process timeline */}
-      <section style={{ padding: "80px 0", background: "#fff" }}>
-        <div className="site-wrap">
-          <h2 style={{ fontSize: "clamp(1.4rem,2.5vw,2rem)", fontWeight: 800, color: "#1a1a1a", textAlign: "center", marginBottom: "56px" }}>
-            Our <span style={{ color: A }}>Design Process</span>
-          </h2>
-          <div style={{ display: "grid", gap: "0", position: "relative" }} className="sm:grid-cols-2 lg:grid-cols-4">
-            {steps.map((s, i) => (
-              <div key={s.n} style={{ padding: "32px 24px", position: "relative", borderTop: `3px solid ${i === 0 ? A : "#e5e7eb"}`, background: "#fff" }}>
-                <div style={{ fontSize: "3rem", fontWeight: 900, color: i === 0 ? A : "#e5e7eb", lineHeight: 1, marginBottom: "12px" }}>{s.n}</div>
-                <h3 style={{ fontWeight: 700, color: "#1a1a1a", fontSize: "16px", marginBottom: "8px" }}>{s.title}</h3>
-                <p style={{ color: "#888", fontSize: "13.5px", lineHeight: 1.7 }}>{s.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-    </>
-  );
-}
 
 /* ══════════════════════════════════════════════════════════════════
    Shared standard layout — intro + offerings grid + process timeline.
@@ -161,81 +136,121 @@ function StandardLayout({ eyebrow, heading, intro, tags, stats, offeringsTitle, 
   return (
     <>
       {/* Intro */}
-      <section style={{ padding: "80px 0", background: "#fff" }}>
-        <div className="site-wrap">
-          <div style={{ display: "grid", gap: "60px", alignItems: "center" }} className="lg:grid-cols-2">
-            <div>
-              <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "14px" }}>
-                <div style={{ width: "32px", height: "2px", background: A }} />
-                <span style={{ color: A, fontSize: "12px", fontWeight: 700, letterSpacing: "3px", textTransform: "uppercase" }}>{eyebrow}</span>
-              </div>
-              <h2 style={{ fontSize: "clamp(1.6rem,3vw,2.5rem)", fontWeight: 800, color: "#1a1a1a", marginBottom: "16px", lineHeight: 1.25 }}>
-                {heading}
-              </h2>
-              {intro.map((p, i) => (
-                <p key={i} style={{ color: "#666", lineHeight: 1.8, marginBottom: i === intro.length - 1 ? "28px" : "16px" }}>{p}</p>
-              ))}
-              <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
-                {tags.map(t => (
-                  <span key={t} style={{ padding: "6px 14px", background: "#fff5eb", color: A, fontWeight: 600, fontSize: "12px", borderRadius: "999px", border: `1px solid ${A}33` }}>{t}</span>
-                ))}
-              </div>
-            </div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
-              {stats.map(s => (
-                <div key={s.l} style={{ padding: "28px 20px", border: "1px solid rgba(0,0,0,0.07)", textAlign: "center", background: "#fafafa" }}>
-                  <div style={{ fontSize: "2rem", fontWeight: 900, color: A }}>{s.v}</div>
-                  <div style={{ color: "#888", fontSize: "13px", marginTop: "4px" }}>{s.l}</div>
-                </div>
+      <CosmicSection>
+        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+          <div data-aos="fade-right">
+            <span className="cosmic-eyebrow mb-4">{eyebrow}</span>
+            <h2 className="font-display text-2xl font-extrabold leading-snug text-white md:text-4xl">
+              {heading}
+            </h2>
+            {intro.map((p, i) => (
+              <p key={i} className="mt-4 text-slate-300">{p}</p>
+            ))}
+            <div className="mt-7 flex flex-wrap gap-2.5">
+              {tags.map(t => (
+                <span
+                  key={t}
+                  className="rounded-full border border-[#dfb15b]/30 bg-[#dfb15b]/[0.07] px-3.5 py-1.5 text-xs font-semibold text-[#dfb15b]"
+                >
+                  {t}
+                </span>
               ))}
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* Offerings grid */}
-      <section style={{ padding: "80px 0", background: "#f8f9fb" }}>
-        <div className="site-wrap">
-          <h2 style={{ fontSize: "clamp(1.4rem,2.5vw,2rem)", fontWeight: 800, color: "#1a1a1a", textAlign: "center", marginBottom: "48px" }}>
-            {offeringsTitle}
-          </h2>
-          <div style={{ display: "grid", gap: "20px" }} className="sm:grid-cols-2 lg:grid-cols-3">
-            {offerings.map(o => (
-              <div key={o.title} style={{ background: "#fff", border: "1px solid rgba(0,0,0,0.07)", overflow: "hidden", display: "flex", flexDirection: "column", transition: "border-color 0.2s, transform 0.2s" }} className="card-hover group">
-                <div style={{ position: "relative", width: "100%", height: "190px", overflow: "hidden" }}>
-                  <Image src={`${o.img}?w=640&q=70`} alt={o.title} fill unoptimized sizes="(max-width: 640px) 100vw, 380px" style={{ objectFit: "cover", transition: "transform 0.5s ease" }} className="group-hover:scale-110" />
-                </div>
-                <div style={{ padding: "24px 26px 28px" }}>
-                  <h3 style={{ fontWeight: 700, color: "#1a1a1a", fontSize: "16px", marginBottom: "8px" }} className="group-hover:text-[#f58220]">{o.title}</h3>
-                  <p style={{ color: "#888", fontSize: "13.5px", lineHeight: 1.7 }}>{o.desc}</p>
-                </div>
+          <div data-aos="fade-left" className="grid grid-cols-2 gap-4">
+            {stats.map(s => (
+              <div key={s.l} className="cosmic-card p-7 text-center">
+                <div className="font-display text-3xl font-black text-[#dfb15b]">{s.v}</div>
+                <div className="mt-1.5 text-[13px] text-slate-400">{s.l}</div>
               </div>
             ))}
           </div>
         </div>
-      </section>
+      </CosmicSection>
+
+      <SectionDivider variant="wave" />
+
+      {/* Offerings grid */}
+      <CosmicSection tint="soft">
+        <h2
+          data-aos="fade-up"
+          className="text-center font-display text-2xl font-extrabold text-white md:text-4xl"
+        >
+          {offeringsTitle}
+        </h2>
+        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {offerings.map((o, i) => (
+            <div
+              key={o.title}
+              data-aos="fade-up"
+              data-aos-delay={(i % 3) * 110}
+              className="cosmic-card cosmic-shimmer group flex flex-col overflow-hidden"
+            >
+              <div className="relative h-48 w-full overflow-hidden">
+                <Image
+                  src={`${o.img}?w=640&q=70`}
+                  alt={o.title}
+                  fill
+                  unoptimized
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                  className="object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent"
+                />
+              </div>
+              <div className="p-6">
+                <h3 className="font-display text-base font-bold text-white transition-colors group-hover:text-[#dfb15b]">
+                  {o.title}
+                </h3>
+                <p className="mt-2 text-[13.5px] text-slate-400">{o.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </CosmicSection>
 
       {/* Process timeline */}
       {steps.length > 0 && (
-      <section style={{ padding: "80px 0", background: "#fff" }}>
-        <div className="site-wrap">
-          <h2 style={{ fontSize: "clamp(1.4rem,2.5vw,2rem)", fontWeight: 800, color: "#1a1a1a", textAlign: "center", marginBottom: "56px" }}>
-            Our <span style={{ color: A }}>Process</span>
+      <CosmicSection>
+          <h2
+            data-aos="fade-up"
+            className="text-center font-display text-2xl font-extrabold text-white md:text-4xl"
+          >
+            Our <span className="cosmic-gradient-text">Process</span>
           </h2>
-          <div style={{ display: "grid", gap: "0", position: "relative" }} className="sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {steps.map((s, i) => (
-              <div key={s.n} style={{ padding: "32px 24px", position: "relative", borderTop: `3px solid ${i === 0 ? A : "#e5e7eb"}`, background: "#fff" }}>
-                <div style={{ fontSize: "3rem", fontWeight: 900, color: i === 0 ? A : "#e5e7eb", lineHeight: 1, marginBottom: "12px" }}>{s.n}</div>
-                <h3 style={{ fontWeight: 700, color: "#1a1a1a", fontSize: "16px", marginBottom: "8px" }}>{s.title}</h3>
-                <p style={{ color: "#888", fontSize: "13.5px", lineHeight: 1.7 }}>{s.desc}</p>
+              <div
+                key={s.n}
+                data-aos="fade-up"
+                data-aos-delay={i * 110}
+                className="cosmic-card relative p-8"
+              >
+                {/* Orbit marker along the top edge — the timeline's "station". */}
+                <span
+                  aria-hidden="true"
+                  className="absolute -top-px left-8 h-0.5 w-12 bg-gradient-to-r from-[#dfb15b] to-transparent"
+                />
+                <div className="font-display text-5xl font-black leading-none text-[#dfb15b]/30">
+                  {s.n}
+                </div>
+                <h3 className="mt-3 font-display text-base font-bold text-white">{s.title}</h3>
+                <p className="mt-2 text-[13.5px] text-slate-400">{s.desc}</p>
               </div>
             ))}
           </div>
-        </div>
-      </section>
+      </CosmicSection>
       )}
     </>
   );
+}
+
+/* ── 1. GRAPHIC DESIGNING ─────────────────────────────────────── */
+function GraphicDesigning() {
+  return <StandardLayout {...GRAPHIC_DESIGNING} />;
 }
 
 /* ── 2. WEBSITE DEVELOPMENT ───────────────────────────────────── */
@@ -243,14 +258,14 @@ function WebsiteDevelopment() {
   return (
     <StandardLayout
       eyebrow="Web Studio"
-      heading={<>Websites that <span style={{ color: A }}>perform</span> as good as they look</>}
+      heading={<>Websites that <span className="cosmic-gradient-text">perform</span> as good as they look</>}
       intro={[
         "Your website is the digital home of your brand — often the very first interaction a customer has with you. At A Designer Ahmedabad we build fast, mobile-first, search-friendly websites that don't just look beautiful, they convert visitors into enquiries and sales.",
         "From a simple business website to a full-scale e-commerce store, every site we build is responsive across devices, optimised for speed, and structured for SEO from day one — so your brand is ready to grow online.",
       ]}
       tags={["Responsive Design", "E-Commerce", "Landing Pages", "WordPress", "Web Apps", "SEO-Ready"]}
       stats={[{ v: "200+", l: "Websites Launched" }, { v: "1.5s", l: "Avg Load Time" }, { v: "100%", l: "Mobile Responsive" }, { v: "24/7", l: "Support" }]}
-      offeringsTitle={<>What We <span style={{ color: A }}>Build</span></>}
+      offeringsTitle={<>What We <span className="cosmic-gradient-text">Build</span></>}
       offerings={[
         { img: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8", title: "Business Websites", desc: "Professional, conversion-focused corporate and business websites that establish credibility and present your brand at its best." },
         { img: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d", title: "E-Commerce Stores", desc: "Secure, easy-to-manage online stores with smooth checkout, payment gateways and inventory — built to sell around the clock." },
@@ -274,14 +289,14 @@ function SearchEngineOptimization() {
   return (
     <StandardLayout
       eyebrow="Organic Growth"
-      heading={<>Get found by customers <span style={{ color: A }}>searching</span> for you</>}
+      heading={<>Get found by customers <span className="cosmic-gradient-text">searching</span> for you</>}
       intro={[
         "Showing up on the first page of Google is one of the most powerful ways to grow your brand. Our SEO specialists use proven, white-hat strategies to improve your rankings, drive qualified organic traffic and turn searches into customers.",
         "From technical audits and on-page optimisation to local SEO and content strategy, A Designer Ahmedabad builds a search foundation that delivers compounding, long-term results — not quick fixes that fade away.",
       ]}
       tags={["Keyword Research", "On-Page SEO", "Technical SEO", "Local SEO", "Link Building", "Analytics"]}
       stats={[{ v: "3x", l: "Avg Traffic Growth" }, { v: "Top 10", l: "Ranking Focus" }, { v: "100%", l: "White-Hat" }, { v: "30d", l: "First Reports" }]}
-      offeringsTitle={<>How We Help You <span style={{ color: A }}>Rank</span></>}
+      offeringsTitle={<>How We Help You <span className="cosmic-gradient-text">Rank</span></>}
       offerings={[
         { img: "https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a", title: "Keyword Research", desc: "We find the high-intent keywords your customers actually search for, and build your strategy around them." },
         { img: "https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2", title: "On-Page SEO", desc: "Optimised titles, meta tags, headings, content and internal links that tell search engines exactly what you offer." },
@@ -305,14 +320,14 @@ function DigitalMarketing() {
   return (
     <StandardLayout
       eyebrow="Performance Marketing"
-      heading={<>Reach the right audience at the <span style={{ color: A }}>right time</span></>}
+      heading={<>Reach the right audience at the <span className="cosmic-gradient-text">right time</span></>}
       intro={[
         "Great marketing puts your brand in front of the people most likely to buy. A Designer Ahmedabad runs full-funnel digital campaigns across social, search and email — building awareness, driving engagement and delivering measurable growth.",
         "Every campaign is data-led: we test, track and optimise continuously so your budget works harder and every rupee is accountable to real business results.",
       ]}
       tags={["Social Media", "Google Ads", "Meta Ads", "Email", "Content", "Analytics"]}
       stats={[{ v: "5M+", l: "Reach Generated" }, { v: "4x", l: "Avg ROAS" }, { v: "10+", l: "Channels" }, { v: "Live", l: "Dashboards" }]}
-      offeringsTitle={<>What We <span style={{ color: A }}>Manage</span></>}
+      offeringsTitle={<>What We <span className="cosmic-gradient-text">Manage</span></>}
       offerings={[
         { img: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7", title: "Social Media Marketing", desc: "Strategy, content and community management across Instagram, Facebook and LinkedIn that grow a loyal audience." },
         { img: "https://images.unsplash.com/photo-1563013544-824ae1b704d3", title: "Google Ads / PPC", desc: "Search, display and shopping campaigns that put you at the top of results and capture high-intent buyers." },
@@ -340,14 +355,14 @@ const SD = "/Stationary Design";
 const DESIGN_CONTENT: Record<string, StandardContent> = {
   "logo-design": {
     eyebrow: "Brand Identity",
-    heading: <>A logo your customers <span style={{ color: A }}>remember</span></>,
+    heading: <>A logo your customers <span className="cosmic-gradient-text">remember</span></>,
     intro: [
       "A professional, well-designed logo is the crucial first step in establishing your brand — it creates the first impression of your company and expresses its values, all in one mark.",
       "At A Designer Ahmedabad we craft distinctive, versatile logos that work everywhere — from a tiny app icon to a giant hoarding — and come delivered in every format you'll ever need.",
     ],
     tags: ["Wordmark", "Lettermark", "Pictorial", "Abstract", "Mascot", "Combination"],
     stats: [{ v: "1000+", l: "Logos Designed" }, { v: "5", l: "Concepts to Start" }, { v: "∞", l: "Revisions" }, { v: "AI/CDR", l: "Source Files" }],
-    offeringsTitle: <>Logos We&apos;ve <span style={{ color: A }}>Crafted</span></>,
+    offeringsTitle: <>Logos We&apos;ve <span className="cosmic-gradient-text">Crafted</span></>,
     offerings: [
       { img: `${SD}/Logo/001.jpeg`, title: "Wordmark Logos", desc: "Clean, typography-led logos built around your brand name for instant recognition." },
       { img: `${SD}/Logo/002.jpeg`, title: "Pictorial Marks", desc: "A memorable symbol or icon that captures your brand in a single image." },
@@ -365,14 +380,14 @@ const DESIGN_CONTENT: Record<string, StandardContent> = {
   },
   "stationery-design": {
     eyebrow: "Corporate Identity",
-    heading: <>Stationery that sets the <span style={{ color: A }}>right tone</span></>,
+    heading: <>Stationery that sets the <span className="cosmic-gradient-text">right tone</span></>,
     intro: [
       "Letterheads, envelopes, folders, business cards, invoices and more — well-executed stationery boosts your corporate identity and sets the tone from the very first touch.",
       "We design cohesive stationery suites that carry your brand consistently across every printed interaction with clients and partners.",
     ],
     tags: ["Business Cards", "Letterheads", "Envelopes", "Folders", "Invoices", "Bill Books"],
     stats: [{ v: "500+", l: "Suites Designed" }, { v: "100%", l: "Print-Ready" }, { v: "CMYK", l: "Colour Accurate" }, { v: "48h", l: "Avg First Draft" }],
-    offeringsTitle: <>What We <span style={{ color: A }}>Design</span></>,
+    offeringsTitle: <>What We <span className="cosmic-gradient-text">Design</span></>,
     offerings: [
       { img: `${SD}/Stationary Design/001.jpeg`, title: "Business Cards", desc: "Memorable, premium cards that make your first handshake count." },
       { img: `${SD}/Stationary Design/002.jpeg`, title: "Letterheads", desc: "Professional letterheads that bring authority to every communication." },
@@ -390,14 +405,14 @@ const DESIGN_CONTENT: Record<string, StandardContent> = {
   },
   "banner-standee-design": {
     eyebrow: "Display & Signage",
-    heading: <>Displays that <span style={{ color: A }}>command attention</span></>,
+    heading: <>Displays that <span className="cosmic-gradient-text">command attention</span></>,
     intro: [
       "Banners and standees are one of the most popular ways to market today. Portable stands — fixed, X-style, expandable or retractable — work in any size for any placement and visibility.",
       "We design bold, legible, high-impact display graphics that read clearly from across the room and pull your audience in at events, stores and exhibitions.",
     ],
     tags: ["Roll-up Standees", "X-Banners", "Flex Banners", "Backdrops", "Exhibition", "Hoardings"],
     stats: [{ v: "800+", l: "Banners Made" }, { v: "Any", l: "Size & Format" }, { v: "HD", l: "Print Quality" }, { v: "24h", l: "Fast Turnaround" }],
-    offeringsTitle: <>Display Formats We <span style={{ color: A }}>Cover</span></>,
+    offeringsTitle: <>Display Formats We <span className="cosmic-gradient-text">Cover</span></>,
     offerings: [
       { img: `${SD}/banner design/Banner1.jpeg`, title: "Roll-up Standees", desc: "Portable retractable standees perfect for events, receptions and stores." },
       { img: `${SD}/banner design/Banner2.jpeg`, title: "X-Style Banners", desc: "Lightweight, easy-to-set-up X-banners for high-visibility placements." },
@@ -415,14 +430,14 @@ const DESIGN_CONTENT: Record<string, StandardContent> = {
   },
   "packaging-label-design": {
     eyebrow: "Product Branding",
-    heading: <>Packaging that <span style={{ color: A }}>wins the shelf</span></>,
+    heading: <>Packaging that <span className="cosmic-gradient-text">wins the shelf</span></>,
     intro: [
       "Packaging is the exterior wrap of your product and your first physical interaction with the public — packaging and labels that convey your brand's identity, quality and reputation.",
       "We design appetising, compliant, shelf-ready packaging and labels that stand out next to the competition and make customers reach for your product.",
     ],
     tags: ["Product Boxes", "Labels", "Pouches", "Bottles", "Food Packaging", "Compliance"],
     stats: [{ v: "300+", l: "Products Branded" }, { v: "FSSAI", l: "Compliant Layouts" }, { v: "Dieline", l: "Print-Ready" }, { v: "3D", l: "Mockups" }],
-    offeringsTitle: <>What We <span style={{ color: A }}>Package</span></>,
+    offeringsTitle: <>What We <span className="cosmic-gradient-text">Package</span></>,
     offerings: [
       { img: `${SD}/packaging/10.jpeg`, title: "Product Boxes", desc: "Structural, eye-catching box designs built around your product and dieline." },
       { img: `${SD}/packaging/11.jpg`, title: "Labels & Stickers", desc: "Crisp, compliant labels that communicate quality at a glance." },
@@ -440,14 +455,14 @@ const DESIGN_CONTENT: Record<string, StandardContent> = {
   },
   "menu-design": {
     eyebrow: "Hospitality",
-    heading: <>Menus that <span style={{ color: A }}>sell</span>, not just list</>,
+    heading: <>Menus that <span className="cosmic-gradient-text">sell</span>, not just list</>,
     intro: [
       "Menus that express your eatery's personality, help customers understand your concept and promote profitability — a key part of any restaurant's marketing plan.",
       "We design beautiful, easy-to-read menus that guide diners toward your best dishes and reflect the experience your brand promises.",
     ],
     tags: ["Dine-in Menus", "Takeaway Menus", "Café Boards", "Digital Menus", "QR Menus", "Bar Menus"],
     stats: [{ v: "200+", l: "Menus Designed" }, { v: "Print+QR", l: "Formats" }, { v: "Appetising", l: "Food Styling" }, { v: "Fast", l: "Turnaround" }],
-    offeringsTitle: <>Menus We <span style={{ color: A }}>Design</span></>,
+    offeringsTitle: <>Menus We <span className="cosmic-gradient-text">Design</span></>,
     offerings: [
       { img: `${SD}/menu/006.jpeg`, title: "Dine-in Menus", desc: "Elegant, well-structured menus that elevate the dining experience." },
       { img: `${SD}/menu/007.jpeg`, title: "Café & Bar Menus", desc: "Characterful menus that match the vibe of your café or bar." },
@@ -465,14 +480,14 @@ const DESIGN_CONTENT: Record<string, StandardContent> = {
   },
   "invitation-card-design": {
     eyebrow: "Events & Celebrations",
-    heading: <>Invitations that set the <span style={{ color: A }}>tone</span></>,
+    heading: <>Invitations that set the <span className="cosmic-gradient-text">tone</span></>,
     intro: [
       "Beautifully crafted invitation cards for weddings, events and celebrations — designed to set the tone and make a memorable first impression.",
       "From traditional to contemporary, we design invitations that feel personal, premium and perfectly matched to your occasion.",
     ],
     tags: ["Wedding", "Corporate", "Birthday", "Religious", "Digital", "E-Invites"],
     stats: [{ v: "400+", l: "Invites Designed" }, { v: "Print+Digital", l: "Formats" }, { v: "Premium", l: "Finishes" }, { v: "Custom", l: "Every Time" }],
-    offeringsTitle: <>Invitations We <span style={{ color: A }}>Create</span></>,
+    offeringsTitle: <>Invitations We <span className="cosmic-gradient-text">Create</span></>,
     offerings: [
       { img: `${SD}/invtations/00b00e3b-0acd-4b3b-9af0-8c57be93ebbd.jpg`, title: "Wedding Invitations", desc: "Elegant, personal wedding suites that set the mood for the big day." },
       { img: `${SD}/invtations/06dd1cb4-20a9-4955-9c64-12960fb781cb.jpg`, title: "Corporate Invites", desc: "Polished invitations for launches, conferences and company events." },
@@ -490,14 +505,14 @@ const DESIGN_CONTENT: Record<string, StandardContent> = {
   },
   "tag-design": {
     eyebrow: "Retail Details",
-    heading: <>Tags that add a <span style={{ color: A }}>premium touch</span></>,
+    heading: <>Tags that add a <span className="cosmic-gradient-text">premium touch</span></>,
     intro: [
       "Custom tags that carry your brand — from price and care tags to gift and product tags — designed for clarity, character and a premium feel.",
       "The smallest details often leave the biggest impression. We design tags that complete your product's look and reinforce your brand at the point of purchase.",
     ],
     tags: ["Price Tags", "Care Labels", "Gift Tags", "Product Tags", "Hang Tags", "Swing Tags"],
     stats: [{ v: "Premium", l: "Finishes" }, { v: "Brand-Matched", l: "Every Tag" }, { v: "Die-cut", l: "Shapes" }, { v: "Print-Ready", l: "Files" }],
-    offeringsTitle: <>Tags We <span style={{ color: A }}>Design</span></>,
+    offeringsTitle: <>Tags We <span className="cosmic-gradient-text">Design</span></>,
     offerings: [
       { img: `${SD}/tag design/a05665c2-b65d-4329-8476-5212f02a5f1b.jpg`, title: "Product & Hang Tags", desc: "Branded swing tags that give apparel and products a premium finish." },
       { img: `${SD}/tag design/cf1415eb-6277-4e47-a503-e1c074aad145.jpg`, title: "Price & Care Tags", desc: "Clear, on-brand price and care tags that inform without clutter." },
@@ -512,14 +527,14 @@ const DESIGN_CONTENT: Record<string, StandardContent> = {
   },
   "brochure-design": {
     eyebrow: "Print Marketing",
-    heading: <>Brochures that tell your <span style={{ color: A }}>story</span></>,
+    heading: <>Brochures that tell your <span className="cosmic-gradient-text">story</span></>,
     intro: [
       "Brochures extend your customers' knowledge of your business — introducing your company and giving a snapshot of your products, services, features and contact information.",
       "We design clear, persuasive brochures and company profiles that guide the reader through your offering and leave a lasting, professional impression.",
     ],
     tags: ["Bi-fold", "Tri-fold", "Company Profile", "Catalogues", "Flyers", "Booklets"],
     stats: [{ v: "600+", l: "Brochures Designed" }, { v: "Any", l: "Fold & Format" }, { v: "Print-Ready", l: "Artwork" }, { v: "Copy+Design", l: "Support" }],
-    offeringsTitle: <>Print Pieces We <span style={{ color: A }}>Produce</span></>,
+    offeringsTitle: <>Print Pieces We <span className="cosmic-gradient-text">Produce</span></>,
     offerings: [
       { img: `${SD}/Brouchers & File/001.jpg`, title: "Bi-fold Brochures", desc: "Clean two-panel brochures perfect for a focused, single message." },
       { img: `${SD}/Brouchers & File/002.jpeg`, title: "Tri-fold Brochures", desc: "Classic three-panel brochures that organise your offering neatly." },
@@ -537,14 +552,14 @@ const DESIGN_CONTENT: Record<string, StandardContent> = {
   },
   "bag-design": {
     eyebrow: "Brand on the Move",
-    heading: <>Bags that carry your <span style={{ color: A }}>brand everywhere</span></>,
+    heading: <>Bags that carry your <span className="cosmic-gradient-text">brand everywhere</span></>,
     intro: [
       "Custom-designed bags that carry your brand wherever your customers go — a walking advertisement that keeps your identity visible long after the sale.",
       "From paper carry bags to cloth and premium retail bags, we design pieces that look great, feel premium and turn every customer into a brand ambassador.",
     ],
     tags: ["Paper Bags", "Carry Bags", "Cloth Bags", "Gift Bags", "Retail Bags", "Eco-Friendly"],
     stats: [{ v: "Custom", l: "Every Design" }, { v: "Premium", l: "Materials" }, { v: "Dieline", l: "Print-Ready" }, { v: "Eco", l: "Options" }],
-    offeringsTitle: <>Bags We <span style={{ color: A }}>Design</span></>,
+    offeringsTitle: <>Bags We <span className="cosmic-gradient-text">Design</span></>,
     offerings: [
       { img: `${SD}/Bag Design/0b62f83c-13c9-4788-8ae8-9ef59b9258a9.jpg`, title: "Paper Carry Bags", desc: "Branded paper bags that give every purchase a premium send-off." },
       { img: `${SD}/Bag Design/1d6d067c-920a-4729-bd44-f38e1b29370b.jpg`, title: "Retail Shopping Bags", desc: "Eye-catching retail bags that keep your brand on the street." },
@@ -597,26 +612,26 @@ const SERVICE_FOLDER: Record<string, string> = {
 function WorkGallery({ title, images }: { title: string; images: string[] }) {
   if (!images.length) return null;
   return (
-    // Continues the offerings section above (same light background) so the work
-    // sits under a single "{offeringsTitle}" heading — no duplicate heading here.
-    <section style={{ padding: "0 0 80px", background: "#f8f9fb" }}>
-      <div className="site-wrap">
-        <div style={{ columnGap: "18px" }} className="columns-1 sm:columns-2 lg:columns-3">
-          {images.map((src, i) => (
-            <div key={src} style={{ marginBottom: "18px", overflow: "hidden", background: "#0b0b0b", breakInside: "avoid" }} className="group">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={src}
-                alt={`${title} design ${i + 1} by A Designer Ahmedabad`}
-                loading="lazy"
-                style={{ width: "100%", height: "auto", display: "block", transition: "transform 0.5s ease" }}
-                className="group-hover:scale-105"
-              />
-            </div>
-          ))}
-        </div>
+    // Continues the offerings section above (same tint) so the work sits under a
+    // single "{offeringsTitle}" heading — no duplicate heading here.
+    <CosmicSection tint="soft" rule={false} rhythm="pb-16 md:pb-20 lg:pb-24">
+      <div className="columns-1 gap-[18px] sm:columns-2 lg:columns-3">
+        {images.map((src, i) => (
+          <div
+            key={src}
+            className="group mb-[18px] block break-inside-avoid overflow-hidden rounded-xl border border-[#dfb15b]/15 bg-black/50 shadow-[0_4px_20px_rgba(0,0,0,0.5)] transition-all duration-500 hover:-translate-y-1 hover:border-[#dfb15b]/50 hover:shadow-[0_0_28px_rgba(223,177,91,0.2)]"
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={src}
+              alt={`${title} design ${i + 1} by A Designer Ahmedabad`}
+              loading="lazy"
+              className="block h-auto w-full transition-transform duration-500 group-hover:scale-105"
+            />
+          </div>
+        ))}
       </div>
-    </section>
+    </CosmicSection>
   );
 }
 
@@ -626,12 +641,10 @@ export default function ServicePageClient({ service }: { service: ServiceMeta })
   const galleryFolder = SERVICE_FOLDER[service.slug];
   const galleryImages = galleryFolder ? workImages[galleryFolder] ?? [] : [];
   return (
-    <>
-      <Navbar />
+    <CosmicLayout>
       <ServiceHero service={service} />
       {Layout ? <Layout /> : null}
       <WorkGallery title={service.title.replace(/ Design$/, "")} images={galleryImages} />
-      <Footer />
-    </>
+    </CosmicLayout>
   );
 }

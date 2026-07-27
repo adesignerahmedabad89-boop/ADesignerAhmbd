@@ -1,0 +1,582 @@
+/* ──────────────────────────────────────────────────────────────────────────
+   Scientific Astrology theme — the shared design system for every INNER page.
+
+   The visual language is lifted from `app/scientific-logo/page.tsx`: the same
+   gold/purple/blue palette, the same deep-space backdrop, the same card,
+   button, input and heading treatments. That page was the only place these
+   values existed; they now live here once and every inner page reads them.
+
+   SCOPING — this is the important part.
+   The home page (`/`) must stay exactly as it is, and it shares two components
+   with the inner pages (`Navbar`, `Footer`). So every rule below is scoped to
+   `.cosmic-root`, the wrapper `CosmicLayout` renders. Nothing here can reach
+   the Showreel home page, which never mounts that wrapper. This mirrors the
+   `.showreel-root` convention already used by `showreel/showreel.css`.
+
+   Tokens, not values: add a variable here rather than hardcoding a hex in a
+   className.
+   ────────────────────────────────────────────────────────────────────────── */
+
+.cosmic-root {
+  /* Core palette — identical to the Scientific Logo page. */
+  --c-gold: #dfb15b;
+  --c-gold-light: #fcd34d;
+  --c-purple: #7c3aed;
+  --c-blue: #0046ad;
+  --c-red: #e31e24;
+  --c-sky: #38bdf8;
+  --c-pink: #ec4899;
+
+  /* Deep space backdrop stops (the canvas paints the same three). */
+  --c-space-1: #070414;
+  --c-space-2: #020108;
+  --c-space-3: #000000;
+
+  /* Ink */
+  --c-ink: #ffffff;
+  --c-body: #cbd5e1; /* slate-300 — body copy */
+  --c-muted: #94a3b8; /* slate-400 — secondary copy */
+  --c-faint: #64748b; /* slate-500 — placeholders */
+
+  /* Glass surfaces */
+  --c-glass: rgba(0, 0, 0, 0.75);
+  --c-glass-soft: rgba(0, 0, 0, 0.6);
+  --c-glass-strong: rgba(0, 0, 0, 0.85);
+  --c-hairline: rgba(223, 177, 91, 0.2);
+  --c-hairline-strong: rgba(223, 177, 91, 0.5);
+  --c-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+  --c-glow-gold: 0 0 20px rgba(223, 177, 91, 0.08);
+
+  color: var(--c-body);
+  background: transparent;
+}
+
+/* Document-level rules — live only while an inner page is mounted, keyed off
+   the wrapper so they apply at first paint and lapse on navigation (the same
+   `:has()` technique `showreel.css` uses). */
+html:has(.cosmic-root) body {
+  background: #000000;
+  color: var(--c-ink, #fff);
+}
+
+/* The site's default 5px red scrollbar reads as a scratch on deep space. */
+html:has(.cosmic-root)::-webkit-scrollbar-track {
+  background: #05030f;
+}
+html:has(.cosmic-root)::-webkit-scrollbar-thumb {
+  background: rgba(223, 177, 91, 0.45);
+}
+
+/* ── Typography ──────────────────────────────────────────────────────────── */
+
+/* Premium serif display face, loaded by the root layout as `--font-cormorant`.
+   Scoped here so the rest of the site (and the Showreel) keep their own faces. */
+.cosmic-root .font-display,
+.cosmic-root h1,
+.cosmic-root h2,
+.cosmic-root h3 {
+  font-family: var(--font-cormorant), ui-serif, Georgia, serif;
+}
+
+/* Body copy: generous leading, light grey, per the theme brief. */
+.cosmic-root p,
+.cosmic-root li {
+  line-height: 1.8;
+}
+
+/* The signature gradient headline (gold → light gold → violet). */
+.cosmic-gradient-text {
+  background-image: linear-gradient(
+    to right,
+    var(--c-gold) 0%,
+    var(--c-gold-light) 45%,
+    var(--c-purple) 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 20px rgba(223, 177, 91, 0.2));
+}
+
+/* Small uppercase section label. */
+.cosmic-eyebrow {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--c-gold);
+}
+
+/* ── Surfaces ────────────────────────────────────────────────────────────── */
+
+/* The card. Frosted glass over deep space with a gold hairline that warms on
+   hover, plus the cosmic glow. `transform` is on its own line so the lift
+   composites on the GPU. */
+.cosmic-card {
+  position: relative;
+  border-radius: 16px;
+  background: var(--c-glass);
+  border: 1px solid var(--c-hairline);
+  box-shadow: var(--c-shadow);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition:
+    border-color 0.35s ease,
+    box-shadow 0.35s ease,
+    transform 0.35s ease;
+  will-change: transform;
+}
+
+.cosmic-card:hover {
+  border-color: var(--c-hairline-strong);
+  box-shadow: var(--c-shadow), var(--c-glow-gold), 0 0 45px rgba(124, 58, 237, 0.1);
+  transform: translateY(-6px);
+}
+
+/* Frosted panel without the hover lift — for form shells and long-form copy. */
+.cosmic-panel {
+  border-radius: 16px;
+  background: var(--c-glass-strong);
+  border: 1px solid var(--c-hairline);
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Pill badge (hero chips, tags). */
+.cosmic-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 20px;
+  border-radius: 999px;
+  border: 1px solid rgba(223, 177, 91, 0.3);
+  background: var(--c-glass-soft);
+  box-shadow: 0 0 15px rgba(223, 177, 91, 0.15);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--c-gold);
+}
+
+/* Section rule — a glowing hairline instead of a hard border. */
+.cosmic-rule {
+  border-bottom: 1px solid rgba(223, 177, 91, 0.1);
+}
+
+/* ── Buttons ─────────────────────────────────────────────────────────────── */
+
+.cosmic-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 999px;
+  font-weight: 800;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    filter 0.25s ease,
+    border-color 0.25s ease,
+    background-color 0.25s ease;
+}
+
+/* Primary — the gold→blue→red gradient from the Scientific Logo hero. */
+.cosmic-btn-primary {
+  background-image: linear-gradient(
+    to right,
+    var(--c-gold) 0%,
+    var(--c-blue) 50%,
+    var(--c-red) 100%
+  );
+  color: #ffffff;
+  box-shadow: 0 0 30px rgba(0, 70, 173, 0.3);
+  border: none;
+}
+
+.cosmic-btn-primary:hover {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 0 40px rgba(0, 70, 173, 0.5), 0 0 24px rgba(223, 177, 91, 0.25);
+}
+
+/* Secondary — glass with a white hairline that glows blue on hover. */
+.cosmic-btn-ghost {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: #ffffff;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.cosmic-btn-ghost:hover {
+  transform: translateY(-2px);
+  border-color: var(--c-sky);
+  box-shadow: 0 0 26px rgba(56, 189, 248, 0.35);
+  background: rgba(56, 189, 248, 0.08);
+}
+
+/* ── Forms ───────────────────────────────────────────────────────────────── */
+
+.cosmic-input,
+.cosmic-root select.cosmic-input,
+.cosmic-root textarea.cosmic-input {
+  width: 100%;
+  background: rgba(2, 6, 23, 0.6);
+  border: 1px solid #1e293b;
+  border-radius: 12px;
+  padding: 14px 16px;
+  font-size: 14px;
+  color: #ffffff;
+  outline: none;
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    background-color 0.25s ease;
+}
+
+.cosmic-input::placeholder {
+  color: var(--c-faint);
+}
+
+/* Gold focus ring — the "glowing border" state. */
+.cosmic-input:focus {
+  border-color: var(--c-gold);
+  box-shadow: 0 0 0 3px rgba(223, 177, 91, 0.12), 0 0 18px rgba(223, 177, 91, 0.22);
+  background: rgba(2, 6, 23, 0.85);
+}
+
+/* Validation states — only after the field has been interacted with, so a
+   pristine required field is never shown as an error. */
+.cosmic-input:user-invalid {
+  border-color: rgba(227, 30, 36, 0.7);
+  box-shadow: 0 0 0 3px rgba(227, 30, 36, 0.1);
+}
+
+.cosmic-input:user-valid {
+  border-color: rgba(56, 189, 248, 0.5);
+}
+
+.cosmic-label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--c-muted);
+}
+
+/* Native select needs its own arrow once the OS chrome is restyled. */
+.cosmic-root select.cosmic-input {
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--c-gold) 50%),
+    linear-gradient(135deg, var(--c-gold) 50%, transparent 50%);
+  background-position: calc(100% - 20px) center, calc(100% - 14px) center;
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+  padding-right: 40px;
+}
+
+.cosmic-root select.cosmic-input option {
+  background: #05030f;
+  color: #fff;
+}
+
+/* ── Long-form copy (privacy, terms, blog articles) ──────────────────────── */
+
+.cosmic-prose h2 {
+  margin-top: 2.75rem;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.cosmic-prose h3 {
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.cosmic-prose p {
+  margin-bottom: 1rem;
+  font-size: 15px;
+  color: var(--c-body);
+}
+
+.cosmic-prose ul,
+.cosmic-prose ol {
+  margin-bottom: 1.25rem;
+  padding-left: 1.35rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  font-size: 15px;
+  color: var(--c-body);
+}
+
+.cosmic-prose li {
+  list-style: none;
+  position: relative;
+}
+
+/* A small gold star in place of the default bullet. */
+.cosmic-prose ul li::before {
+  content: "✦";
+  position: absolute;
+  left: -1.35rem;
+  color: var(--c-gold);
+  font-size: 0.8em;
+  line-height: 1.9;
+}
+
+.cosmic-prose ol {
+  counter-reset: cosmic-ol;
+}
+
+.cosmic-prose ol li {
+  counter-increment: cosmic-ol;
+}
+
+.cosmic-prose ol li::before {
+  content: counter(cosmic-ol) ".";
+  position: absolute;
+  left: -1.35rem;
+  color: var(--c-gold);
+  font-weight: 700;
+}
+
+.cosmic-prose strong {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.cosmic-prose a {
+  color: var(--c-gold);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.cosmic-prose a:hover {
+  color: var(--c-gold-light);
+}
+
+/* Pull quote inside an article. Declared here so it outranks `.cosmic-prose p`
+   on the nested paragraph — the reason it is a class and not utilities. */
+.cosmic-pull-quote {
+  position: relative;
+  margin: 2.5rem 0;
+  padding: 1.75rem 2rem;
+  border-left: 4px solid var(--c-gold);
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 0 8px 8px 0;
+}
+
+.cosmic-prose .cosmic-pull-quote p {
+  margin-bottom: 0.5rem;
+  font-size: 17px;
+  font-style: italic;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.cosmic-pull-quote cite {
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-gold);
+}
+
+/* ── Navbar + Footer, themed only inside the cosmic scope ────────────────── */
+
+/* Both components style themselves with inline styles for the light site, and
+   inline styles outrank stylesheets — so these few rules need `!important` to
+   land. Scoped to `.cosmic-root`, so the home page is untouched. */
+.cosmic-root .adz-footer,
+.cosmic-root .adz-footer > div {
+  background: transparent !important;
+}
+
+.cosmic-root .adz-footer {
+  border-top: 1px solid rgba(223, 177, 91, 0.18);
+  position: relative;
+}
+
+/* Golden divider above the footer content. */
+.cosmic-root .adz-footer::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(680px, 80%);
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--c-gold),
+    var(--c-gold-light),
+    var(--c-gold),
+    transparent
+  );
+  box-shadow: 0 0 12px rgba(223, 177, 91, 0.5);
+}
+
+/* Footer link + social hover glow. */
+.cosmic-root .adz-footer a:hover {
+  color: var(--c-gold) !important;
+}
+
+.cosmic-root .adz-footer a[target="_blank"]:hover {
+  border-color: rgba(223, 177, 91, 0.6) !important;
+  box-shadow: 0 0 16px rgba(223, 177, 91, 0.35);
+}
+
+/* ── Motion ──────────────────────────────────────────────────────────────── */
+
+@keyframes cosmic-twinkle {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 1; }
+}
+
+@keyframes cosmic-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+
+@keyframes cosmic-orbit {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes cosmic-orbit-reverse {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+@keyframes cosmic-glow-pulse {
+  0%, 100% { opacity: 0.35; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.06); }
+}
+
+@keyframes cosmic-nebula-drift {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  33% { transform: translate3d(3%, -2%, 0) scale(1.06); }
+  66% { transform: translate3d(-2%, 3%, 0) scale(0.97); }
+}
+
+@keyframes cosmic-shimmer {
+  from { transform: translateX(-120%); }
+  to { transform: translateX(220%); }
+}
+
+@keyframes cosmic-scroll-dot {
+  0% { transform: translateY(0); opacity: 0; }
+  35% { opacity: 1; }
+  100% { transform: translateY(16px); opacity: 0; }
+}
+
+@keyframes cosmic-ray-sweep {
+  0%, 100% { opacity: 0.12; }
+  50% { opacity: 0.3; }
+}
+
+.cosmic-animate-float { animation: cosmic-float 7s ease-in-out infinite; }
+.cosmic-animate-orbit { animation: cosmic-orbit 48s linear infinite; }
+.cosmic-animate-orbit-rev { animation: cosmic-orbit-reverse 72s linear infinite; }
+.cosmic-animate-pulse { animation: cosmic-glow-pulse 6s ease-in-out infinite; }
+.cosmic-animate-nebula { animation: cosmic-nebula-drift 32s ease-in-out infinite; }
+.cosmic-animate-twinkle { animation: cosmic-twinkle 3.5s ease-in-out infinite; }
+.cosmic-animate-ray { animation: cosmic-ray-sweep 9s ease-in-out infinite; }
+
+/* Client-logo marquee. The track holds the strip twice, so translating it by
+   half its width loops seamlessly. Compositor-only, no JS. */
+@keyframes cosmic-logo-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.cosmic-logo-track {
+  animation: cosmic-logo-scroll 80s linear infinite;
+}
+
+.cosmic-logo-track:hover {
+  animation-play-state: paused;
+}
+
+/* Glass shimmer — a light sweep across a card on hover. */
+.cosmic-shimmer {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.cosmic-shimmer::after {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 45%;
+  background: linear-gradient(
+    100deg,
+    transparent,
+    rgba(255, 255, 255, 0.09),
+    transparent
+  );
+  transform: translateX(-120%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.cosmic-shimmer:hover::after {
+  animation: cosmic-shimmer 1.1s ease-out;
+}
+
+/* Scroll-reveal. AOS is already initialised site-wide, so these only cover the
+   decorative layers AOS does not touch. */
+.cosmic-reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.cosmic-reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ── Accessibility + performance ─────────────────────────────────────────── */
+
+/* Every decorative animation is opacity/transform only, so switching them off
+   costs nothing structurally. The canvas checks this flag in JS too. */
+@media (prefers-reduced-motion: reduce) {
+  .cosmic-root *,
+  .cosmic-root *::before,
+  .cosmic-root *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  .cosmic-reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* backdrop-filter is expensive on low-end mobile GPUs; drop to a solid tint
+   below the tablet breakpoint and let the canvas carry the atmosphere. */
+@media (max-width: 640px) {
+  .cosmic-card,
+  .cosmic-panel {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: rgba(3, 2, 12, 0.9);
+  }
+}
