@@ -138,6 +138,67 @@ export const IconTelescope: CosmicIcon = (props) => (
   </svg>
 );
 
+/* ── Astro-scientific services ───────────────────────────────────────────── */
+
+/** Name & Mobile Numerology — digits orbiting a vibration core. */
+export const IconNumerology: CosmicIcon = (props) => (
+  <svg {...base} {...props}>
+    <circle cx="12" cy="12" r="2.6" />
+    <path d="M12 2.6v3.2M12 18.2v3.2M21.4 12h-3.2M5.8 12H2.6M18.1 5.9l-2.3 2.3M8.2 15.8l-2.3 2.3M18.1 18.1l-2.3-2.3M8.2 8.2 5.9 5.9" />
+  </svg>
+);
+
+/** Mobile Numerology — a handset carrying a signal/vibration wave. */
+export const IconMobileWave: CosmicIcon = (props) => (
+  <svg {...base} {...props}>
+    <rect x="7" y="2.5" width="10" height="19" rx="2.4" />
+    <path d="M10.2 19h3.6" />
+    <path d="M3.3 10c1.6-1.8 1.6-3.2 0-5M20.7 10c-1.6-1.8-1.6-3.2 0-5" opacity="0.7" />
+  </svg>
+);
+
+/** Signature Analysis — a flowing, looping signature stroke. */
+export const IconSignature: CosmicIcon = (props) => (
+  <svg {...base} {...props}>
+    <path d="M3 17c2-1 3-3 3.5-5.5S7 6.5 5.5 6 3 8 4 10.5s3.5 3.8 6 3.8c3 0 3.5-4 6-4 1.6 0 1 2.4 2.5 2.4 1.2 0 1.8-1 2-2.2" />
+    <path d="M17 17.5c1.2.9 2.6.9 3.6-.3" opacity="0.7" />
+  </svg>
+);
+
+/** Wristwatch Analysis — a watch face with wrist strap lugs. */
+export const IconWristwatch: CosmicIcon = (props) => (
+  <svg {...base} {...props}>
+    <circle cx="12" cy="12" r="5.5" />
+    <path d="M12 9v3.2l2.2 1.3" />
+    <path d="M9.5 6.5 10 3h4l.5 3.5M9.5 17.5 10 21h4l.5-3.5" />
+  </svg>
+);
+
+/** Wall Clock Analysis — a clock mounted with placement guides. */
+export const IconWallClock: CosmicIcon = (props) => (
+  <svg {...base} {...props}>
+    <circle cx="12" cy="13" r="6.5" />
+    <path d="M12 9.3v3.7l2.6 1.6" />
+    <path d="M9 3.2h6M12 3.2v2.3" />
+  </svg>
+);
+
+/** Astro Jewellery — a faceted gemstone. */
+export const IconGemstone: CosmicIcon = (props) => (
+  <svg {...base} {...props}>
+    <path d="M6.5 4h11L21 9.5 12 21 3 9.5z" />
+    <path d="M6.5 4 12 9.5 3 9.5M17.5 4 12 9.5l9 0M9 4l3 5.5M15 4l-3 5.5M12 9.5 8.5 21M12 9.5 15.5 21" opacity="0.6" />
+  </svg>
+);
+
+/** Plant Vastu — a growing leaf/sprout carrying life energy. */
+export const IconLeaf: CosmicIcon = (props) => (
+  <svg {...base} {...props}>
+    <path d="M5 19c-1.2-6.4 1.6-12.4 8-14.4C18.6 3 20.5 5 19.5 9.8 17.8 17.6 11.6 20.2 5 19Z" />
+    <path d="M6 18c3-4 6-7 12-12.8" />
+  </svg>
+);
+
 /* ── Zodiac ──────────────────────────────────────────────────────────────── */
 
 export const ZODIAC_SIGNS = [

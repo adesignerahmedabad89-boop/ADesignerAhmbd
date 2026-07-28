@@ -9,6 +9,20 @@ const nextConfig: NextConfig = {
     root: fileURLToPath(new URL(".", import.meta.url)),
   },
 
+  async redirects() {
+    return [
+      // Scientific Logo already owns a dedicated, richer page — keep the
+      // catalogue-style /services/scientific-logo URL working (it's the slug
+      // used consistently across the rest of the astrology service line)
+      // without duplicating that page's content under the [slug] route.
+      {
+        source: "/services/scientific-logo",
+        destination: "/scientific-logo",
+        permanent: true,
+      },
+    ];
+  },
+
   images: {
     // Modern formats — smaller than JPEG/PNG; the browser picks what it supports.
     formats: ["image/avif", "image/webp"],

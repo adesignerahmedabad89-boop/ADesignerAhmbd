@@ -168,6 +168,27 @@ export const homeSectionsContent: HomeSectionsContent = {
         description:
           "Introduce your company and showcase your products, services and key features in a beautifully designed brochure.",
       },
+      {
+        title: "Scientific Logo",
+        href: "/scientific-logo",
+        img: "/mystical_moon_eye.png",
+        description:
+          "Logos aligned with astrology, numerology, sacred geometry and frequency — brand identity tuned to planetary energy.",
+      },
+      {
+        title: "Name Numerology",
+        href: "/services/name-numerology",
+        img: "/celestial_planet.png",
+        description:
+          "Analyze the vibrations and numerical energy of your name to unlock success, relationships and career growth.",
+      },
+      {
+        title: "Astro Vastu",
+        href: "/services/astro-vastu",
+        img: "/hand_holding_universe.png",
+        description:
+          "Scientific Vastu consultation combining astrology, directional energies, planetary influences and space optimization.",
+      },
     ],
     primary: { label: "View all services", href: "/services" },
     secondary: { label: "Get a free consultation", href: "/contact" },

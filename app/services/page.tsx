@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { CosmicLayout } from "@/components/cosmic/CosmicLayout";
 import { CosmicHero } from "@/components/cosmic/CosmicHero";
+import { SectionDivider } from "@/components/cosmic/CosmicUI";
 import { IconSacredGeometry } from "@/components/cosmic/CosmicIcons";
 import AllServices from "@/components/AllServices";
+import AstrologyServices from "@/components/AstrologyServices";
 
 export const metadata: Metadata = {
   title: "Our Services | A Designer Ahmedabad",
@@ -24,6 +26,8 @@ export default function ServicesPage() {
         sub="From the first mark to the final print run — every discipline calibrated to move your brand into its right orbit."
       />
       <AllServices />
+      <SectionDivider variant="constellation" />
+      <AstrologyServices />
     </CosmicLayout>
   );
 }

@@ -4,9 +4,11 @@ import { useState } from "react";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { Menu, X } from "lucide-react";
+import { ChevronDown, Menu, X } from "lucide-react";
 import { animated, easings, useSpring } from "@react-spring/web";
 import { useLoaderStore } from "@/showreel/hooks/use-loader";
+import { services as designServices } from "@/lib/services-data";
+import { astrologyServiceHref, astrologyServices } from "@/lib/astrology-services-data";
 
 export interface NavbarProps {
   revealAfterLoader?: boolean;
@@ -17,7 +19,6 @@ const navLinks = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Services", href: "/services" },
-  { label: "Scientific Logo", href: "/scientific-logo" },
   { label: "Portfolio", href: "/portfolio" },
   { label: "Career", href: "/career" },
   { label: "Pricing", href: "/pricing" },
@@ -31,6 +32,11 @@ export default function Navbar({
 }: NavbarProps) {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
+  // Desktop hover mega menu + mobile accordion for the "Services" link — both
+  // fan out into the same two groups: design/branding services (`lib/services-data`)
+  // and the Scientific Astrology line (`lib/astrology-services-data`).
+  const [servicesOpen, setServicesOpen] = useState(false);
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
 
   const revealed = useLoaderStore((s) => s.revealed);
   const shown = revealAfterLoader ? revealed : true;
@@ -122,6 +128,169 @@ export default function Navbar({
         >
           {navLinks.map((link) => {
             const isActive = link.href === "/" ? pathname === "/" : pathname.startsWith(link.href);
+
+            if (link.label === "Services") {
+              const groupLabelColor = cosmic ? "#dfb15b" : "#e31e24";
+              return (
+                <div
+                  key={link.label}
+                  style={{ position: "relative" }}
+                  onMouseEnter={() => setServicesOpen(true)}
+                  onMouseLeave={() => setServicesOpen(false)}
+                >
+                  <Link
+                    href={link.href}
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "3px",
+                      padding: "5px 13px",
+                      borderRadius: "999px",
+                      fontSize: "13px",
+                      fontWeight: isActive ? 700 : 500,
+                      color: isActive ? activeColor : linkColor,
+                      background: isActive ? activeBg : "transparent",
+                      transition: "background 0.18s ease, color 0.18s ease",
+                      whiteSpace: "nowrap",
+                    }}
+                    className={
+                      isActive
+                        ? ""
+                        : cosmic
+                        ? "hover:bg-white/10 hover:!text-white"
+                        : "hover:bg-white hover:!text-gray-900"
+                    }
+                  >
+                    {link.label}
+                    <ChevronDown
+                      size={13}
+                      aria-hidden="true"
+                      style={{
+                        transform: servicesOpen ? "rotate(180deg)" : "none",
+                        transition: "transform 0.2s ease",
+                      }}
+                    />
+                  </Link>
+
+                  {/* Mega menu panel */}
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: "calc(100% + 14px)",
+                      left: "50%",
+                      transform: servicesOpen
+                        ? "translateX(-50%) translateY(0)"
+                        : "translateX(-50%) translateY(8px)",
+                      opacity: servicesOpen ? 1 : 0,
+                      pointerEvents: servicesOpen ? "auto" : "none",
+                      transition: "opacity 0.2s ease, transform 0.2s ease",
+                      width: "min(680px, 88vw)",
+                      maxHeight: "75vh",
+                      overflowY: "auto",
+                      background: cosmic ? "rgba(8,6,20,0.97)" : "#ffffff",
+                      backdropFilter: cosmic ? "blur(20px) saturate(150%)" : undefined,
+                      WebkitBackdropFilter: cosmic ? "blur(20px) saturate(150%)" : undefined,
+                      border: `1px solid ${capsuleBdr}`,
+                      borderRadius: "20px",
+                      boxShadow: capsuleShadow,
+                      padding: "22px",
+                      display: "grid",
+                      gridTemplateColumns: "1fr 1fr",
+                      gap: "8px 24px",
+                    }}
+                  >
+                    <div>
+                      <div
+                        style={{
+                          fontSize: "10px",
+                          fontWeight: 800,
+                          letterSpacing: "1.5px",
+                          textTransform: "uppercase",
+                          color: groupLabelColor,
+                          marginBottom: "10px",
+                        }}
+                      >
+                        Design &amp; Branding
+                      </div>
+                      <div style={{ display: "flex", flexDirection: "column", gap: "1px" }}>
+                        {designServices.map((s) => (
+                          <Link
+                            key={s.slug}
+                            href={`/services/${s.slug}`}
+                            style={{
+                              padding: "7px 10px",
+                              borderRadius: "10px",
+                              fontSize: "13px",
+                              color: linkColor,
+                              transition: "background 0.15s, color 0.15s",
+                            }}
+                            className={
+                              cosmic
+                                ? "hover:bg-white/10 hover:!text-white"
+                                : "hover:bg-gray-100 hover:!text-gray-900"
+                            }
+                          >
+                            {s.title}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div>
+                      <div
+                        style={{
+                          fontSize: "10px",
+                          fontWeight: 800,
+                          letterSpacing: "1.5px",
+                          textTransform: "uppercase",
+                          color: groupLabelColor,
+                          marginBottom: "10px",
+                        }}
+                      >
+                        Astrology &amp; Energy
+                      </div>
+                      <div style={{ display: "flex", flexDirection: "column", gap: "1px" }}>
+                        {astrologyServices.map((s) => (
+                          <Link
+                            key={s.slug}
+                            href={astrologyServiceHref(s.slug)}
+                            style={{
+                              padding: "7px 10px",
+                              borderRadius: "10px",
+                              fontSize: "13px",
+                              color: linkColor,
+                              transition: "background 0.15s, color 0.15s",
+                            }}
+                            className={
+                              cosmic
+                                ? "hover:bg-white/10 hover:!text-white"
+                                : "hover:bg-gray-100 hover:!text-gray-900"
+                            }
+                          >
+                            {s.title}
+                          </Link>
+                        ))}
+                      </div>
+                      <Link
+                        href="/services"
+                        style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: "6px",
+                          marginTop: "14px",
+                          fontSize: "12px",
+                          fontWeight: 700,
+                          color: groupLabelColor,
+                        }}
+                      >
+                        View all services →
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              );
+            }
+
             return (
               <Link
                 key={link.label}
@@ -208,8 +377,8 @@ export default function Navbar({
           width: "calc(100% - 32px)",
           maxWidth: "1400px",
           marginTop: "6px",
-          maxHeight: mobileOpen ? "600px" : "0",
-          overflow: "hidden",
+          maxHeight: mobileOpen ? "80vh" : "0",
+          overflowY: mobileOpen ? "auto" : "hidden",
           transition: "max-height 0.35s ease, opacity 0.25s ease",
           opacity: mobileOpen ? 1 : 0,
           background: cosmic ? "rgba(10,8,25,0.95)" : "#ffffff",
@@ -224,6 +393,118 @@ export default function Navbar({
         <div style={{ padding: "12px 12px 16px" }}>
           {navLinks.map((link) => {
             const isActive = link.href === "/" ? pathname === "/" : pathname.startsWith(link.href);
+
+            if (link.label === "Services") {
+              const groupLabelColor = cosmic ? "#dfb15b" : "#e31e24";
+              return (
+                <div key={link.label} style={{ marginBottom: "2px" }}>
+                  <div style={{ display: "flex", alignItems: "stretch", gap: "2px" }}>
+                    <Link
+                      href={link.href}
+                      onClick={() => setMobileOpen(false)}
+                      style={{
+                        flex: 1,
+                        display: "block",
+                        padding: "11px 16px",
+                        fontSize: "14px",
+                        fontWeight: isActive ? 600 : 500,
+                        color: isActive ? activeColor : linkColor,
+                        backgroundColor: isActive ? activeBg : "transparent",
+                        borderRadius: "12px",
+                        transition: "background 0.15s, color 0.15s",
+                      }}
+                      className={
+                        cosmic
+                          ? "hover:bg-[#dfb15b]/10 hover:text-[#dfb15b]"
+                          : "hover:bg-gray-100 hover:text-gray-900"
+                      }
+                    >
+                      {link.label}
+                    </Link>
+                    <button
+                      type="button"
+                      onClick={() => setMobileServicesOpen((v) => !v)}
+                      aria-label="Toggle services submenu"
+                      aria-expanded={mobileServicesOpen}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        width: "42px",
+                        background: "none",
+                        border: "none",
+                        color: linkColor,
+                        cursor: "pointer",
+                        borderRadius: "12px",
+                      }}
+                    >
+                      <ChevronDown
+                        size={16}
+                        aria-hidden="true"
+                        style={{
+                          transform: mobileServicesOpen ? "rotate(180deg)" : "none",
+                          transition: "transform 0.2s ease",
+                        }}
+                      />
+                    </button>
+                  </div>
+
+                  <div
+                    style={{
+                      display: "grid",
+                      gridTemplateRows: mobileServicesOpen ? "1fr" : "0fr",
+                      transition: "grid-template-rows 0.3s ease",
+                    }}
+                  >
+                    <div style={{ overflow: "hidden" }}>
+                      <div style={{ padding: "4px 6px 10px 18px", display: "flex", flexDirection: "column", gap: "12px" }}>
+                        <div>
+                          <div style={{ fontSize: "10px", fontWeight: 800, letterSpacing: "1.2px", textTransform: "uppercase", color: groupLabelColor, margin: "6px 0" }}>
+                            Design &amp; Branding
+                          </div>
+                          {designServices.map((s) => (
+                            <Link
+                              key={s.slug}
+                              href={`/services/${s.slug}`}
+                              onClick={() => { setMobileOpen(false); setMobileServicesOpen(false); }}
+                              style={{ display: "block", padding: "7px 10px", fontSize: "13px", color: linkColor, borderRadius: "8px" }}
+                              className={
+                                cosmic
+                                  ? "hover:bg-[#dfb15b]/10 hover:text-[#dfb15b]"
+                                  : "hover:bg-gray-100 hover:text-gray-900"
+                              }
+                            >
+                              {s.title}
+                            </Link>
+                          ))}
+                        </div>
+                        <div>
+                          <div style={{ fontSize: "10px", fontWeight: 800, letterSpacing: "1.2px", textTransform: "uppercase", color: groupLabelColor, margin: "6px 0" }}>
+                            Astrology &amp; Energy
+                          </div>
+                          {astrologyServices.map((s) => (
+                            <Link
+                              key={s.slug}
+                              href={astrologyServiceHref(s.slug)}
+                              onClick={() => { setMobileOpen(false); setMobileServicesOpen(false); }}
+                              style={{ display: "block", padding: "7px 10px", fontSize: "13px", color: linkColor, borderRadius: "8px" }}
+                              className={
+                                cosmic
+                                  ? "hover:bg-[#dfb15b]/10 hover:text-[#dfb15b]"
+                                  : "hover:bg-gray-100 hover:text-gray-900"
+                              }
+                            >
+                              {s.title}
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            }
+
             return (
               <Link
                 key={link.label}

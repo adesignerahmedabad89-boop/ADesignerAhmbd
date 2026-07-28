@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Phone, Mail, MapPin, ArrowRight } from "lucide-react";
 import { CosmicFooterTop } from "@/components/cosmic/CosmicFooterTop";
+import { astrologyServiceHref, astrologyServices } from "@/lib/astrology-services-data";
 
 const SocialFacebook = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" width="15" height="15"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" /></svg>
@@ -36,14 +37,14 @@ const quickLinks = [
 ];
 
 const serviceLinks = [
-  { label: "Logo Design", href: "/services" },
-  { label: "Stationery Design", href: "/services" },
-  { label: "Banner & Standee Design", href: "/services" },
-  { label: "Packaging & Label Design", href: "/services" },
-  { label: "Menu Design", href: "/services" },
-  { label: "Invitation Card Design", href: "/services" },
-  { label: "Tag Design", href: "/services" },
-  { label: "Brochure Design", href: "/services" },
+  { label: "Logo Design", href: "/services/logo-design" },
+  { label: "Stationery Design", href: "/services/stationery-design" },
+  { label: "Banner & Standee Design", href: "/services/banner-standee-design" },
+  { label: "Packaging & Label Design", href: "/services/packaging-label-design" },
+  { label: "Menu Design", href: "/services/menu-design" },
+  { label: "Invitation Card Design", href: "/services/invitation-card-design" },
+  { label: "Tag Design", href: "/services/tag-design" },
+  { label: "Brochure Design", href: "/services/brochure-design" },
 ];
 
 export interface FooterProps {
@@ -74,7 +75,7 @@ export default function Footer({ cosmic = false }: FooterProps) {
         }
       >
         <div className="site-wrap" style={{ padding: "64px 24px" }}>
-          <div style={{ display: "grid", gap: "40px" }} className="md:grid-cols-2 lg:grid-cols-4">
+          <div style={{ display: "grid", gap: "40px" }} className="md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
             <div>
               {/* 256×183 = the PNG's real intrinsic ratio; the rendered size is
                   still 40px tall / auto width via `style`. See Navbar.tsx. */}
@@ -113,6 +114,20 @@ export default function Footer({ cosmic = false }: FooterProps) {
                     <Link href={s.href} style={{ color: "rgba(255,255,255,0.4)", fontSize: "13px", display: "flex", alignItems: "center", gap: "6px", transition: "color 0.2s" }} className="hover:text-[#f58220] group">
                       <ArrowRight size={11} style={{ opacity: 0, transition: "opacity 0.2s" }} className="group-hover:opacity-100" />
                       {s.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <h4 style={{ color: "#fff", fontWeight: 700, fontSize: "13px", letterSpacing: "2px", textTransform: "uppercase", marginBottom: "20px" }}>Astrology Services</h4>
+              <ul style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                {astrologyServices.map((s) => (
+                  <li key={s.slug}>
+                    <Link href={astrologyServiceHref(s.slug)} style={{ color: "rgba(255,255,255,0.4)", fontSize: "13px", display: "flex", alignItems: "center", gap: "6px", transition: "color 0.2s" }} className="hover:text-[#f58220] group">
+                      <ArrowRight size={11} style={{ opacity: 0, transition: "opacity 0.2s" }} className="group-hover:opacity-100" />
+                      {s.title}
                     </Link>
                   </li>
                 ))}
