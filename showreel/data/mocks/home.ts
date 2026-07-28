@@ -129,8 +129,8 @@ export const homeContent: ShowreelContent = {
     headingTop: "Beyond",
     headingBottom: ["all", "limits"],
     body: [
-      "Superconscious is a neural engine that turns intent into action — anticipating your next move before you make it, across every device you already own.",
-      "One model, every surface: wearable, neural, and beyond. No ceilings, no limits — just intelligence that keeps pace with the way you think.",
+      "ADesignerAhmedabad is a scientific astrology practice that turns cosmic insight into everyday clarity — aligning your name, brand, and space with the energy that shapes your journey, long before you take the next step.",
+      "One philosophy, every dimension: logo, numerology, signature, and space. No guesswork, no limits — just guidance that keeps pace with the way you grow.",
     ],
     cardLabel: "Neural Core",
     cardUrl: "superconscious.ai",
