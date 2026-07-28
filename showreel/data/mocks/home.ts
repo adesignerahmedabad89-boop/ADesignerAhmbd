@@ -1,7 +1,7 @@
 /**
- * Placeholder content for the Showreel home page ("Prompts that think ahead").
- * Mirrors the copy of the original vanilla showreel. Fed to the view via props
- * so no string is hardcoded in a component.
+ * Content for the Showreel home page hero ("Align Your / Cosmic Energy").
+ * Structure mirrors the original vanilla showreel; copy is ADesignerAhmedabad's.
+ * Fed to the view via props so no string is hardcoded in a component.
  */
 
 export interface NavLink {
@@ -88,17 +88,17 @@ export const homeContent: ShowreelContent = {
   ],
   headerCta: { label: "Get Started", href: "#get-started" },
   marquee: [
-    "Templates that work",
-    "Design that sells",
-    "Speed without compromise",
-    "AI prompts on another level",
+    "Numerology that guides",
+    "Branding that resonates",
+    "Precision without compromise",
+    "Astrology for modern brands",
   ],
   hero: {
-    lines: ["Prompts that", "think ahead"],
-    templatesTitle: "Browse our\ntemplates",
+    lines: ["Align Your", "Cosmic Energy"],
+    templatesTitle: "Browse our\nservices",
     bottomBlock: {
-      leftText: "Turn engagement into conversions, trends into traffic, and views into revenue. All with a team that knows how to make social media work for you.",
-      rightText: "From crafting scroll-stopping content to engineering algorithms we help your brand break through the noise and go viral.",
+      leftText: "ADesignerAhmedabad blends scientific astrology with premium business branding — aligning your name, logo, and signature with the cosmic energy that shapes real success.",
+      rightText: "From Scientific Logo design and Name Numerology to Signature Analysis and Astro Vastu, every consultation aligns your identity and space with cosmic precision.",
       avatars: [
         "https://i.pravatar.cc/100?img=1",
         "https://i.pravatar.cc/100?img=2",

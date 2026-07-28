@@ -148,10 +148,10 @@ export const HeroCard = memo(({ p, lines, templatesTitle, images, bottomBlock, a
             </p>
             <div className="flex items-center gap-4 max-sm:flex-col max-sm:items-stretch max-sm:gap-3">
               <button className="inline-flex items-center justify-center px-8 py-3.5 max-sm:px-5 max-sm:py-3 rounded-btn bg-white/10 backdrop-blur-md border border-white/20 transition-colors hover:bg-white/20 text-[17px] max-sm:text-[15px] leading-none">
-                See Pricing
+                View Services
               </button>
               <button className="inline-flex items-center justify-center px-8 py-3.5 max-sm:px-5 max-sm:py-3 rounded-btn bg-white text-black font-medium transition-colors hover:bg-white/90 text-[17px] max-sm:text-[15px] leading-none">
-                Start Journey
+                Book Consultation
               </button>
             </div>
           </div>
@@ -169,7 +169,7 @@ export const HeroCard = memo(({ p, lines, templatesTitle, images, bottomBlock, a
                   <img key={i} src={src} alt="" className="w-8 h-8 rounded-full border border-white/10 object-cover" />
                 ))}
               </div>
-              <span className="text-[14px] font-medium opacity-90 pr-2">Trusted by 4000+ creatives</span>
+              <span className="text-[14px] font-medium opacity-90 pr-2">Trusted by 1000+ clients across India</span>
             </div>
             <p className="max-w-lg opacity-90 leading-relaxed text-right text-[15px] pointer-events-auto">
               {bottomBlock.rightText}
