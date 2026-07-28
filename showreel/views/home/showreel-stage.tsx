@@ -180,12 +180,25 @@ export const ShowreelStage = ({ content }: ShowreelStageProps) => {
         <FlameBackground className="absolute inset-0" active={vis.aurora} />
       </animated.div>
 
-      <div ref={trackRef} className="relative" style={{ height: `${geo.trackVh}vh` }}>
-        <div className="sticky top-0 h-screen overflow-hidden p-[4vmin]">
+      {/* `pointer-events-none`: this 2000vh track has no content of its own —
+          it exists purely to size the scroll range for the sticky stage
+          pinned inside it — so it should never be the hit target either;
+          same opt-in-per-interactive-element pattern as its children. */}
+      <div
+        ref={trackRef}
+        className="pointer-events-none relative"
+        style={{ height: `${geo.trackVh}vh` }}
+      >
+        {/* `pointer-events-none`: this box is otherwise entirely decorative
+            backdrop + 3D scene layers now, so it should never itself be the
+            hit target — every real interactive element inside (hero buttons,
+            the CTA link) already opts back in with its own
+            `pointer-events-auto`. */}
+        <div className="pointer-events-none sticky top-0 h-screen overflow-hidden p-[4vmin]">
           {/* White backdrop for phases 1–4; fades to the black page at gp 0.72. */}
           <animated.div
             aria-hidden="true"
-            className="absolute inset-0 z-0 bg-white"
+            className="pointer-events-none absolute inset-0 z-0 bg-white"
             style={{ opacity: s.backdrop }}
           />
 
@@ -201,8 +214,13 @@ export const ShowreelStage = ({ content }: ShowreelStageProps) => {
             <Marquee items={content.marquee} />
           </animated.div>
 
-          {/* 3D scene. */}
-          <div className="relative z-[2] flex size-full items-center justify-center [perspective:1500px]">
+          {/* 3D scene. `pointer-events-none` here so this (mostly-empty,
+              full-stage) perspective box and its 3D-transformed descendants
+              never swallow clicks meant for content underneath/within them —
+              every real interactive element inside (hero buttons, the CTA
+              link) already opts back in with its own `pointer-events-auto`,
+              same pattern as the card components. */}
+          <div className="pointer-events-none relative z-[2] flex size-full items-center justify-center [perspective:1500px]">
             <animated.div
               className="absolute inset-0 [transform-style:preserve-3d]"
               style={{ transform: s.cameraRig }}

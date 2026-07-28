@@ -89,7 +89,13 @@ export function FlameBackground({
   return (
     <div className={className}>
       <Canvas
-        style={{ width: "100%", height: "100%" }}
+        // r3f's Canvas wrapper defaults its OWN pointer-events to "auto" unless
+        // an `eventSource` is passed (see its web/Canvas.tsx) — silently
+        // overriding this decorative, always-mounted `fixed inset-0 z-30`
+        // background's `pointer-events-none` ancestor and swallowing clicks
+        // meant for whatever sits underneath it (e.g. the final CTA button),
+        // even while fully transparent.
+        style={{ width: "100%", height: "100%", pointerEvents: "none" }}
         gl={{ alpha: true }}
         dpr={[1, 2]}
         frameloop={active ? "always" : "never"}

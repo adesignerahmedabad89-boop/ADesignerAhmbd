@@ -232,7 +232,7 @@ export function HeroGradient({
   return (
     <div className={className}>
       <Canvas
-        style={{ width: "100%", height: "100%" }}
+        style={{ width: "100%", height: "100%", pointerEvents: "none" }}
         gl={{ alpha: true }}
         // The gradient is smooth + low-frequency, so rendering at 1× device
         // pixels (no retina super-sampling) is visually identical but ~4× cheaper

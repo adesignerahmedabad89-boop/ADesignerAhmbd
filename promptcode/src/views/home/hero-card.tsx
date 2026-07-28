@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { memo, useEffect } from "react";
 import { animated, useSpring, to, type SpringValue } from "@react-spring/web";
 import { HeroGradient } from "@/components/3d/hero-gradient";
@@ -69,7 +70,7 @@ export const HeroCard = memo(({ p, lines, templatesTitle, images, bottomBlock, a
         className="pointer-events-none absolute inset-0 z-[3] flex p-[40px] max-sm:p-5"
         style={{ opacity: p.to(heroContentFade) }}
       >
-        <h1 className="flex flex-col items-start text-left text-[7vw] font-normal leading-[0.95] tracking-[-0.03em] text-white">
+        <h1 className="flex flex-col items-start text-left text-[5.5vw] font-normal leading-[0.95] tracking-[-0.03em] text-white">
           {lines.map((line, i) => (
             <span key={i} className={i === 1 ? "opacity-40" : undefined}>
               <ScrollLetters text={line} p={p} styleFn={heroLetterStyle} />
@@ -141,12 +142,12 @@ export const HeroCard = memo(({ p, lines, templatesTitle, images, bottomBlock, a
               {bottomBlock.leftText}
             </p>
             <div className="flex items-center gap-4 max-sm:flex-col max-sm:items-stretch max-sm:gap-3">
-              <button className="inline-flex items-center justify-center px-8 py-3.5 max-sm:px-5 max-sm:py-3 rounded-btn bg-white/10 backdrop-blur-md border border-white/20 transition-colors hover:bg-white/20 text-[17px] max-sm:text-[15px] leading-none">
-                See Pricing
-              </button>
-              <button className="inline-flex items-center justify-center px-8 py-3.5 max-sm:px-5 max-sm:py-3 rounded-btn bg-white text-black font-medium transition-colors hover:bg-white/90 text-[17px] max-sm:text-[15px] leading-none">
-                Start Journey
-              </button>
+              <Link href="/services" className="inline-flex items-center justify-center px-8 py-3.5 max-sm:px-5 max-sm:py-3 rounded-btn bg-white/10 backdrop-blur-md border border-white/20 transition-colors hover:bg-white/20 text-[17px] max-sm:text-[15px] leading-none text-white no-underline">
+                View Services
+              </Link>
+              <Link href="/contact" className="inline-flex items-center justify-center px-8 py-3.5 max-sm:px-5 max-sm:py-3 rounded-btn bg-white text-black font-medium transition-colors hover:bg-white/90 text-[17px] max-sm:text-[15px] leading-none no-underline">
+                Book Consultation
+              </Link>
             </div>
           </div>
 
