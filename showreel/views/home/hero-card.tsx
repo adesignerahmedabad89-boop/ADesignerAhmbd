@@ -131,6 +131,8 @@ export const HeroCard = memo(({ p, lines, templatesTitle, images, bottomBlock, a
               sizes="66vmin"
               className="object-cover [transform:rotate(-90deg)_scale(1.65)]"
             />
+            {/* Dark overlay to make the rotated white text pop */}
+            <div className="absolute inset-0 bg-black/40 z-[2]" />
           </animated.div>
         </animated.div>
       </div>

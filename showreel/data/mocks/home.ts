@@ -109,17 +109,17 @@ export const homeContent: ShowreelContent = {
     }
   },
   catalistDark: {
-    url: "Catalist.co.uk",
-    pillLabel: "Catalist Lendings",
-    pillTitle: "Apply for Loan",
-    lead: "The Ultimate Engine for ",
-    leadStrong: "Business Lending",
+    url: "adesignerahmedabad.com",
+    pillLabel: "Scientific Branding",
+    pillTitle: "Design Cosmic Logo",
+    lead: "Align your brand logo with ",
+    leadStrong: "planetary energies",
   },
   catalistLight: {
-    url: "Catalist.co.uk",
-    searchText: "Analyze impact of lending in Business [Field]",
-    lead: "Use AI-based system analyser — ",
-    leadStrong: "all through one intelligent platform.",
+    url: "adesignerahmedabad.com",
+    searchText: "Analyze name and workspace energy...",
+    lead: "Harmonize your name and space for ",
+    leadStrong: "infinite growth.",
   },
   carouselCta: {
     button: "Explore the collection",
@@ -132,9 +132,9 @@ export const homeContent: ShowreelContent = {
       "ADesignerAhmedabad is a scientific astrology practice that turns cosmic insight into everyday clarity — aligning your name, brand, and space with the energy that shapes your journey, long before you take the next step.",
       "One philosophy, every dimension: logo, numerology, signature, and space. No guesswork, no limits — just guidance that keeps pace with the way you grow.",
     ],
-    cardLabel: "Neural Core",
-    cardUrl: "superconscious.ai",
-    cardHeading: "Intelligence, beyond limits",
+    cardLabel: "Scientific Astrology",
+    cardUrl: "adesignerahmedabad.com",
+    cardHeading: "Cosmic guidance, beyond limits",
   },
   portfolio: {
     items: [
