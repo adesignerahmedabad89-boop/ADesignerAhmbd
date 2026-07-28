@@ -13,3 +13,4 @@ import { HomeView } from "@/showreel/views/home";
 export default function Home() {
   return <HomeView />;
 }
+

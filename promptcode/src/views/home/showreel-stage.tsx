@@ -227,7 +227,7 @@ export const ShowreelStage = ({ content }: ShowreelStageProps) => {
                     lines={content.hero.lines}
                     templatesTitle={content.hero.templatesTitle}
                     bottomBlock={content.hero.bottomBlock}
-                    images={{ stone: `${A}/stone.jpg`, rotated: `${A}/hero-image-2.png` }}
+                    images={{ stone: `${A}/cosmic-hero.webp`, rotated: `${A}/hero-image-2.png` }}
                     active={vis.hero}
                   />
                 </animated.div>
