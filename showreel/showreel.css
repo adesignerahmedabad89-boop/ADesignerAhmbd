@@ -28,35 +28,54 @@
    ────────────────────────────────────────────────────────────────────────── */
 
 .showreel-root {
-  --background: #000000; /* page backdrop behind the fixed flame shader */
-  --foreground: #f5f1ec; /* default off-white ink */
+  --background: #000000;
+  /* page backdrop behind the fixed flame shader */
+  --foreground: #f5f1ec;
+  /* default off-white ink */
 
   /* Surfaces */
-  --ink: #07031a; /* target-block deep navy-black */
-  --pf-card: #14110e; /* portfolio card surface */
-  --cc-search: #161310; /* catalist light-card search bar */
-  --paper: #f5f1ec; /* off-white card/UI text */
-  --paper-alt: #f3f1ec; /* portfolio section ink */
-  --nav-ink: #1a1a1a; /* nav-pill links (on light pill) */
-  --cc-dark-ink: #f5f1ec; /* catalist dark-card ink */
-  --cc-light-ink: #1a1714; /* catalist light-card ink */
-  --cc-light-muted: #9a948d; /* catalist light-card secondary copy */
+  --ink: #07031a;
+  /* target-block deep navy-black */
+  --pf-card: #14110e;
+  /* portfolio card surface */
+  --cc-search: #161310;
+  /* catalist light-card search bar */
+  --paper: #f5f1ec;
+  /* off-white card/UI text */
+  --paper-alt: #f3f1ec;
+  /* portfolio section ink */
+  --nav-ink: #1a1a1a;
+  /* nav-pill links (on light pill) */
+  --cc-dark-ink: #f5f1ec;
+  /* catalist dark-card ink */
+  --cc-light-ink: #1a1714;
+  /* catalist light-card ink */
+  --cc-light-muted: #9a948d;
+  /* catalist light-card secondary copy */
 
   /* Header — opaque segmented bar. Base shows through the 1px gaps between
      containers (reads as hairlines); items are the lightest, the logo container
      a touch darker, the CTA black. */
-  --nav-surface: #e3e3e3; /* header base / 1px gap colour (neutral grey) */
-  --nav-item: #ffffff; /* link container fill (white) */
-  --nav-logo: #dadada; /* logo container — slightly darker than the items */
-  --nav-cta: #0d0d0d; /* black CTA */
-  --nav-cta-ink: #f4f4f4; /* CTA label */
+  --nav-surface: #e3e3e3;
+  /* header base / 1px gap colour (neutral grey) */
+  --nav-item: #ffffff;
+  /* link container fill (white) */
+  --nav-logo: #dadada;
+  /* logo container — slightly darker than the items */
+  --nav-cta: #0d0d0d;
+  /* black CTA */
+  --nav-cta-ink: #f4f4f4;
+  /* CTA label */
   --nav-border: rgba(255, 255, 255, 0.6);
   --nav-shadow: rgba(0, 0, 0, 0.12);
-  --glass-dark: rgba(40, 36, 33, 0.55); /* catalist dark pill */
+  --glass-dark: rgba(40, 36, 33, 0.55);
+  /* catalist dark pill */
   --glass-border: rgba(255, 255, 255, 0.12);
   --glass-border-soft: rgba(255, 255, 255, 0.14);
-  --hairline: rgba(255, 255, 255, 0.28); /* "See All" pill border */
-  --watermark: rgba(255, 255, 255, 0.85); /* portfolio card watermark */
+  --hairline: rgba(255, 255, 255, 0.28);
+  /* "See All" pill border */
+  --watermark: rgba(255, 255, 255, 0.85);
+  /* portfolio card watermark */
 
   /* Sphere (slot-4) card face — soft violet mesh gradient */
   --card-violet: radial-gradient(95% 80% at 50% 28%, #ddd6fe 0%, #9a73f0 38%, #6d28d9 68%, #34146e 100%);
@@ -85,15 +104,24 @@
      These MUST stay on `:root`: the hook writes them to
      `document.documentElement.style`, and a re-declaration further down the
      tree would shadow the runtime value. */
-  --sr-card-w: 42vmin; /* side-card width (hero card height) */
-  --sr-card-h: 62vmin; /* side-card height (hero card width) */
-  --sr-carousel-r: 27vmin; /* carousel radius (card translateZ) */
-  --sr-flyback: 40vmin; /* carousel fly-back depth */
-  --sr-hero-pad: 8vmin; /* hero full-screen inset (2× stage padding) */
-  --sr-heading-1: 18vmin; /* sphere top heading */
-  --sr-heading-2: 24vmin; /* sphere bottom heading */
-  --sr-sphere-body-w: 52vmin; /* sphere supporting-copy max-width */
-  --sr-sphere-body-text: 2.4vmin; /* sphere supporting-copy text size */
+  --sr-card-w: 42vmin;
+  /* side-card width (hero card height) */
+  --sr-card-h: 62vmin;
+  /* side-card height (hero card width) */
+  --sr-carousel-r: 27vmin;
+  /* carousel radius (card translateZ) */
+  --sr-flyback: 40vmin;
+  /* carousel fly-back depth */
+  --sr-hero-pad: 8vmin;
+  /* hero full-screen inset (2× stage padding) */
+  --sr-heading-1: 18vmin;
+  /* sphere top heading */
+  --sr-heading-2: 24vmin;
+  /* sphere bottom heading */
+  --sr-sphere-body-w: 52vmin;
+  /* sphere supporting-copy max-width */
+  --sr-sphere-body-text: 2.4vmin;
+  /* sphere supporting-copy text size */
 }
 
 @theme inline {
@@ -125,12 +153,18 @@
   --font-script: var(--font-marck);
 
   /* Radii — viewport-proportional, matching the original card geometry. */
-  --radius-btn: 8px; /* buttons + header (fixed 8px, per design request) */
-  --radius-card: 3vmin; /* hero / carousel cards */
-  --radius-pf: 2.5vmin; /* portfolio cards */
-  --radius-slider: 1.6vmin; /* hero image slider */
-  --radius-grid: 12px; /* parallax grid items */
-  --radius-target: 30px; /* target block (pre-flythrough) */
+  --radius-btn: 8px;
+  /* buttons + header (fixed 8px, per design request) */
+  --radius-card: 3vmin;
+  /* hero / carousel cards */
+  --radius-pf: 2.5vmin;
+  /* portfolio cards */
+  --radius-slider: 1.6vmin;
+  /* hero image slider */
+  --radius-grid: 12px;
+  /* parallax grid items */
+  --radius-target: 30px;
+  /* target block (pre-flythrough) */
 }
 
 /* ──────────────────────────────────────────────────────────────────────────
@@ -180,25 +214,29 @@ html:has(.showreel-root) {
 
 @media (max-width: 1920px) {
   html:has(.showreel-root) {
-    font-size: 0.833333vw; /* 16 * 100 / 1920 */
+    font-size: 0.833333vw;
+    /* 16 * 100 / 1920 */
   }
 }
 
 @media (max-width: 1440px) {
   html:has(.showreel-root) {
-    font-size: 1.111111vw; /* 16 * 100 / 1440 */
+    font-size: 1.111111vw;
+    /* 16 * 100 / 1440 */
   }
 }
 
 @media (max-width: 1024px) {
   html:has(.showreel-root) {
-    font-size: 1.5625vw; /* 16 * 100 / 1024 */
+    font-size: 1.5625vw;
+    /* 16 * 100 / 1024 */
   }
 }
 
 @media (max-width: 640px) {
   html:has(.showreel-root) {
-    font-size: 4.444444vw; /* 16 * 100 / 360 */
+    font-size: 4.444444vw;
+    /* 16 * 100 / 360 */
   }
 }
 
@@ -244,8 +282,10 @@ html:has(.showreel-root) .adz-footer {
    Only the headline block's top inset moves. The card, its shader, the letter
    springs and every value in `utils/showreel/timeline.ts` are untouched. */
 .showreel-root .sr-hero-copy {
-  --sr-nav-h: 73px; /* .adz-navbar, pinned to 16px above → constant height */
-  --sr-nav-gap: 12px; /* breathing room under the bar */
+  --sr-nav-h: 73px;
+  /* .adz-navbar, pinned to 16px above → constant height */
+  --sr-nav-gap: 12px;
+  /* breathing room under the bar */
   padding-top: max(40px, calc(var(--sr-nav-h) + var(--sr-nav-gap) - 4vmin));
 }
 
@@ -253,6 +293,7 @@ html:has(.showreel-root) .adz-footer {
   .scrollbar-none {
     scrollbar-width: none;
   }
+
   .scrollbar-none::-webkit-scrollbar {
     display: none;
   }
@@ -278,4 +319,22 @@ html.lenis body {
 
 .lenis.lenis-scrolling iframe {
   pointer-events: none;
+}
+
+/* Custom scrollbar styling for dropdown menus */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(223, 177, 91, 0.3);
+  border-radius: 99px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(223, 177, 91, 0.6);
 }

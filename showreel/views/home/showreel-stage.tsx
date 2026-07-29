@@ -185,6 +185,7 @@ export const ShowreelStage = ({ content }: ShowreelStageProps) => {
           pinned inside it — so it should never be the hit target either;
           same opt-in-per-interactive-element pattern as its children. */}
       <div
+        id="showreel-track"
         ref={trackRef}
         className="pointer-events-none relative"
         style={{ height: `${geo.trackVh}vh` }}
@@ -328,17 +329,18 @@ export const ShowreelStage = ({ content }: ShowreelStageProps) => {
                   className="pointer-events-none absolute inset-[-4vmin] z-[3] rounded-[11vmin] border-[8vmin] border-white"
                   style={{ opacity: s.finalFrame }}
                 />
-                <CtaBlock
-                  p={p}
-                  heading={content.cta.heading}
-                  headingFaded={content.cta.headingFaded}
-                  sub={content.cta.sub}
-                  button={content.cta.button}
-                  href={content.cta.href}
-                />
               </animated.div>
             </animated.div>
           </div>
+
+          <CtaBlock
+            p={p}
+            heading={content.cta.heading}
+            headingFaded={content.cta.headingFaded}
+            sub={content.cta.sub}
+            button={content.cta.button}
+            href={content.cta.href}
+          />
 
           {/* Carousel CTA — pinned under the 4-card carousel (the second block).
               A sibling overlay of the 3D scene (not inside its perspective

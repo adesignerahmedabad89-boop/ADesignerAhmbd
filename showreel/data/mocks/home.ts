@@ -123,7 +123,7 @@ export const homeContent: ShowreelContent = {
   },
   carouselCta: {
     button: "Explore the collection",
-    href: "#templates",
+    href: "/services",
   },
   sphere: {
     headingTop: "Beyond",

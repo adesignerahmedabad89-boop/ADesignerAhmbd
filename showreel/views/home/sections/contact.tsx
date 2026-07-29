@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { ChevronDown } from "lucide-react";
 import type { HomeSectionsContent } from "@/showreel/data/mocks/home-sections";
 import { Reveal } from "./reveal";
 import { Section } from "./section";
@@ -37,10 +38,29 @@ export const Contact = ({ content }: ContactProps) => {
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
   const [error, setError] = useState("");
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
+    
+    // Email Validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(form.email.trim())) {
+      setError("Please enter a valid email address.");
+      return;
+    }
+
+    // Phone Validation (Strips formatting, requires 10 digits or 10-digit number with standard country code)
+    const cleanPhone = form.phone.replace(/[^0-9]/g, "");
+    const isValidPhone = (cleanPhone.length === 10) || 
+                         (cleanPhone.length === 12 && cleanPhone.startsWith("91")) ||
+                         (cleanPhone.length === 11 && cleanPhone.startsWith("0"));
+    if (!isValidPhone) {
+      setError("Please enter a valid 10-digit phone number.");
+      return;
+    }
+
     setSending(true);
     try {
       const res = await fetch("/api/contact", {
@@ -127,24 +147,49 @@ export const Contact = ({ content }: ContactProps) => {
                 onChange={(e) => setForm({ ...form, phone: e.target.value })}
               />
             </div>
-            <div>
+             <div className="relative">
               <label className={LABEL} htmlFor="contact-service">
                 Service
               </label>
-              <select
-                suppressHydrationWarning
+              <button
+                type="button"
                 id="contact-service"
-                className={FIELD}
-                value={form.service}
-                onChange={(e) => setForm({ ...form, service: e.target.value })}
+                onClick={() => setDropdownOpen(!dropdownOpen)}
+                className={`${FIELD} flex items-center justify-between text-left cursor-pointer`}
               >
-                <option value="">Select service</option>
-                {content.options.map((o) => (
-                  <option key={o.value} value={o.value}>
-                    {o.label}
-                  </option>
-                ))}
-              </select>
+                <span>
+                  {content.options.find((o) => o.value === form.service)?.label || "Select service"}
+                </span>
+                <ChevronDown className={`w-4 h-4 text-[#dfb15b]/70 transition-transform duration-200 ${dropdownOpen ? "rotate-180" : ""}`} />
+              </button>
+
+              {dropdownOpen && (
+                <>
+                  {/* Backdrop click target */}
+                  <div className="fixed inset-0 z-40 cursor-default" onClick={() => setDropdownOpen(false)} />
+                  
+                  {/* Options Menu */}
+                  <div className="absolute left-0 right-0 mt-2 max-h-[200px] overflow-y-auto rounded-xl border border-[#dfb15b]/30 bg-black/95 z-50 p-1.5 shadow-[0_10px_30px_rgba(0,0,0,0.8)] backdrop-blur-md custom-scrollbar">
+                    {content.options.map((o) => (
+                      <button
+                        key={o.value}
+                        type="button"
+                        onClick={() => {
+                          setForm({ ...form, service: o.value });
+                          setDropdownOpen(false);
+                        }}
+                        className={`w-full text-left px-3.5 py-2.5 rounded-lg text-sm transition-all duration-150 cursor-pointer ${
+                          form.service === o.value
+                            ? "bg-[#dfb15b] text-black font-semibold"
+                            : "text-white/80 hover:bg-white/10 hover:text-white"
+                        }`}
+                      >
+                        {o.label}
+                      </button>
+                    ))}
+                  </div>
+                </>
+              )}
             </div>
           </div>
 

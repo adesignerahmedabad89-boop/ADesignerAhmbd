@@ -180,7 +180,7 @@ export const ShowreelStage = ({ content }: ShowreelStageProps) => {
         <FlameBackground className="absolute inset-0" active={vis.aurora} />
       </animated.div>
 
-      <div ref={trackRef} className="relative" style={{ height: `${geo.trackVh}vh` }}>
+      <div id="showreel-track" ref={trackRef} className="relative" style={{ height: `${geo.trackVh}vh` }}>
         <div className="sticky top-0 h-screen overflow-hidden p-[4vmin]">
           {/* White backdrop for phases 1–4; fades to the black page at gp 0.72. */}
           <animated.div
@@ -310,17 +310,18 @@ export const ShowreelStage = ({ content }: ShowreelStageProps) => {
                   className="pointer-events-none absolute inset-[-4vmin] z-[3] rounded-[11vmin] border-[8vmin] border-white"
                   style={{ opacity: s.finalFrame }}
                 />
-                <CtaBlock
-                  p={p}
-                  heading={content.cta.heading}
-                  headingFaded={content.cta.headingFaded}
-                  sub={content.cta.sub}
-                  button={content.cta.button}
-                  href={content.cta.href}
-                />
               </animated.div>
             </animated.div>
           </div>
+
+          <CtaBlock
+            p={p}
+            heading={content.cta.heading}
+            headingFaded={content.cta.headingFaded}
+            sub={content.cta.sub}
+            button={content.cta.button}
+            href={content.cta.href}
+          />
 
           {/* Carousel CTA — pinned under the 4-card carousel (the second block).
               A sibling overlay of the 3D scene (not inside its perspective

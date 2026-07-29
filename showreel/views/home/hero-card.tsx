@@ -150,10 +150,10 @@ export const HeroCard = memo(({ p, lines, templatesTitle, images, bottomBlock, a
               {bottomBlock.leftText}
             </p>
             <div className="flex items-center gap-4 max-sm:flex-col max-sm:items-stretch max-sm:gap-3">
-              <Link href="/services" className="inline-flex items-center justify-center px-8 py-3.5 max-sm:px-5 max-sm:py-3 rounded-btn bg-white/10 backdrop-blur-md border border-white/20 transition-colors hover:bg-white/20 text-[17px] max-sm:text-[15px] leading-none text-white no-underline">
+              <Link href="/services" className="inline-flex items-center justify-center px-8 py-3.5 max-sm:px-5 max-sm:py-3 rounded-btn bg-white/5 backdrop-blur-md border border-white/15 transition-all duration-300 hover:bg-white/10 hover:border-[#dfb15b]/45 hover:text-[#dfb15b] text-[17px] max-sm:text-[15px] leading-none text-white no-underline shadow-sm">
                 View Services
               </Link>
-              <Link href="/contact" className="inline-flex items-center justify-center px-8 py-3.5 max-sm:px-5 max-sm:py-3 rounded-btn bg-white text-black font-medium transition-colors hover:bg-white/90 text-[17px] max-sm:text-[15px] leading-none no-underline">
+              <Link href="/contact" className="inline-flex items-center justify-center px-8 py-3.5 max-sm:px-5 max-sm:py-3 rounded-btn bg-gradient-to-r from-[#dfb15b] to-[#7c3aed] font-semibold text-white transition-all duration-300 hover:from-[#e9be6b] hover:to-[#8c4fed] hover:scale-[1.03] text-[17px] max-sm:text-[15px] leading-none no-underline shadow-[0_0_20px_rgba(223,177,91,0.25)] hover:shadow-[0_0_25px_rgba(223,177,91,0.45)]">
                 Book Consultation
               </Link>
             </div>
