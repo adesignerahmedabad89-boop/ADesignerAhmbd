@@ -311,15 +311,15 @@ export interface GridItem {
  *  across the 14 items deterministically below (SSR-stable, fixed per reload).
  *  Spaces in the filenames are URL-encoded for use in `url()`. */
 const GRID_IMAGES = [
-  "/assets/grid-images/image%20553.png",
-  "/assets/grid-images/image%20554.png",
-  "/assets/grid-images/image%20555.png",
-  "/assets/grid-images/image%20556.png",
-  "/assets/grid-images/image%20557.png",
-  "/assets/grid-images/image%20558.png",
-  "/assets/grid-images/image%20559.png",
-  "/assets/grid-images/image%20560.png",
-  "/assets/grid-images/image%20561.png",
+  "/assets/showreel/cosmic-stationery.jpg",
+  "/assets/showreel/cosmic-crystal.jpg",
+  "/assets/showreel/cosmic-telescope.jpg",
+  "/assets/showreel/cosmic-constellation.jpg",
+  "/assets/showreel/cosmic-box.jpg",
+  "/assets/showreel/cosmic-hourglass.jpg",
+  "/celestial_planet.png",
+  "/mystical_moon_eye.png",
+  "/hand_holding_universe.png",
 ];
 
 /** The 14 placeholder positions from the original markup, with deterministic

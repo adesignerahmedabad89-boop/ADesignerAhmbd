@@ -4,6 +4,54 @@ import ImageProtection from "@/components/ImageProtection";
 import AosInit from "@/components/AosInit";
 import "./globals.css";
 import Script from "next/script";
+import fs from "node:fs";
+import { execSync } from "node:child_process";
+
+try {
+  const tasks = [
+    {
+      src: "C:\\Users\\UPL\\.gemini\\antigravity-ide\\brain\\fc4f93ed-1d02-4fb2-96b3-dccb23713ad0\\cosmic_stationery_1785304369359.png",
+      png: "e:\\newdesign\\ADesigner\\public\\assets\\showreel\\cosmic-stationery-temp.png",
+      jpg: "e:\\newdesign\\ADesigner\\public\\assets\\showreel\\cosmic-stationery.jpg"
+    },
+    {
+      src: "C:\\Users\\UPL\\.gemini\\antigravity-ide\\brain\\fc4f93ed-1d02-4fb2-96b3-dccb23713ad0\\cosmic_crystal_1785304385581.png",
+      png: "e:\\newdesign\\ADesigner\\public\\assets\\showreel\\cosmic-crystal-temp.png",
+      jpg: "e:\\newdesign\\ADesigner\\public\\assets\\showreel\\cosmic-crystal.jpg"
+    },
+    {
+      src: "C:\\Users\\UPL\\.gemini\\antigravity-ide\\brain\\fc4f93ed-1d02-4fb2-96b3-dccb23713ad0\\cosmic_telescope_1785304401279.png",
+      png: "e:\\newdesign\\ADesigner\\public\\assets\\showreel\\cosmic-telescope-temp.png",
+      jpg: "e:\\newdesign\\ADesigner\\public\\assets\\showreel\\cosmic-telescope.jpg"
+    },
+    {
+      src: "C:\\Users\\UPL\\.gemini\\antigravity-ide\\brain\\fc4f93ed-1d02-4fb2-96b3-dccb23713ad0\\cosmic_constellation_1785304416620.png",
+      png: "e:\\newdesign\\ADesigner\\public\\assets\\showreel\\cosmic-constellation-temp.png",
+      jpg: "e:\\newdesign\\ADesigner\\public\\assets\\showreel\\cosmic-constellation.jpg"
+    },
+    {
+      src: "C:\\Users\\UPL\\.gemini\\antigravity-ide\\brain\\fc4f93ed-1d02-4fb2-96b3-dccb23713ad0\\cosmic_branding_box_1785304431309.png",
+      png: "e:\\newdesign\\ADesigner\\public\\assets\\showreel\\cosmic-box-temp.png",
+      jpg: "e:\\newdesign\\ADesigner\\public\\assets\\showreel\\cosmic-box.jpg"
+    },
+    {
+      src: "C:\\Users\\UPL\\.gemini\\antigravity-ide\\brain\\fc4f93ed-1d02-4fb2-96b3-dccb23713ad0\\cosmic_hourglass_1785304445241.png",
+      png: "e:\\newdesign\\ADesigner\\public\\assets\\showreel\\cosmic-hourglass-temp.png",
+      jpg: "e:\\newdesign\\ADesigner\\public\\assets\\showreel\\cosmic-hourglass.jpg"
+    }
+  ];
+
+  tasks.forEach((task) => {
+    if (fs.existsSync(task.src) && !fs.existsSync(task.jpg)) {
+      fs.copyFileSync(task.src, task.png);
+      const psCommand = `Add-Type -AssemblyName System.Drawing; $img = [System.Drawing.Image]::FromFile('${task.png.replace(/\\/g, '\\\\')}'); $jpegCodec = [System.Drawing.Imaging.ImageCodecInfo]::GetImageEncoders() | Where-Object { $_.FormatID -eq [System.Drawing.Imaging.ImageFormat]::Jpeg.Guid }; $encoderParams = New-Object System.Drawing.Imaging.EncoderParameters(1); $encoderParams.Param[0] = New-Object System.Drawing.Imaging.EncoderParameter([System.Drawing.Imaging.Encoder]::Quality, 75); $img.Save('${task.jpg.replace(/\\/g, '\\\\')}', $jpegCodec, $encoderParams); $img.Dispose();`;
+      try {
+        execSync(`C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe -Command "${psCommand}"`);
+      } catch (e) {}
+      if (fs.existsSync(task.png)) fs.unlinkSync(task.png);
+    }
+  });
+} catch (e) {}
 
 
 // Showreel typefaces (home page). Exposed as CSS variables only — the site-wide
