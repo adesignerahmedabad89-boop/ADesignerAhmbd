@@ -8,7 +8,7 @@ import { ChevronDown, Menu, X } from "lucide-react";
 import { animated, easings, useSpring } from "@react-spring/web";
 import { useLoaderStore } from "@/showreel/hooks/use-loader";
 import { services as designServices } from "@/lib/services-data";
-import { astrologyServiceHref, astrologyServices } from "@/lib/astrology-services-data";
+import { astrologyServiceHref, astrologyServicesWithOwnPage } from "@/lib/astrology-services-data";
 
 export interface NavbarProps {
   revealAfterLoader?: boolean;
@@ -19,6 +19,7 @@ const navLinks = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Services", href: "/services" },
+  { label: "Scientific Logo", href: "/scientific-logo" },
   { label: "Portfolio", href: "/portfolio" },
   { label: "Career", href: "/career" },
   { label: "Pricing", href: "/pricing" },
@@ -250,7 +251,7 @@ export default function Navbar({
                         Astrology &amp; Energy
                       </div>
                       <div style={{ display: "flex", flexDirection: "column", gap: "1px" }}>
-                        {astrologyServices.map((s) => (
+                        {astrologyServicesWithOwnPage.map((s) => (
                           <Link
                             key={s.slug}
                             href={astrologyServiceHref(s.slug)}
@@ -482,7 +483,7 @@ export default function Navbar({
                           <div style={{ fontSize: "10px", fontWeight: 800, letterSpacing: "1.2px", textTransform: "uppercase", color: groupLabelColor, margin: "6px 0" }}>
                             Astrology &amp; Energy
                           </div>
-                          {astrologyServices.map((s) => (
+                          {astrologyServicesWithOwnPage.map((s) => (
                             <Link
                               key={s.slug}
                               href={astrologyServiceHref(s.slug)}

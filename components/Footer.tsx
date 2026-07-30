@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Phone, Mail, MapPin, ArrowRight } from "lucide-react";
 import { CosmicFooterTop } from "@/components/cosmic/CosmicFooterTop";
-import { astrologyServiceHref, astrologyServices } from "@/lib/astrology-services-data";
+import { astrologyServiceHref, astrologyServicesWithOwnPage } from "@/lib/astrology-services-data";
 
 const SocialFacebook = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" width="15" height="15"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" /></svg>
@@ -29,6 +29,7 @@ const socialLinks = [
 const quickLinks = [
   { label: "Home", href: "/" }, { label: "About Us", href: "/about" },
   { label: "Services", href: "/services" },
+  { label: "Scientific Logo", href: "/scientific-logo" },
   { label: "Portfolio", href: "/portfolio" },
   { label: "Pricing", href: "/pricing" },
   { label: "Career", href: "/career" },
@@ -123,7 +124,7 @@ export default function Footer({ cosmic = false }: FooterProps) {
             <div>
               <h4 style={{ color: "#fff", fontWeight: 700, fontSize: "13px", letterSpacing: "2px", textTransform: "uppercase", marginBottom: "20px" }}>Astrology Services</h4>
               <ul style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-                {astrologyServices.map((s) => (
+                {astrologyServicesWithOwnPage.map((s) => (
                   <li key={s.slug}>
                     <Link href={astrologyServiceHref(s.slug)} style={{ color: "rgba(255,255,255,0.4)", fontSize: "13px", display: "flex", alignItems: "center", gap: "6px", transition: "color 0.2s" }} className="hover:text-[#f58220] group">
                       <ArrowRight size={11} style={{ opacity: 0, transition: "opacity 0.2s" }} className="group-hover:opacity-100" />
