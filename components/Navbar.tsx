@@ -20,6 +20,7 @@ const navLinks = [
   { label: "About", href: "/about" },
   { label: "Services", href: "/services" },
   { label: "Scientific Logo", href: "/scientific-logo" },
+  { label: "Kundli Form", href: "/kundli-details-form" },
   { label: "Portfolio", href: "/portfolio" },
   { label: "Career", href: "/career" },
   { label: "Pricing", href: "/pricing" },
@@ -115,7 +116,7 @@ export default function Navbar({
 
         {/* Inner nav pill — desktop only */}
         <nav
-          className="hidden lg:flex"
+          className="hidden xl:flex"
           style={{
             flex: 1,
             justifyContent: "center",
@@ -323,7 +324,7 @@ export default function Navbar({
         </nav>
 
         {/* Right: phone + CTA — desktop only */}
-        <div className="hidden lg:flex items-center" style={{ gap: "12px", flexShrink: 0 }}>
+        <div className="hidden xl:flex items-center" style={{ gap: "12px", flexShrink: 0 }}>
           <a
             href="https://wa.me/916353117403"
             target="_blank"
@@ -364,7 +365,7 @@ export default function Navbar({
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
           style={{ color: cosmic ? "#ffffff" : "#333", padding: "8px", background: "none", border: "none", cursor: "pointer", flexShrink: 0 }}
-          className="lg:hidden"
+          className="xl:hidden"
           aria-label="Toggle menu"
         >
           {mobileOpen ? <X size={22} /> : <Menu size={22} />}
@@ -389,7 +390,7 @@ export default function Navbar({
           border: `1px solid ${capsuleBdr}`,
           boxShadow: capsuleShadow,
         }}
-        className="lg:hidden"
+        className="xl:hidden"
       >
         <div style={{ padding: "12px 12px 16px" }}>
           {navLinks.map((link) => {
